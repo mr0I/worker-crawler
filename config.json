@@ -1,0 +1,13 @@
+{
+  "db": {
+    "fullstack_express": {
+      "host": "localhost",
+      "database": "crawlerDB",
+      "username": "root",
+      "password": ""
+    }
+  },
+  "tables": {
+    "ProductsTable": "products"
+  }
+}
