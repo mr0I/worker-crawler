@@ -9,6 +9,7 @@
   },
   "tables": {
     "ProductsTable": "products",
-    "LogsTable": "logs"
+    "LogsTable": "logs",
+    "CategoriesTable": "categories"
   }
 }
