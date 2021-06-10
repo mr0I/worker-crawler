@@ -8,6 +8,7 @@
     }
   },
   "tables": {
-    "ProductsTable": "products"
+    "ProductsTable": "products",
+    "LogsTable": "logs"
   }
 }
