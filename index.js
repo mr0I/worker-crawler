@@ -15,12 +15,14 @@ const connection = mysql.createConnection({
 connection.connect();
 
 // Get URL
+const siteId = cmdArgs['site-id'];
 const catId = cmdArgs['cat-id'];
 connection.query(`SELECT url FROM ${config.tables.CategoriesTable} WHERE id=${catId} `,
     function(err,row,fields){
         if (err) fetchData('Error');
         fetchData(row);
     });
+
 
 // Variables
 let pageLimit = 3;
@@ -46,41 +48,69 @@ const fetchData = async (row) => {
     try {
         const html = await axios.get(url);
         const $ = cheerio.load(html.data);
-        const selector = $('ul.c-listing__items.js-plp-products-list > li > .c-product-box');
 
-        selector.map(function (index , el) {
-            //index++;
-            products_count++;
-            let title = $(el).attr('data-title-fa');
-            let href = $(el).find('a.js-product-url').attr('href');
-            let img = $(el).find('img').attr('src');
-
-            const metadata = {
-                "title" : title,
-                "url" : href,
-                "image" : img
-            };
-            parsedResults.push(metadata);
-        });
-
-        // Pagination Elements Link
-        const nextPageLink = 'https://www.digikala.com' + $('.c-pager__items').find('a.c-pager__item.is-active').parent().next().find('a').attr('href');
-
-        console.log(chalk.cyan(`Scraping: ${nextPageLink}`));
-        pageCounter++;
-        console.log(pageCounter);
-
-        if (pageCounter === pageLimit) {
-            exportResults(parsedResults , catId , start_crawl_time);
-            return false;
-        }
-
-        await fetchData(nextPageLink);
+        connection.query(`SELECT * FROM ${config.tables.SelectorsTable} WHERE site_id=${siteId} `,
+            function(err,row,fields){
+                Scraping(row,$);
+                if (err) console.log(err);
+            });
 
     } catch (error) {
         console.error(error);
         process.exit();
     }
+};
+
+const Scraping = async (row , $) => {
+    const site_id = row[0].site_id;
+    const selector = $(row[0].main_selector);
+
+    selector.map(function (index , el) {
+        //index++;
+        products_count++;
+        let title = '';
+        let href = '';
+        let img = '';
+        switch (site_id) {
+            case 1:
+                title = $(el).attr(row[0].title_selector);
+                href = $(el).find(row[0].href_selector).attr('href');
+                img = $(el).find(row[0].img_selector).attr('src');
+                break;
+            default:
+                title = $(el).attr(row[0].title_selector);
+                href = $(el).find(row[0].href_selector).attr('href');
+                img = $(el).find(row[0].img_selector).attr('src');
+        }
+
+        const metadata = {
+            "title" : title,
+            "url" : href,
+            "image" : img
+        };
+        parsedResults.push(metadata);
+    });
+
+    // Pagination Elements Link
+    let nextPageLink = '';
+    switch (site_id) {
+        case 1:
+            nextPageLink = 'https://www.digikala.com' + $('.c-pager__items').find('a.c-pager__item.is-active').parent().next().find('a').attr('href');
+            break;
+        default:
+            nextPageLink = 'https://www.digikala.com' + $('.c-pager__items').find('a.c-pager__item.is-active').parent().next().find('a').attr('href');
+    }
+
+    console.log(chalk.cyan(`Scraping: ${nextPageLink}`));
+    pageCounter++;
+    console.log(pageCounter);
+
+    if (pageCounter === pageLimit) {
+        exportResults(parsedResults , catId , start_crawl_time);
+        return false;
+    }
+
+    await fetchData(nextPageLink);
 };
 
 const exportResults = (parsed_results,cat_id,sct) => {
