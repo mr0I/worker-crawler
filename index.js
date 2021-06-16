@@ -106,35 +106,37 @@ const Scraping = async (row , $) => {
     console.log(pageCounter);
 
     if (pageCounter === pageLimit) {
-        exportResults(parsedResults , catId , start_crawl_time);
+        exportResults(parsedResults ,site_id, catId , start_crawl_time);
         return false;
     }
 
     await fetchData(nextPageLink);
 };
 
-const exportResults = (parsed_results,cat_id,sct) => {
+const exportResults = (parsed_results,site_id ,cat_id,sct) => {
     let values = [];
     const ect = getCurrentDate();
 
     for(let i=0; i< parsedResults.length; i++){
-        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].image,cat_id,String(ect)]);
+        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].image,cat_id,site_id,String(ect)]);
     }
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
-    connection.query(`INSERT INTO ${config.tables.ProductsTable} (title, url , image, category_id,date) VALUES ?`,
+    connection.query(`INSERT INTO ${config.tables.ProductsTable} (title, url , image, category_id,site_id,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) console.log(err);
 
             console.log('All Is Done');
-            connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND date<${String(ect)} `,
+            connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
                 function(err,resp){
                     if (err) throw err;
                     console.log('All Old Data Is Deleted.');
                 });
         });
 
-    connection.query(`INSERT INTO ${config.tables.LogsTable} (start_crawl_time, end_crawl_time , count , category_id) VALUES (${sct},${ect},${products_count},${cat_id})`,
+    connection.query(`INSERT INTO ${config.tables.LogsTable} 
+    (start_crawl_time, end_crawl_time , count , category_id , site_id) 
+    VALUES (${sct},${ect},${products_count},${cat_id},${site_id})`,
         function(err,result) {
             if (err)  console.log(err);
             console.log('Logs Added.');
