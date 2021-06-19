@@ -33,6 +33,30 @@ let products_count = 0;
 
 
 const fetchData = async (row) => {
+    const urlSingle = 'https://www.digikala.com/product/dkp-2361428/گوشی-موبایل-سامسونگ-مدل-galaxy-a51-sm-a515fdsn-دو-سیم-کارت-ظرفیت-128گیگابایت';
+    const html = await axios.get(encodeURI(urlSingle));
+    const $ = cheerio.load(html.data);
+    const images_selector = $('.c-product__params.js-is-expandable > ul > li');
+    // const images_selector = $('ul.c-gallery__items > li.js-product-thumb-img > .thumb-wrapper');
+    let images = [];
+    let specs = [];
+    let specs_obj = {};
+    images_selector.map(function (index , el) {
+        let img = $(el).find('img').data('src');
+        let specs_key = $(el).find('span').eq(0).text();
+        let specs_value = $(el).find('span').eq(1).text();
+        //console.log(spec);
+        // const metadata = {
+        //     "images" : img
+        // };
+        specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
+        specs.push(specs_obj);
+        // images.push(spec);
+    });
+    let last_index = specs[specs.length-1];
+    console.log(JSON.parse(JSON.stringify(last_index)));
+    return;
+
 
     if (row.length === 0){
         console.log(chalk.red.bgBlack("No Such Category!!!"));
@@ -54,7 +78,6 @@ const fetchData = async (row) => {
                 Scraping(row,$);
                 if (err) console.log(err);
             });
-
     } catch (error) {
         console.error(error);
         process.exit();
