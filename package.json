@@ -10,9 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.9",
     "mysql": "^2.18.1",
-    "chalk": "^4.1.1",
+    "util": "^0.12.4",
     "yargs": "^17.0.1"
   }
 }

@@ -2,6 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const mysql = require('mysql');
 const chalk = require('chalk');
+const util = require('util');
 const cmdArgs = require('yargs').argv;
 const config = require('./config');
 
@@ -33,30 +34,6 @@ let products_count = 0;
 
 
 const fetchData = async (row) => {
-    const urlSingle = 'https://www.digikala.com/product/dkp-2361428/گوشی-موبایل-سامسونگ-مدل-galaxy-a51-sm-a515fdsn-دو-سیم-کارت-ظرفیت-128گیگابایت';
-    const html = await axios.get(encodeURI(urlSingle));
-    const $ = cheerio.load(html.data);
-    const images_selector = $('.c-product__params.js-is-expandable > ul > li');
-    // const images_selector = $('ul.c-gallery__items > li.js-product-thumb-img > .thumb-wrapper');
-    let images = [];
-    let specs = [];
-    let specs_obj = {};
-    images_selector.map(function (index , el) {
-        let img = $(el).find('img').data('src');
-        let specs_key = $(el).find('span').eq(0).text();
-        let specs_value = $(el).find('span').eq(1).text();
-        //console.log(spec);
-        // const metadata = {
-        //     "images" : img
-        // };
-        specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
-        specs.push(specs_obj);
-        // images.push(spec);
-    });
-    let last_index = specs[specs.length-1];
-    console.log(JSON.parse(JSON.stringify(last_index)));
-    return;
-
 
     if (row.length === 0){
         console.log(chalk.red.bgBlack("No Such Category!!!"));
@@ -70,13 +47,13 @@ const fetchData = async (row) => {
 
     start_crawl_time = getCurrentDate();
     try {
-        const html = await axios.get(url);
+        const html = await axios.get(encodeURI(url));
         const $ = cheerio.load(html.data);
 
         connection.query(`SELECT * FROM ${config.tables.SelectorsTable} WHERE site_id=${siteId} `,
             function(err,row,fields){
-                Scraping(row,$);
                 if (err) console.log(err);
+                Scraping(row,$);
             });
     } catch (error) {
         console.error(error);
@@ -136,6 +113,64 @@ const Scraping = async (row , $) => {
     await fetchData(nextPageLink);
 };
 
+const fetchSinglePage = async (url , pid) => {
+    const urlSingle = 'https://www.digikala.com' + url;
+
+    try{
+        const html = await axios.get(encodeURI(urlSingle));
+        const $ = cheerio.load(html.data);
+        const specs_selector = $('.c-product__params.js-is-expandable > ul > li');
+        const params_selector = $('ul.c-params__list > li');
+        const desc_selector = $('.c-content-expert__summary > .c-mask');
+        //const images_selector = $('ul.c-gallery__items > li > .thumb-wrapper');
+        let specs = [];
+        let specs_obj = {};
+        let params = [];
+        let params_obj = {};
+        let desc = '';
+        params_selector.map(function (index , el) {
+            let params_key = $(el).find('.c-params__list-key > span.block').text();
+            let params_value = $(el).find('.c-params__list-value > span.block').text();
+            params_obj[params_key] = params_value.replace(/\s+/g, ' ');
+            params.push(params_obj);
+        });
+        params = params[params.length-1];
+        specs_selector.map(function (index , el) {
+            //let img = $(el).find('img').data('src');
+            let specs_key = $(el).find('span').eq(0).text();
+            let specs_value = $(el).find('span').eq(1).text();
+            specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
+            specs.push(specs_obj);
+        });
+        specs = specs[specs.length-1];
+        desc_selector.map(function (index , el) {
+            desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
+        });
+        const product={
+            specifications : JSON.stringify(specs),
+            parameters : JSON.stringify(params),
+            description : desc
+        };
+        // let images = [];
+        // images_selector.map(function (index , el) {
+        //     let img = $(el).find('img').attr('src');
+        //     images.push(img);
+        // });
+
+        await connection.query(`UPDATE ${config.tables.ProductsTable} SET ? WHERE id=${pid}`,product,
+            function(err,result) {
+                if (err)  console.log(err);
+                console.log('update success');
+            });
+        //process.exit();
+
+    } catch (error) {
+        console.error(error);
+        process.exit();
+    }
+
+};
+
 const exportResults = (parsed_results,site_id ,cat_id,sct) => {
     let values = [];
     const ect = getCurrentDate();
@@ -144,16 +179,50 @@ const exportResults = (parsed_results,site_id ,cat_id,sct) => {
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].image,cat_id,site_id,String(ect)]);
     }
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
-    connection.query(`INSERT INTO ${config.tables.ProductsTable} (title, url , image, category_id,site_id,date) VALUES ?`,
+     connection.query(`INSERT INTO ${config.tables.ProductsTable} (title, url , image, category_id,site_id,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) console.log(err);
 
             console.log('All Is Done');
-            connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+              connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
                 function(err,resp){
                     if (err) throw err;
                     console.log('All Old Data Is Deleted.');
+
+                    // Add Single Page Data
+                    // node native promisify
+                    const query = util.promisify(connection.query).bind(connection);
+                    (async () => {
+                        try {
+                            const rows = await query(`SELECT * FROM ${config.tables.ProductsTable} 
+                                WHERE site_id=${site_id} AND category_id=${cat_id}`);
+                            //console.log(rows);
+                            let counter=0;
+                            for (const item in rows){
+                                fetchSinglePage(rows[counter].url , rows[counter].id);
+                                counter++;
+                            }
+                        } finally {
+                            connection.end();
+                        }
+                    })();
+
+
+
+                    // connection.query(`SELECT * FROM ${config.tables.ProductsTable}
+                    //     WHERE site_id=${site_id} AND category_id=${cat_id}`,
+                    //     function(err,row,fields){
+                    //         if (err) console.log(err);
+                    //
+                    //
+                    //             let counter=0;
+                    //             for (const item in row){
+                    //                 fetchSinglePage(row[counter].url , row[counter].id);
+                    //                 counter++;
+                    //             }
+                    //
+                    //     });
                 });
         });
 
@@ -164,7 +233,10 @@ const exportResults = (parsed_results,site_id ,cat_id,sct) => {
             if (err)  console.log(err);
             console.log('Logs Added.');
         });
+
+
 };
+
 
 function getCurrentDate(){
     const currentDate = new Date();
