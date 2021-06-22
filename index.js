@@ -103,19 +103,18 @@ const Scraping = async (row , $) => {
     console.log(pageCounter);
 
     if (pageCounter === pageLimit) {
-        exportResults(parsedResults ,site_id, catId , start_crawl_time);
+        exportResults(parsedResults , row ,site_id, catId , start_crawl_time);
         return false;
     }
 
     await fetchData(nextPageLink);
 };
 
-const exportResults = async (parsed_results,site_id ,cat_id,sct) => {
+const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     let values = [];
     const ect = getCurrentDate();
 
     let crawled_count = 0;
-    // for(let i=0; i<10 ; i++){
     for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
@@ -128,53 +127,96 @@ const exportResults = async (parsed_results,site_id ,cat_id,sct) => {
         try{
             const html = await axios.get(encodeURI(urlSingle));
             const $ = cheerio.load(html.data);
-            const specs_selector = $('.c-product__params.js-is-expandable > ul > li');
-            const params_selector = $('ul.c-params__list > li');
-            const desc_selector = $('.c-content-expert__summary > .c-mask');
+            const specs_selector = $(row[0].specs_selector);
+            const params_selector = $(row[0].params_selector);
+            const desc_selector = $(row[0].desc_selector);
             //const images_selector = $('ul.c-gallery__items > li > .thumb-wrapper');
+
             let specs = [];
             let specs_obj = {};
             let params = [];
             let params_obj = {};
             let desc = '';
+
             params_selector.map(function (index , el) {
-                let params_key = $(el).find('.c-params__list-key > span.block').text();
-                let params_value = $(el).find('.c-params__list-value > span.block').text();
-                params_obj[params_key] = params_value.replace(/\s+/g, ' ');
-                params.push(params_obj);
+                let params_key = '';
+                let params_value = '';
+                switch (site_id) {
+                    case 1:
+                        params_key = $(el).find('.c-params__list-key > span.block').text();
+                        params_value = $(el).find('.c-params__list-value > span.block').text();
+                        params_obj[params_key] = params_value.replace(/\s+/g, ' ');
+                        params.push(params_obj);
+                        break;
+                    default:
+                        params_key = $(el).find('.c-params__list-key > span.block').text();
+                        params_value = $(el).find('.c-params__list-value > span.block').text();
+                        params_obj[params_key] = params_value.replace(/\s+/g, ' ');
+                        params.push(params_obj);
+                }
             });
             params = params[params.length-1];
+
             specs_selector.map(function (index , el) {
-                //let img = $(el).find('img').data('src');
-                let specs_key = $(el).find('span').eq(0).text();
-                let specs_value = $(el).find('span').eq(1).text();
-                specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
-                specs.push(specs_obj);
+                let specs_key ='';
+                let specs_value ='';
+                switch (site_id) {
+                    case 1:
+                        specs_key = $(el).find('span').eq(0).text();
+                        specs_value = $(el).find('span').eq(1).text();
+                        specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
+                        specs.push(specs_obj);
+                        break;
+                    default:
+                        specs_key = $(el).find('span').eq(0).text();
+                        specs_value = $(el).find('span').eq(1).text();
+                        specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
+                        specs.push(specs_obj);
+                }
             });
             specs = specs[specs.length-1];
+
             desc_selector.map(function (index , el) {
-                desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
+                switch (site_id) {
+                    case 1:
+                        desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
+                        break;
+                    default:
+                        desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
+                }
             });
-             specifications = JSON.stringify(specs);
-             parameters = JSON.stringify(params);
-             description = desc;
+
+            specifications = JSON.stringify(specs);
+            parameters = JSON.stringify(params);
+            description = desc;
         } catch (error) {
             console.error(error);
             process.exit();
         }
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
+
+        if (crawled_count % 30 === 0) {
+            connection.query(`INSERT INTO ${config.tables.ProductsTable}
+                 (title, url , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+                [values],
+                function(err,result) {
+                    if (err) throw err;
+                    console.log('All 30 Is Done');
+                    values = [];
+                });
+        }
     }
 
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
-     connection.query(`INSERT INTO ${config.tables.ProductsTable}
+    connection.query(`INSERT INTO ${config.tables.ProductsTable}
      (title, url , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
             console.log('All Is Done');
 
-              connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+            connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
                 function(err,resp){
                     if (err) throw err;
                     console.log('All Old Data Is Deleted.');
