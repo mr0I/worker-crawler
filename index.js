@@ -25,7 +25,7 @@ connection.query(`SELECT url FROM ${config.tables.CategoriesTable} WHERE id=${ca
     });
 
 // Variables
-let pageLimit = 3;
+let pageLimit = config.crawler_settings.pageLimit;
 let pageCounter = 0;
 let parsedResults = [];
 let start_crawl_time = '';
@@ -68,22 +68,25 @@ const Scraping = async (row , $) => {
         let title = '';
         let href = '';
         let img = '';
+
         switch (site_id) {
             case 1:
                 title = $(el).attr(row[0].title_selector);
-                href = $(el).find(row[0].href_selector).attr('href');
+                href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
                 img = $(el).find(row[0].img_selector).attr('src');
+                img = img.substring(0,(img.indexOf(".jpg")+4));
                 break;
             default:
                 title = $(el).attr(row[0].title_selector);
-                href = $(el).find(row[0].href_selector).attr('href');
+                href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
                 img = $(el).find(row[0].img_selector).attr('src');
+                img = img.substring(0,(img.indexOf(".jpg")+4));
         }
 
         const metadata = {
             "title" : title,
             "url" : href,
-            "image" : img
+            "image" : img.substring(0,(img.indexOf(".jpg")+4))
         };
         parsedResults.push(metadata);
     });
@@ -100,7 +103,6 @@ const Scraping = async (row , $) => {
 
     console.log(chalk.cyan(`Scraping: ${nextPageLink}`));
     pageCounter++;
-    console.log(pageCounter);
 
     if (pageCounter === pageLimit) {
         exportResults(parsedResults , row ,site_id, catId , start_crawl_time);
@@ -115,10 +117,11 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     const ect = getCurrentDate();
 
     let crawled_count = 0;
-    for(let i=0; i< parsedResults.length; i++){
+    for(let i=0; i< 10; i++){
+    // for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
-        const urlSingle = await `https://www.digikala.com${parsed_results[i].url}`;
+        const urlSingle = await parsed_results[i].url;
         console.log('current index:' + chalk.yellow.bgBlack(i+1));
         let specifications = '';
         let parameters = '';
@@ -130,8 +133,6 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             const specs_selector = $(row[0].specs_selector);
             const params_selector = $(row[0].params_selector);
             const desc_selector = $(row[0].desc_selector);
-            //const images_selector = $('ul.c-gallery__items > li > .thumb-wrapper');
-
             let specs = [];
             let specs_obj = {};
             let params = [];
@@ -196,13 +197,13 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
 
-        if (crawled_count % 30 === 0) {
+        if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
                  (title, url , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
-                    console.log('All 30 Is Done');
+                    console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
                     values = [];
                 });
         }

@@ -12,5 +12,9 @@
     "LogsTable": "logs",
     "CategoriesTable": "categories",
     "SelectorsTable": "selectors"
+  },
+  "crawler_settings": {
+    "pageLimit" : 3,
+    "bulkInsertCount" : 30
   }
 }
