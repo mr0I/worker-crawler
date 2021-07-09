@@ -18,10 +18,13 @@ connection.connect();
 // Get URL
 const siteId = cmdArgs['site-id'];
 const catId = cmdArgs['cat-id'];
-connection.query(`SELECT url FROM ${config.tables.CategoriesTable} WHERE id=${catId} `,
+const catName = cmdArgs['cat-name'];
+
+const user_url = catName+'Url';
+connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=${siteId} `,
     function(err,row,fields){
         if (err) fetchData('Error');
-        fetchData(row);
+         fetchData(row , user_url);
     });
 
 // Variables
@@ -31,7 +34,7 @@ let parsedResults = [];
 let start_crawl_time = '';
 
 
-const fetchData = async (row) => {
+const fetchData = async (row , user_url) => {
 
     if (row.length === 0){
         console.log(chalk.red.bgBlack("No Such Category!!!"));
@@ -40,7 +43,14 @@ const fetchData = async (row) => {
     }
 
     let url = '';
-    (row instanceof Object) ? url = await row[0].url : url=row;
+    switch (user_url){
+        case 'mobileUrl':
+            (row instanceof Object) ? url = await row[0].mobileUrl : url=row;
+            break;
+        default:
+            (row instanceof Object) ? url = await row[0].mobileUrl : url=row;
+    }
+    
     console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(url)} initiated...\n`));
 
     start_crawl_time = getCurrentDate();
@@ -117,8 +127,8 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     const ect = getCurrentDate();
 
     let crawled_count = 0;
-    for(let i=0; i< 10; i++){
-    // for(let i=0; i< parsedResults.length; i++){
+    //for(let i=0; i< 10; i++){
+     for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
         const urlSingle = await parsed_results[i].url;

@@ -11,7 +11,8 @@
     "ProductsTable": "products",
     "LogsTable": "logs",
     "CategoriesTable": "categories",
-    "SelectorsTable": "selectors"
+    "SelectorsTable": "selectors",
+    "SitesTable": "sites"
   },
   "crawler_settings": {
     "pageLimit" : 3,
