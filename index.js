@@ -50,7 +50,7 @@ const fetchData = async (row , user_url) => {
         default:
             (row instanceof Object) ? url = await row[0].mobileUrl : url=row;
     }
-    
+
     console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(url)} initiated...\n`));
 
     start_crawl_time = getCurrentDate();
@@ -77,18 +77,21 @@ const Scraping = async (row , $) => {
         //index++;
         let title = '';
         let href = '';
+        let price = '';
         let img = '';
 
         switch (site_id) {
             case 1:
                 title = $(el).attr(row[0].title_selector);
                 href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
+                price = $(el).attr(row[0].price_selector);
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
                 break;
             default:
                 title = $(el).attr(row[0].title_selector);
                 href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
+                price = $(el).attr(row[0].price_selector);
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
         }
@@ -96,6 +99,7 @@ const Scraping = async (row , $) => {
         const metadata = {
             "title" : title,
             "url" : href,
+            "price" : price,
             "image" : img.substring(0,(img.indexOf(".jpg")+4))
         };
         parsedResults.push(metadata);
@@ -205,11 +209,11 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             process.exit();
         }
 
-        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
+        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
 
         if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+                 (title, url ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
@@ -221,7 +225,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+     (title, url ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
