@@ -78,6 +78,7 @@ const Scraping = async (row , $) => {
         let title = '';
         let href = '';
         let price = '';
+        let main_price = '';
         let img = '';
 
         switch (site_id) {
@@ -85,6 +86,7 @@ const Scraping = async (row , $) => {
                 title = $(el).attr(row[0].title_selector);
                 href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
                 price = $(el).attr(row[0].price_selector);
+                main_price = $(el).find(row[0].main_price_selector).text();
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
                 break;
@@ -92,6 +94,7 @@ const Scraping = async (row , $) => {
                 title = $(el).attr(row[0].title_selector);
                 href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
                 price = $(el).attr(row[0].price_selector);
+                main_price = $(el).find(row[0].main_price_selector).text();
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
         }
@@ -100,6 +103,7 @@ const Scraping = async (row , $) => {
             "title" : title,
             "url" : href,
             "price" : price,
+            "main_price" : main_price,
             "image" : img.substring(0,(img.indexOf(".jpg")+4))
         };
         parsedResults.push(metadata);
@@ -131,7 +135,6 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     const ect = getCurrentDate();
 
     let crawled_count = 0;
-    //for(let i=0; i< 10; i++){
      for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
@@ -209,11 +212,11 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             process.exit();
         }
 
-        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
+        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
 
         if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+                 (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
@@ -225,7 +228,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+     (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
