@@ -5,6 +5,11 @@ const chalk = require('chalk');
 const util = require('util');
 const cmdArgs = require('yargs').argv;
 const config = require('./config');
+const {
+    convert_non_latin_numbers_to_latin_numbers,
+    priceSanitizer,
+    getCurrentDate
+} = require('./inc/functions');
 
 
 const connection = mysql.createConnection({
@@ -102,8 +107,8 @@ const Scraping = async (row , $) => {
         const metadata = {
             "title" : title,
             "url" : href,
-            "price" : price,
-            "main_price" : main_price,
+            "price" : priceSanitizer(price),
+            "main_price" : (priceSanitizer(main_price) !== 0) ? priceSanitizer(main_price): null,
             "image" : img.substring(0,(img.indexOf(".jpg")+4))
         };
         parsedResults.push(metadata);
@@ -251,9 +256,9 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
 };
 
-
-function getCurrentDate(){
-    const currentDate = new Date();
-    return currentDate.getTime();
-}
+//
+// function getCurrentDate(){
+//     const currentDate = new Date();
+//     return currentDate.getTime();
+// }
 
