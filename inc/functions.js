@@ -32,10 +32,25 @@ function getCurrentDate(){
     return currentDate.getTime();
 }
 
+function getBrand(title){
+    if (title.indexOf('شیائومی') !== -1){
+        return 'Xiaomi';
+    } else if(title.indexOf('سامسونگ') !== -1){
+        return 'Samsung';
+    } else if(title.indexOf('اپل') !== -1){
+        return 'Apple';
+    } else if(title.indexOf('نوکیا') !== -1){
+        return 'Nokia';
+    } else{
+        return null;
+    }
+}
+
 
 
 module.exports ={
     convert_non_latin_numbers_to_latin_numbers,
     priceSanitizer,
-    getCurrentDate
+    getCurrentDate,
+    getBrand
 };

@@ -2,13 +2,14 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const mysql = require('mysql');
 const chalk = require('chalk');
-const util = require('util');
+//const util = require('util');
 const cmdArgs = require('yargs').argv;
 const config = require('./config');
 const {
     convert_non_latin_numbers_to_latin_numbers,
     priceSanitizer,
-    getCurrentDate
+    getCurrentDate,
+    getBrand
 } = require('./inc/functions');
 
 
@@ -85,6 +86,7 @@ const Scraping = async (row , $) => {
         let price = '';
         let main_price = '';
         let img = '';
+        let brand = '';
 
         switch (site_id) {
             case 1:
@@ -94,6 +96,7 @@ const Scraping = async (row , $) => {
                 main_price = $(el).find(row[0].main_price_selector).text();
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
+                brand = getBrand(title);
                 break;
             default:
                 title = $(el).attr(row[0].title_selector);
@@ -102,6 +105,7 @@ const Scraping = async (row , $) => {
                 main_price = $(el).find(row[0].main_price_selector).text();
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
+                brand = getBrand(title);
         }
 
         const metadata = {
@@ -109,7 +113,8 @@ const Scraping = async (row , $) => {
             "url" : href,
             "price" : priceSanitizer(price),
             "main_price" : (priceSanitizer(main_price) !== 0) ? priceSanitizer(main_price): null,
-            "image" : img.substring(0,(img.indexOf(".jpg")+4))
+            "image" : img.substring(0,(img.indexOf(".jpg")+4)),
+            "brand": brand
         };
         parsedResults.push(metadata);
     });
@@ -217,11 +222,13 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             process.exit();
         }
 
-        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications,parameters,description,String(ect)]);
+        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
+            ,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications
+            ,parameters,description,parsed_results[i].brand,String(ect)]);
 
         if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+                 (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
@@ -233,7 +240,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,date) VALUES ?`,
+     (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
@@ -255,10 +262,3 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         });
 
 };
-
-//
-// function getCurrentDate(){
-//     const currentDate = new Date();
-//     return currentDate.getTime();
-// }
-
