@@ -2,9 +2,11 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const mysql = require('mysql');
 const chalk = require('chalk');
-//const util = require('util');
 const cmdArgs = require('yargs').argv;
 const config = require('./config');
+const fs = require('fs');
+const request = require('request');
+const path = require('path');
 const {
     convert_non_latin_numbers_to_latin_numbers,
     priceSanitizer,
@@ -30,7 +32,7 @@ const user_url = catName+'Url';
 connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=${siteId} `,
     function(err,row,fields){
         if (err) fetchData('Error');
-         fetchData(row , user_url);
+        fetchData(row , user_url);
     });
 
 // Variables
@@ -39,6 +41,15 @@ let pageCounter = 0;
 let parsedResults = [];
 let start_crawl_time = '';
 
+
+const download = async function(uri, filename, callback){
+    request.head(uri, function(err, res, body){
+        // console.log('content-type:', res.headers['content-type']);
+        // console.log('content-length:', res.headers['content-length']);
+
+        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    });
+};
 
 const fetchData = async (row , user_url) => {
 
@@ -86,6 +97,7 @@ const Scraping = async (row , $) => {
         let price = '';
         let main_price = '';
         let img = '';
+        let img_name = '';
         let brand = '';
 
         switch (site_id) {
@@ -96,6 +108,7 @@ const Scraping = async (row , $) => {
                 main_price = $(el).find(row[0].main_price_selector).text();
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
+                img_name = img.substring(img.lastIndexOf('/')+1,img.length);
                 brand = getBrand(title);
                 break;
             default:
@@ -105,15 +118,18 @@ const Scraping = async (row , $) => {
                 main_price = $(el).find(row[0].main_price_selector).text();
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
+                img_name = img.substring(img.lastIndexOf('/')+1,img.length);
                 brand = getBrand(title);
         }
+
 
         const metadata = {
             "title" : title,
             "url" : href,
             "price" : priceSanitizer(price),
             "main_price" : (priceSanitizer(main_price) !== 0) ? priceSanitizer(main_price): null,
-            "image" : img.substring(0,(img.indexOf(".jpg")+4)),
+            "image" : img_name,
+            "img" : img.substring(0,(img.indexOf(".jpg")+4)),
             "brand": brand
         };
         parsedResults.push(metadata);
@@ -145,7 +161,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     const ect = getCurrentDate();
 
     let crawled_count = 0;
-     for(let i=0; i< parsedResults.length; i++){
+    for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
         const urlSingle = await parsed_results[i].url;
@@ -222,6 +238,12 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             process.exit();
         }
 
+        download(parsed_results[i].img,
+            path.join(__dirname, './uploads/images/digikala/') + parsed_results[i].image, function(){
+                console.log('image upload:','done');
+            });
+
+
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
             ,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications
             ,parameters,description,parsed_results[i].brand,String(ect)]);
@@ -262,3 +284,4 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         });
 
 };
+
