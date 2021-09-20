@@ -96,6 +96,7 @@ const Scraping = async (row , $) => {
         let href = '';
         let price = '';
         let main_price = '';
+        let status = '';
         let img = '';
         let img_name = '';
         let brand = '';
@@ -106,6 +107,7 @@ const Scraping = async (row , $) => {
                 href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
                 price = $(el).attr(row[0].price_selector);
                 main_price = $(el).find(row[0].main_price_selector).text();
+                status = (($(el).find(row[0].status_selector).html()) != '')? 'available' : 'not-available';
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
                 img_name = img.substring(img.lastIndexOf('/')+1,img.length);
@@ -116,6 +118,7 @@ const Scraping = async (row , $) => {
                 href = 'https://www.digikala.com' + $(el).find(row[0].href_selector).attr('href');
                 price = $(el).attr(row[0].price_selector);
                 main_price = $(el).find(row[0].main_price_selector).text();
+                status = (($(el).find(row[0].status_selector).html()) != '')? 'available' : 'not-available';
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
                 img_name = img.substring(img.lastIndexOf('/')+1,img.length);
@@ -128,6 +131,7 @@ const Scraping = async (row , $) => {
             "url" : href,
             "price" : priceSanitizer(price),
             "main_price" : (priceSanitizer(main_price) !== 0) ? priceSanitizer(main_price): null,
+            "status" : status,
             "image" : img_name,
             "img" : img.substring(0,(img.indexOf(".jpg")+4)),
             "brand": brand
@@ -239,18 +243,18 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         }
 
         download(parsed_results[i].img,
-            path.join(__dirname, './uploads/images/digikala/') + parsed_results[i].image, function(){
+            path.join(__dirname, './uploads/product_images/') + parsed_results[i].image, function(){
                 console.log('image upload:','done');
             });
 
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
-            ,parsed_results[i].price,parsed_results[i].image,cat_id,site_id,specifications
+            ,parsed_results[i].price,parsed_results[i].status,parsed_results[i].image,cat_id,site_id,specifications
             ,parameters,description,parsed_results[i].brand,String(ect)]);
 
         if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                 (title, url,main_price ,price ,status , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
@@ -262,7 +266,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url,main_price ,price , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+     (title, url,main_price ,price,status , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
