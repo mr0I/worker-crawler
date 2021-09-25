@@ -165,7 +165,8 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     const ect = getCurrentDate();
 
     let crawled_count = 0;
-    for(let i=0; i< parsedResults.length; i++){
+    for(let i=0; i< 2; i++){
+    // for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
         const urlSingle = await parsed_results[i].url;
@@ -264,6 +265,8 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         }
     }
 
+    
+    
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
      (title, url,main_price ,price,status , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
@@ -272,10 +275,19 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             if (err) throw err;
             console.log('All Is Done');
 
+            connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+                function(err,row,fields){
+                    if (err) console.log(err);
+                    console.log('row',row[0].image);
+                    oldImagesArrayFunc(row[0].image);
+                });
+
             connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
                 function(err,resp){
                     if (err) throw err;
                     console.log('All Old Data Is Deleted.');
+                    // delete old images
+                    deleteOldImages();
                 });
         });
 
@@ -288,4 +300,23 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         });
 
 };
+
+
+let old_images=[];
+const oldImagesArrayFunc = async (img) => {
+    old_images.push(img);
+    console.log('oi',old_images);
+};
+const deleteOldImages = async () => {
+    for (j=0;j<old_images.length;j++){
+        fs.unlink(path.join(__dirname, './uploads/product_images/') + old_images[j] , function (err) {
+            if (err) console.warn('image delete Error',err);
+            console.log('Old Image Is Deleted');
+        })
+    }
+};
+
+
+
+
 
