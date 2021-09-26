@@ -169,16 +169,14 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
         function(err,result,fields){
             if (err) console.log(err);
-            console.log('result',result.length);
             for (let k=0;k<result.length;k++){
-                oldImagesArrayFunc(result[k].image_name);
+                oldImagesArrayFunc(result[k].image);
             }
         });
 
 
     let crawled_count = 0;
-    for(let i=0; i< 2; i++){
-    // for(let i=0; i< parsedResults.length; i++){
+    for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
         const urlSingle = await parsed_results[i].url;
@@ -263,26 +261,25 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
-            ,parsed_results[i].price,parsed_results[i].status,image_temp,parsed_results[i].image,cat_id,site_id,specifications
+            ,parsed_results[i].price,parsed_results[i].status,image_temp,cat_id,site_id,specifications
             ,parameters,description,parsed_results[i].brand,String(ect)]);
 
         if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url,main_price ,price ,status,image_name , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                 (title, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
                     console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
                     values = [];
                 });
-
         }
     }
 
 
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url,main_price ,price,status ,image_name, image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+     (title, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
@@ -304,7 +301,6 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             if (err) throw err;
             console.log('Logs Added.');
         });
-
 };
 
 
