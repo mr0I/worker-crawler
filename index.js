@@ -7,6 +7,7 @@ const config = require('./config');
 const fs = require('fs');
 const request = require('request');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const {
     convert_non_latin_numbers_to_latin_numbers,
     priceSanitizer,
@@ -164,6 +165,17 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     let values = [];
     const ect = getCurrentDate();
 
+
+    connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+        function(err,result,fields){
+            if (err) console.log(err);
+            console.log('result',result.length);
+            for (let k=0;k<result.length;k++){
+                oldImagesArrayFunc(result[k].image_name);
+            }
+        });
+
+
     let crawled_count = 0;
     for(let i=0; i< 2; i++){
     // for(let i=0; i< parsedResults.length; i++){
@@ -243,44 +255,38 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             process.exit();
         }
 
+        let image_temp = uuidv4();
         download(parsed_results[i].img,
-            path.join(__dirname, './uploads/product_images/') + parsed_results[i].image, function(){
+            path.join(__dirname, './uploads/product_images/') + image_temp + '.jpg', function(){
                 console.log('image upload:','done');
             });
 
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
-            ,parsed_results[i].price,parsed_results[i].status,parsed_results[i].image,cat_id,site_id,specifications
+            ,parsed_results[i].price,parsed_results[i].status,image_temp,parsed_results[i].image,cat_id,site_id,specifications
             ,parameters,description,parsed_results[i].brand,String(ect)]);
 
         if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
             connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url,main_price ,price ,status , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                 (title, url,main_price ,price ,status,image_name , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
                 [values],
                 function(err,result) {
                     if (err) throw err;
                     console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
                     values = [];
                 });
+
         }
     }
 
-    
-    
+
     //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url,main_price ,price,status , image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+     (title, url,main_price ,price,status ,image_name, image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
         [values],
         function(err,result) {
             if (err) throw err;
             console.log('All Is Done');
-
-            connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
-                function(err,row,fields){
-                    if (err) console.log(err);
-                    console.log('row',row[0].image);
-                    oldImagesArrayFunc(row[0].image);
-                });
 
             connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
                 function(err,resp){
@@ -308,11 +314,15 @@ const oldImagesArrayFunc = async (img) => {
     console.log('oi',old_images);
 };
 const deleteOldImages = async () => {
-    for (j=0;j<old_images.length;j++){
-        fs.unlink(path.join(__dirname, './uploads/product_images/') + old_images[j] , function (err) {
-            if (err) console.warn('image delete Error',err);
-            console.log('Old Image Is Deleted');
-        })
+    for (let j=0;j<old_images.length;j++){
+        try {
+            fs.unlink(path.join(__dirname, './uploads/product_images/') + old_images[j] + '.jpg' , function (err) {
+                if (err) console.warn('image delete Error',err);
+                console.log('Old Image Is Deleted');
+            })
+        } catch (e) {
+            console.error('Unlink Error',e);
+        }
     }
 };
 
