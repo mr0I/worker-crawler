@@ -41,9 +41,13 @@ function getBrand(title){
         return 'Apple';
     } else if(title.indexOf('نوکیا') !== -1){
         return 'Nokia';
-    } else{
+    }else if(title.indexOf('هوآوی') !== -1 || title.indexOf('هواوی') !== -1){
+        return 'Huawei';
+    }else{
         return null;
     }
+
+
 }
 
 
