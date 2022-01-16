@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2021 at 06:08 PM
+-- Generation Time: Oct 26, 2021 at 09:06 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -20,6 +20,52 @@ SET time_zone = "+00:00";
 --
 -- Database: `crawlerdb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `articles`
+--
+
+CREATE TABLE `articles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `article_image_id` bigint(20) NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('published','draft') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `articles`
+--
+
+INSERT INTO `articles` (`id`, `title`, `article_image_id`, `description`, `meta_title`, `meta_desc`, `status`, `slug`, `created_at`, `updated_at`) VALUES
+(1, 'مقاله 1', 1, 'هر نفسی که فرو می‌ بریم، مرگی را که مدام به ما دست‌ اندازی می‌کند پس می‌زند... در نهایت این مرگ است که باید پیروز شود، زیرا از هنگام تولد بخشی از سرنوشت ما شده و فقط مدت کوتاهی پیش از بلعیدن طعمه اش، با آن بازی می کند. با این همه، ما تا آنجا که ممکن است، با علاقه فراوان و دلواپسی زیاد به زندگی ادامه می دهیم، همان‌ طور که تا آنجا که ممکن است طولانی‌ تر در یک حباب صابون می‌ دمیم تا بزرگتر شود، گر چه با قطعیتی تمام می‌ دانیم که خواهد ترکید.\nهر نفسی که فرو می‌ بریم، مرگی را که مدام به ما دست‌ اندازی می‌کند پس می‌زند... در نهایت این مرگ است که باید پیروز شود، زیرا از هنگام تولد بخشی از سرنوشت ما شده و فقط مدت کوتاهی پیش از بلعیدن طعمه اش، با آن بازی می کند. با این همه، ما تا آنجا که ممکن است، با علاقه فراوان و دلواپسی زیاد به زندگی ادامه می دهیم، همان‌ طور که تا آنجا که ممکن است طولانی‌ تر در یک حباب صابون می‌ دمیم تا بزرگتر شود، گر چه با قطعیتی تمام می‌ دانیم که خواهد ترکید.', 'title1', 'desc1', 'published', 'مقاله-1', '2021-10-26 14:57:57', '2021-10-26 14:57:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `article_images`
+--
+
+CREATE TABLE `article_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `article_images`
+--
+
+INSERT INTO `article_images` (`id`, `image`, `created_at`, `updated_at`) VALUES
+(1, '1635272873-2021-1.jpg', '2021-10-26 14:57:53', '2021-10-26 14:57:53');
 
 -- --------------------------------------------------------
 
@@ -91,7 +137,8 @@ CREATE TABLE `compares` (
 --
 
 INSERT INTO `compares` (`id`, `userIdentity`, `pid1`, `pid2`, `pid3`, `pid4`, `created_at`, `updated_at`) VALUES
-(4, '127.0.0.1', 649, 678, 641, 650, '2021-09-20 13:11:50', '2021-09-20 12:52:30');
+(1, '127.0.0.1', 856, 857, 854, 884, '2021-10-10 15:08:10', '2021-10-11 14:37:26'),
+(2, '1', 857, NULL, NULL, NULL, '2021-10-25 15:41:05', '2021-10-25 15:41:05');
 
 -- --------------------------------------------------------
 
@@ -276,7 +323,17 @@ INSERT INTO `metaproducts` (`id`, `product_id`, `key`, `value`, `created_at`, `u
 (18, 649, 'views', '2', '2021-09-20 12:55:12', '2021-09-20 12:56:44'),
 (19, 678, 'views', '9', '2021-09-20 12:58:06', '2021-09-20 13:22:49'),
 (20, 641, 'views', '3', '2021-09-20 13:23:04', '2021-09-20 13:25:18'),
-(21, 643, 'views', '5', '2021-09-25 12:12:51', '2021-09-25 12:21:53');
+(21, 643, 'views', '5', '2021-09-25 12:12:51', '2021-09-25 12:21:53'),
+(22, 856, 'views', '10', '2021-09-26 12:21:50', '2021-10-10 14:55:13'),
+(23, 894, 'views', '1', '2021-09-26 12:25:09', '2021-09-26 12:25:09'),
+(24, 857, 'views', '4', '2021-09-26 12:26:09', '2021-10-25 15:41:19'),
+(25, 855, 'views', '5', '2021-09-26 12:17:03', '2021-10-01 06:14:24'),
+(26, 861, 'views', '3', '2021-10-01 06:01:02', '2021-10-11 13:59:47'),
+(27, 862, 'views', '2', '2021-10-01 05:31:44', '2021-10-01 05:32:41'),
+(28, 877, 'views', '4', '2021-10-01 05:33:22', '2021-10-01 05:39:41'),
+(29, 859, 'views', '3', '2021-10-01 05:40:15', '2021-10-11 14:00:02'),
+(30, 878, 'views', '2', '2021-10-01 06:10:33', '2021-10-01 06:10:39'),
+(31, 854, 'views', '1', '2021-10-01 06:11:11', '2021-10-01 06:11:11');
 
 -- --------------------------------------------------------
 
@@ -301,7 +358,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2014_10_12_000000_create_users_table', 3),
 (6, '2021_08_03_172904_create_metaproducts_table', 4),
 (7, '2021_08_16_052150_create_compares_table', 5),
-(9, '2021_09_17_165025_create_comments_table', 6);
+(9, '2021_09_17_165025_create_comments_table', 6),
+(10, '2021_10_09_160606_create_wishlists_table', 7),
+(25, '2021_10_26_163338_create_article_images_table', 8),
+(26, '2021_10_20_161844_create_articles_table', 9);
 
 -- --------------------------------------------------------
 
@@ -520,9 +580,43 @@ INSERT INTO `users` (`id`, `name`, `family`, `email`, `email_verified_at`, `pass
 (3, 'sina', 'nasr', 'sina@yahoo.ir', NULL, '$2y$10$51M.nQl59TdwjjjJqe0jnutEX53EVjGGgnkEnwfmiSdJj3aeSWgPK', '2', NULL, '2021-07-31 10:53:08', '2021-07-31 10:53:08'),
 (4, 'gholi', 'ddsfsd', 'sdadad@eerrwr.it', NULL, '$2y$10$0kXALCPnAH13SkuYJlBe5.COSy1OD.YdjZZTEg0ZEow1RqKYnnVZK', '2', NULL, '2021-08-03 10:34:32', '2021-08-03 10:34:32');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlists`
+--
+
+CREATE TABLE `wishlists` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `userIdentity` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`pids`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wishlists`
+--
+
+INSERT INTO `wishlists` (`id`, `userIdentity`, `pids`, `created_at`, `updated_at`) VALUES
+(17, '127.0.0.1', '[862,855,857,854,887,886,923,858,856]', '2021-10-11 13:59:38', '2021-10-23 14:23:27'),
+(18, '1', '[857,856]', '2021-10-20 12:47:28', '2021-10-25 15:41:57');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `article_images`
+--
+ALTER TABLE `article_images`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categories`
@@ -604,8 +698,26 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `wishlists`
+--
+ALTER TABLE `wishlists`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `article_images`
+--
+ALTER TABLE `article_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -623,61 +735,19 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `compares`
 --
 ALTER TABLE `compares`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `logs`
---
-ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
-
---
--- AUTO_INCREMENT for table `metaproducts`
---
-ALTER TABLE `metaproducts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT for table `wishlists`
 --
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=926;
-
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `selectors`
---
-ALTER TABLE `selectors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `sites`
---
-ALTER TABLE `sites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `wishlists`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

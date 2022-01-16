@@ -63,10 +63,13 @@ const fetchData = async (row , user_url) => {
     let url = '';
     switch (user_url){
         case 'mobileUrl':
-            (row instanceof Object) ? url = await row[0].mobileUrl : url=row;
+            url = (row instanceof Object) ? await row[0].mobileUrl : row;
+            break;
+        case 'mobileAccessoriesUrl':
+            url = (row instanceof Object) ? await row[0].mobileAccessoriesUrl : row;
             break;
         default:
-            (row instanceof Object) ? url = await row[0].mobileUrl : url=row;
+            url = (row instanceof Object) ? await row[0].mobileUrl : row;
     }
 
     console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(url)} initiated...\n`));
@@ -313,7 +316,7 @@ const deleteOldImages = async () => {
     for (let j=0;j<old_images.length;j++){
         try {
             fs.unlink(path.join(__dirname, './uploads/product_images/') + old_images[j] + '.jpg' , function (err) {
-                if (err) console.warn('image delete Error',err);
+                if (err) console.warn('image deletion Error',err);
                 console.log('Old Image Is Deleted');
             })
         } catch (e) {

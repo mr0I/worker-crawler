@@ -46,8 +46,6 @@ function getBrand(title){
     }else{
         return null;
     }
-
-
 }
 
 
