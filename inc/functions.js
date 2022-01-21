@@ -43,6 +43,8 @@ function getBrand(title){
         return 'Nokia';
     }else if(title.indexOf('هوآوی') !== -1 || title.indexOf('هواوی') !== -1){
         return 'Huawei';
+    }else if(title.indexOf('لیتو') !== -1 ){
+        return 'Lito';
     }else{
         return null;
     }

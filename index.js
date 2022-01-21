@@ -20,7 +20,8 @@ const connection = mysql.createConnection({
     host: config.db.fullstack_express.host,
     database: config.db.fullstack_express.database,
     user: config.db.fullstack_express.username,
-    password: config.db.fullstack_express.password
+    password: config.db.fullstack_express.password,
+    multipleStatements:true
 });
 connection.connect();
 
@@ -28,6 +29,31 @@ connection.connect();
 const siteId = cmdArgs['site-id'];
 const catId = cmdArgs['cat-id'];
 const catName = cmdArgs['cat-name'];
+const brandUpdater = cmdArgs['brand-updater'];
+
+// Update Brand Names
+if (brandUpdater === 1) {
+    connection.query(`SELECT id,title,brand FROM ${config.tables.ProductsTable} `,
+        function(err,row){
+            if (err) throw new Error('Error: ' + err);
+
+            let values = [];
+            for (let item of row){
+                if (item.brand === null){
+                    values.push({brand:getBrand(item.title), id:item.id });
+                }
+            }
+            let queries = '';
+            values.forEach(function (item) {
+                queries += mysql.format(`UPDATE ${config.tables.ProductsTable} SET brand = ? WHERE id = ?; `, [item.brand,item.id] );
+            });
+            connection.query(queries);
+        });
+
+    console.log(chalk.white.bgGreen("Brands updated"));
+    return;exit;
+}
+
 
 const user_url = catName+'Url';
 connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=${siteId} `,
