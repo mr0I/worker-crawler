@@ -38,6 +38,7 @@ if (brandUpdater === 1) {
             if (err) throw new Error('Error: ' + err);
 
             let values = [];
+            let counter = 0;
             for (let item of row){
                 if (item.brand === null){
                     values.push({brand:getBrand(item.title), id:item.id });
@@ -45,15 +46,22 @@ if (brandUpdater === 1) {
             }
             let queries = '';
             values.forEach(function (item) {
+                counter += 1;
                 queries += mysql.format(`UPDATE ${config.tables.ProductsTable} SET brand = ? WHERE id = ?; `, [item.brand,item.id] );
             });
+            console.log(chalk.yellow(`Renamed Brands Count: ${counter}`) );
             connection.query(queries);
         });
-
     console.log(chalk.white.bgGreen("Brands updated"));
-    return;exit;
-}
 
+    connection.query(`SELECT COUNT(*) as ct FROM ${config.tables.ProductsTable} WHERE ISNULL(brand)`,
+        function(err,row){
+            if (err) throw new Error('Error: ' + err);
+            console.log(chalk.red(`Nulled Brands Count: ${row['ct']}`) );
+            console.log(row);
+        });
+    return;
+}
 
 const user_url = catName+'Url';
 connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=${siteId} `,
@@ -68,12 +76,10 @@ let pageCounter = 0;
 let parsedResults = [];
 let start_crawl_time = '';
 
-
 const download = async function(uri, filename, callback){
     request.head(uri, function(err, res, body){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
-
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
 };
@@ -93,6 +99,24 @@ const fetchData = async (row , user_url) => {
             break;
         case 'mobileAccessoriesUrl':
             url = (row instanceof Object) ? await row[0].mobileAccessoriesUrl : row;
+            break;
+        case 'computerPartsUrl':
+            url = (row instanceof Object) ? await row[0].computerPartsUrl : row;
+            break;
+        case 'laptopAccessoriesUrl':
+            url = (row instanceof Object) ? await row[0].laptopAccessoriesUrl : row;
+            break;
+        case 'wearableGadgetUrl':
+            url = (row instanceof Object) ? await row[0].wearableGadgetUrl : row;
+            break;
+        case 'tabletUrl':
+            url = (row instanceof Object) ? await row[0].tabletUrl : row;
+            break;
+        case 'laptopUrl':
+            url = (row instanceof Object) ? await row[0].laptopUrl : row;
+            break;
+        case 'officeMachinesUrl':
+            url = (row instanceof Object) ? await row[0].officeMachinesUrl : row;
             break;
         default:
             url = (row instanceof Object) ? await row[0].mobileUrl : row;
@@ -287,7 +311,6 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             path.join(__dirname, './uploads/product_images/') + image_temp + '.jpg', function(){
                 console.log('image upload:','done');
             });
-
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
             ,parsed_results[i].price,parsed_results[i].status,image_temp,cat_id,site_id,specifications
