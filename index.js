@@ -9,10 +9,9 @@ const request = require('request');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const {
-    convert_non_latin_numbers_to_latin_numbers,
-    priceSanitizer,
-    getCurrentDate,
-    getBrand
+    price_sanitizer,
+    get_current_date,
+    get_brand
 } = require('./inc/functions');
 
 
@@ -37,29 +36,30 @@ if (brandUpdater === 1) {
         function(err,row){
             if (err) throw new Error('Error: ' + err);
 
+            let rows = Object.values(JSON.parse(JSON.stringify(row)));
             let values = [];
             let counter = 0;
-            for (let item of row){
+            for (let item of rows){
                 if (item.brand === null){
-                    values.push({brand:getBrand(item.title), id:item.id });
+                     values.push({brand:get_brand(item.title), id:item.id });
                 }
             }
+
             let queries = '';
-            values.forEach(function (item) {
-                counter += 1;
-                queries += mysql.format(`UPDATE ${config.tables.ProductsTable} SET brand = ? WHERE id = ?; `, [item.brand,item.id] );
+            values.forEach(function (value) {
+                if (value.brand !== null) counter += 1;
+                queries += mysql.format(`UPDATE ${config.tables.ProductsTable} SET brand = ? WHERE id = ?; `, [value.brand,value.id] );
             });
             console.log(chalk.yellow(`Renamed Brands Count: ${counter}`) );
             connection.query(queries);
+
+            connection.query(`SELECT COUNT(*) as ct FROM ${config.tables.ProductsTable} WHERE ISNULL(brand)`,
+                function(err,row){
+                    if (err) throw new Error('Error: ' + err);
+                    console.log(chalk.red(`Remained Nulled Brands: ${row[0].ct}`) );
+                });
         });
     console.log(chalk.white.bgGreen("Brands updated"));
-
-    connection.query(`SELECT COUNT(*) as ct FROM ${config.tables.ProductsTable} WHERE ISNULL(brand)`,
-        function(err,row){
-            if (err) throw new Error('Error: ' + err);
-            console.log(chalk.red(`Nulled Brands Count: ${row['ct']}`) );
-            console.log(row);
-        });
     return;
 }
 
@@ -124,7 +124,7 @@ const fetchData = async (row , user_url) => {
 
     console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(url)} initiated...\n`));
 
-    start_crawl_time = getCurrentDate();
+    start_crawl_time = get_current_date();
     try {
         const html = await axios.get(encodeURI(url));
         const $ = cheerio.load(html.data);
@@ -165,7 +165,7 @@ const Scraping = async (row , $) => {
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
                 img_name = img.substring(img.lastIndexOf('/')+1,img.length);
-                brand = getBrand(title);
+                brand = get_brand(title);
                 break;
             default:
                 title = $(el).attr(row[0].title_selector);
@@ -176,15 +176,15 @@ const Scraping = async (row , $) => {
                 img = $(el).find(row[0].img_selector).attr('src');
                 img = img.substring(0,(img.indexOf(".jpg")+4));
                 img_name = img.substring(img.lastIndexOf('/')+1,img.length);
-                brand = getBrand(title);
+                brand = get_brand(title);
         }
 
 
         const metadata = {
             "title" : title,
             "url" : href,
-            "price" : priceSanitizer(price),
-            "main_price" : (priceSanitizer(main_price) !== 0) ? priceSanitizer(main_price): null,
+            "price" : price_sanitizer(price),
+            "main_price" : (price_sanitizer(main_price) !== 0) ? price_sanitizer(main_price): null,
             "status" : status,
             "image" : img_name,
             "img" : img.substring(0,(img.indexOf(".jpg")+4)),
@@ -216,7 +216,7 @@ const Scraping = async (row , $) => {
 
 const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     let values = [];
-    const ect = getCurrentDate();
+    const ect = get_current_date();
 
 
     connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
