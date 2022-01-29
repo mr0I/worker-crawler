@@ -35,12 +35,12 @@ function get_current_date(){
 }
 
 function get_brand(title){
-    let brand = null;
+    let brand = 'UnCategorized';
     Object.entries(brandsList).forEach(entry => {
         let [key,value] = entry;
         if (title.indexOf(key) !== -1) brand = brandsList[key];
     });
-    
+
     return brand;
 }
 

@@ -41,8 +41,13 @@ if (brandUpdater === 1) {
             let counter = 0;
             for (let item of rows){
                 if (item.brand === null){
-                     values.push({brand:get_brand(item.title), id:item.id });
+                    values.push({brand:get_brand(item.title), id:item.id });
                 }
+            }
+
+            if (values.length === 0) {
+                console.log(chalk.green(`No need to do this!`) );
+                return;
             }
 
             let queries = '';
@@ -53,13 +58,13 @@ if (brandUpdater === 1) {
             console.log(chalk.yellow(`Renamed Brands Count: ${counter}`) );
             connection.query(queries);
 
-            connection.query(`SELECT COUNT(*) as ct FROM ${config.tables.ProductsTable} WHERE ISNULL(brand)`,
+            connection.query(`SELECT COUNT(*) as ct FROM ${config.tables.ProductsTable} WHERE brand='UnCategorized' `,
                 function(err,row){
                     if (err) throw new Error('Error: ' + err);
                     console.log(chalk.red(`Remained Nulled Brands: ${row[0].ct}`) );
                 });
+            console.log(chalk.white.bgGreen("Brands updated"));
         });
-    console.log(chalk.white.bgGreen("Brands updated"));
     return;
 }
 
