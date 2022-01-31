@@ -13,6 +13,17 @@ const {
     get_current_date,
     get_brand
 } = require('./inc/functions');
+const sharp = require('sharp'); // https://github.com/lovell/sharp
+
+
+sharp('./uploads/product_imagesss/7725e559-993a-463f-9561-42f9f093a5ee.jpg')
+    .resize(250, 250)
+    // .rotate(45)
+    .toFile('./uploads/temppp/output.webp', (err, info) => {
+        if (err) console.log('Error',err);
+        else console.log(info);
+    });
+return;
 
 
 const connection = mysql.createConnection({
@@ -85,6 +96,9 @@ const download = async function(uri, filename, callback){
     request.head(uri, function(err, res, body){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
+        fs.access('./uploads/product_imagesss/',(error) => {
+           if (error) fs.mkdirSync('./uploads/product_imagesss/')  ;
+        });
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
 };
@@ -223,7 +237,6 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
     let values = [];
     const ect = get_current_date();
 
-
     connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
         function(err,result,fields){
             if (err) console.log(err);
@@ -231,7 +244,6 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
                 oldImagesArrayFunc(result[k].image);
             }
         });
-
 
     let crawled_count = 0;
     for(let i=0; i< parsedResults.length; i++){
@@ -313,7 +325,8 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
         let image_temp = uuidv4();
         download(parsed_results[i].img,
-            path.join(__dirname, './uploads/product_images/') + image_temp + '.jpg', function(){
+            // path.join(__dirname, './uploads/product_images/') + image_temp + '.jpg', function(){
+            path.join(__dirname, './uploads/product_imagesss/') + image_temp + '.jpg', function(){
                 console.log('image upload:','done');
             });
 
@@ -364,12 +377,11 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 let old_images=[];
 const oldImagesArrayFunc = async (img) => {
     old_images.push(img);
-    console.log('oi',old_images);
 };
 const deleteOldImages = async () => {
     for (let j=0;j<old_images.length;j++){
         try {
-            fs.unlink(path.join(__dirname, './uploads/product_images/') + old_images[j] + '.jpg' , function (err) {
+            fs.unlink(path.join(__dirname, './uploads/product_imagesss/') + old_images[j] + '.jpg' , function (err) {
                 if (err) console.warn('image deletion Error',err);
                 console.log('Old Image Is Deleted');
             })
