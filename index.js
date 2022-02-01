@@ -15,17 +15,7 @@ const {
 } = require('./inc/functions');
 const sharp = require('sharp'); // https://github.com/lovell/sharp
 
-
-sharp('./uploads/product_imagesss/7725e559-993a-463f-9561-42f9f093a5ee.jpg')
-    .resize(250, 250)
-    // .rotate(45)
-    .toFile('./uploads/temppp/output.webp', (err, info) => {
-        if (err) console.log('Error',err);
-        else console.log(info);
-    });
-return;
-
-
+// Define Connection
 const connection = mysql.createConnection({
     host: config.db.fullstack_express.host,
     database: config.db.fullstack_express.database,
@@ -325,9 +315,22 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
         let image_temp = uuidv4();
         download(parsed_results[i].img,
-            // path.join(__dirname, './uploads/product_images/') + image_temp + '.jpg', function(){
-            path.join(__dirname, './uploads/product_imagesss/') + image_temp + '.jpg', function(){
+            path.join(__dirname, '../EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function(){
                 console.log('image upload:','done');
+                sharp('../EcommerceShop/public/uploads/productImages/' + image_temp + '.jpg')
+                    .resize(450)
+                    .toFile('../EcommerceShop/public/uploads/productImages/' + image_temp + '.webp', (err, info) => {
+                        if (err) console.log('Error in resinzing',err);
+                        else {
+                            try {
+                                fs.unlink(path.join(__dirname, '../EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg' , function (err) {
+                                    if (err) console.warn('image deletion Error',err);
+                                });
+                            } catch (e) {
+                                console.error('Unlink Error',e);
+                            }
+                        }
+                    });
             });
 
         values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
@@ -381,7 +384,7 @@ const oldImagesArrayFunc = async (img) => {
 const deleteOldImages = async () => {
     for (let j=0;j<old_images.length;j++){
         try {
-            fs.unlink(path.join(__dirname, './uploads/product_imagesss/') + old_images[j] + '.jpg' , function (err) {
+            fs.unlink(path.join(__dirname, '../EcommerceShop/public/uploads/productImages/') + old_images[j] + '.webp' , function (err) {
                 if (err) console.warn('image deletion Error',err);
                 console.log('Old Image Is Deleted');
             })
