@@ -5,8 +5,8 @@ const chalk = require('chalk');
 const cmdArgs = require('yargs').argv;
 const config = require('./config');
 const fs = require('fs');
-const request = require('request');
 const path = require('path');
+const request = require('request');
 const { v4: uuidv4 } = require('uuid');
 const {
     price_sanitizer,
@@ -14,22 +14,86 @@ const {
     get_brand
 } = require('./inc/functions');
 const sharp = require('sharp'); // https://github.com/lovell/sharp
+const Ftp = require( 'ftp' );
 
-// Define Connection
-const connection = mysql.createConnection({
-    host: config.db.fullstack_express.host,
-    database: config.db.fullstack_express.database,
-    user: config.db.fullstack_express.username,
-    password: config.db.fullstack_express.password,
-    multipleStatements:true
-});
-connection.connect();
 
-// Get URL
+// Get Args
+const isDev = cmdArgs['dev'];
 const siteId = cmdArgs['site-id'];
 const catId = cmdArgs['cat-id'];
 const catName = cmdArgs['cat-name'];
 const brandUpdater = cmdArgs['brand-updater'];
+const imageUploader = cmdArgs['image-uploader'];
+
+
+// Define Connection
+const connection = mysql.createConnection({
+    host: isDev ? config.db.fullstack_express.host : config.remoteDB.fullstack_express.host ,
+    port :  3306,
+    connectionLimit : isDev ? 100 : 100,
+    database: isDev ? config.db.fullstack_express.database : config.remoteDB.fullstack_express.database,
+    user: isDev ? config.db.fullstack_express.username : config.remoteDB.fullstack_express.username,
+    password: isDev ? config.db.fullstack_express.password : config.remoteDB.fullstack_express.password,
+    multipleStatements:true
+});
+connection.connect();
+
+
+// send images to host
+if (imageUploader === 1){
+    // fs.readdir('./productImages', function (err, files) {
+    //     if (err) {
+    //         console.error("Could not list the directory.", err);
+    //         process.exit(1);
+    //     }
+    //
+    //     files.forEach(function (file, index) {
+    //         // Make one pass and make the file complete
+    //         var fromPath = path.join(moveFrom, file);
+    //         var toPath = path.join(moveTo, file);
+    //
+    //         fs.stat(fromPath, function (error, stat) {
+    //             if (error) {
+    //                 console.error("Error stating file.", error);
+    //                 return;
+    //             }
+    //
+    //             if (stat.isFile())
+    //                 console.log("'%s' is a file.", fromPath);
+    //             else if (stat.isDirectory())
+    //                 console.log("'%s' is a directory.", fromPath);
+    //
+    //             fs.rename(fromPath, toPath, function (error) {
+    //                 if (error) {
+    //                     console.error("File moving error.", error);
+    //                 } else {
+    //                     console.log("Moved file '%s' to '%s'.", fromPath, toPath);
+    //                 }
+    //             });
+    //         });
+    //     });
+    // });
+
+
+
+    const ftpClient = new Ftp();
+    ftpClient.connect( {
+        'host': '212.33.195.45',
+        'user': 'zeroone@dgmarketz.com',
+        'password': 'S63)0UTi^0P*'
+    });
+    ftpClient.on( 'ready', function() {
+        ftpClient.put( './main.js',
+            '/home/dgmarket/dgmarketz.com/zeroone/main.js', function( err, list ) {
+                if ( err ) throw err;
+                console.log('list',list);
+                ftpClient.end();
+            } );
+    });
+
+    return;
+}
+
 
 // Update Brand Names
 if (brandUpdater === 1) {
@@ -69,6 +133,8 @@ if (brandUpdater === 1) {
     return;
 }
 
+
+// Start Crawler
 const user_url = catName+'Url';
 connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=${siteId} `,
     function(err,row,fields){
@@ -87,17 +153,16 @@ const download = async function(uri, filename, callback){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
         fs.access('./uploads/product_imagesss/',(error) => {
-           if (error) fs.mkdirSync('./uploads/product_imagesss/')  ;
+            if (error) fs.mkdirSync('./uploads/product_imagesss/')  ;
         });
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
 };
 
 const fetchData = async (row , user_url) => {
-
     if (row.length === 0){
         console.log(chalk.red.bgBlack("No Such Category!!!"));
-        process.exit();
+        process.exit(1);
         return;
     }
 
@@ -145,7 +210,7 @@ const fetchData = async (row , user_url) => {
             });
     } catch (error) {
         console.error(error);
-        process.exit();
+        process.exit(1);
     }
 };
 
@@ -187,7 +252,6 @@ const Scraping = async (row , $) => {
                 img_name = img.substring(img.lastIndexOf('/')+1,img.length);
                 brand = get_brand(title);
         }
-
 
         const metadata = {
             "title" : title,
@@ -310,7 +374,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
             description = desc;
         } catch (error) {
             console.error(error);
-            process.exit();
+            process.exit(1);
         }
 
         let image_temp = uuidv4();
@@ -373,6 +437,7 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         function(err,result) {
             if (err) throw err;
             console.log('Logs Added.');
+            // connection.end();
         });
 };
 

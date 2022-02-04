@@ -2,10 +2,18 @@
   "db": {
     "fullstack_express": {
       "host": "localhost",
-      "database": "crawlerDB",
+      "database": "crawlerdb",
       "username": "root",
       "password": ""
     }
+  },
+  "remoteDB": {
+      "fullstack_express": {
+        "host": "212.33.195.45",
+        "database": "dgmarket_crawlerdb",
+        "username": "dgmarket_zeroone",
+        "password": "Xcvq1#VH%G@j"
+      }
   },
   "tables": {
     "ProductsTable": "products",
