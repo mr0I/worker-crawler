@@ -28,12 +28,12 @@ const imageUploader = cmdArgs['image-uploader'];
 
 // Define Connection
 const connection = mysql.createConnection({
-    host: isDev ? config.db.fullstack_express.host : config.remoteDB.fullstack_express.host ,
+    host: isDev ? config.db.fullstack_express.host : config.db.fullstack_express.host ,
     port :  3306,
     connectionLimit : isDev ? 100 : 100,
-    database: isDev ? config.db.fullstack_express.database : config.remoteDB.fullstack_express.database,
-    user: isDev ? config.db.fullstack_express.username : config.remoteDB.fullstack_express.username,
-    password: isDev ? config.db.fullstack_express.password : config.remoteDB.fullstack_express.password,
+    database: isDev ? config.db.fullstack_express.database : config.db.fullstack_express.database,
+    user: isDev ? config.db.fullstack_express.username : config.db.fullstack_express.username,
+    password: isDev ? config.db.fullstack_express.password : config.db.fullstack_express.password,
     multipleStatements:true
 });
 connection.connect();
@@ -41,54 +41,30 @@ connection.connect();
 
 // send images to host
 if (imageUploader === 1){
-    // fs.readdir('./productImages', function (err, files) {
-    //     if (err) {
-    //         console.error("Could not list the directory.", err);
-    //         process.exit(1);
-    //     }
-    //
-    //     files.forEach(function (file, index) {
-    //         // Make one pass and make the file complete
-    //         var fromPath = path.join(moveFrom, file);
-    //         var toPath = path.join(moveTo, file);
-    //
-    //         fs.stat(fromPath, function (error, stat) {
-    //             if (error) {
-    //                 console.error("Error stating file.", error);
-    //                 return;
-    //             }
-    //
-    //             if (stat.isFile())
-    //                 console.log("'%s' is a file.", fromPath);
-    //             else if (stat.isDirectory())
-    //                 console.log("'%s' is a directory.", fromPath);
-    //
-    //             fs.rename(fromPath, toPath, function (error) {
-    //                 if (error) {
-    //                     console.error("File moving error.", error);
-    //                 } else {
-    //                     console.log("Moved file '%s' to '%s'.", fromPath, toPath);
-    //                 }
-    //             });
-    //         });
-    //     });
-    // });
-
-
-
     const ftpClient = new Ftp();
+
     ftpClient.connect( {
-        'host': '212.33.195.45',
-        'user': 'zeroone@dgmarketz.com',
-        'password': 'S63)0UTi^0P*'
+        'host': config.ftp.host,
+        'user': config.ftp.user,
+        'password': config.ftp.pass
     });
-    ftpClient.on( 'ready', function() {
-        ftpClient.put( './main.js',
-            '/home/dgmarket/dgmarketz.com/zeroone/main.js', function( err, list ) {
-                if ( err ) throw err;
-                console.log('list',list);
-                ftpClient.end();
-            } );
+
+    fs.readdir('./productImages', function (err, files) {
+        if (err) {
+            console.error("Could not list the directory.", err);
+            process.exit(1);
+        }
+
+        files.forEach(function (file, index) {
+            ftpClient.on( 'ready', function() {
+                ftpClient.put( `./productImages/${file}`,
+                    `./productImages/${file}`, function( err, list ) {
+                        if ( err ) throw err;
+                        console.log("upload file '%d' successful" , ++index);
+                        ftpClient.end();
+                    });
+            });
+        });
     });
 
     return;
@@ -152,8 +128,8 @@ const download = async function(uri, filename, callback){
     request.head(uri, function(err, res, body){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
-        fs.access('./uploads/product_imagesss/',(error) => {
-            if (error) fs.mkdirSync('./uploads/product_imagesss/')  ;
+        fs.access('./productImages/',(error) => {
+            if (error) fs.mkdirSync('./productImages/')  ;
         });
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
@@ -379,15 +355,19 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
 
         let image_temp = uuidv4();
         download(parsed_results[i].img,
-            path.join(__dirname, '../EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function(){
+            path.join(__dirname, '.' +
+                './productImages/') + image_temp + '.jpg', function(){
                 console.log('image upload:','done');
-                sharp('../EcommerceShop/public/uploads/productImages/' + image_temp + '.jpg')
+                sharp('.' +
+                    './productImages/' + image_temp + '.jpg')
                     .resize(450)
-                    .toFile('../EcommerceShop/public/uploads/productImages/' + image_temp + '.webp', (err, info) => {
+                    .toFile('.' +
+                        './productImages/' + image_temp + '.webp', (err, info) => {
                         if (err) console.log('Error in resinzing',err);
                         else {
                             try {
-                                fs.unlink(path.join(__dirname, '../EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg' , function (err) {
+                                fs.unlink(path.join(__dirname, '.' +
+                                    './productImages/') + image_temp + '.jpg' , function (err) {
                                     if (err) console.warn('image deletion Error',err);
                                 });
                             } catch (e) {
@@ -449,7 +429,7 @@ const oldImagesArrayFunc = async (img) => {
 const deleteOldImages = async () => {
     for (let j=0;j<old_images.length;j++){
         try {
-            fs.unlink(path.join(__dirname, '../EcommerceShop/public/uploads/productImages/') + old_images[j] + '.webp' , function (err) {
+            fs.unlink(path.join(__dirname, './productImages/') + old_images[j] + '.webp' , function (err) {
                 if (err) console.warn('image deletion Error',err);
                 console.log('Old Image Is Deleted');
             })
