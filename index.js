@@ -40,7 +40,7 @@ connection.connect();
 
 
 // send images to host
-if (imageUploader === 1){
+if (imageUploader !== undefined && imageUploader.toLowerCase() === 'y'){
     const ftpClient = new Ftp();
 
     ftpClient.connect( {
@@ -71,8 +71,9 @@ if (imageUploader === 1){
 }
 
 
+
 // Update Brand Names
-if (brandUpdater === 1) {
+if (brandUpdater !== undefined &&  brandUpdater.toLowerCase() === 'y') {
     connection.query(`SELECT id,title,brand FROM ${config.tables.ProductsTable} `,
         function(err,row){
             if (err) throw new Error('Error: ' + err);

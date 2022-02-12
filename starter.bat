@@ -19,14 +19,14 @@ pause
 cls
 
 :image_uploader
-set /p iu="Upload images: "
+set /p iu="Upload images(Y/N): "
 powershell -c node index.js --image-uploader "%iu%" --dev
 echo "Upload Has Started..."
 pause
 cls
 
 :brand_updater
-set /p bu="Should Update: "
+set /p bu="Are You Sure (Y/N):"
 powershell -c node index.js --brand-updater "%bu%" --dev
 echo "Brand Updater Has Started..."
 pause
