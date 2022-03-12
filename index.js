@@ -57,8 +57,8 @@ if (imageUploader !== undefined && imageUploader.toLowerCase() === 'y'){
 
         files.forEach(function (file, index) {
             ftpClient.on( 'ready', function() {
-                ftpClient.put( `./productImages/${file}`,
-                    `./productImages/${file}`, function( err, list ) {
+                ftpClient.put( `../EcommerceShop/public/uploads/productImages${file}`,
+                    `../EcommerceShop/public/uploads/productImages${file}`, function( err, list ) {
                         if ( err ) throw err;
                         console.log("upload file '%d' successful" , ++index);
                         ftpClient.end();
@@ -70,10 +70,8 @@ if (imageUploader !== undefined && imageUploader.toLowerCase() === 'y'){
     return;
 }
 
-
-
 // Update Brand Names
-if (brandUpdater !== undefined &&  brandUpdater.toLowerCase() === 'y') {
+if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
     connection.query(`SELECT id,title,brand FROM ${config.tables.ProductsTable} `,
         function(err,row){
             if (err) throw new Error('Error: ' + err);
@@ -111,6 +109,44 @@ if (brandUpdater !== undefined &&  brandUpdater.toLowerCase() === 'y') {
 }
 
 
+// Start New Crawler
+const getResults = async function () {
+    const results = await axios.get('https://api.digikala.com/v1/categories/mobile-phone/search/?page=2');
+    // log in local file
+    fs.writeFileSync('./logs.js', JSON.stringify(results.data.data.products,null,'\t'));
+
+    const products = results.data.data.products;
+    console.log(products.length) // 20
+
+    // const metadata = {
+    //     "title" : title,
+    //     "url" : href,
+    //     "price" : price_sanitizer(price),
+    //     "main_price" : (price_sanitizer(main_price) !== 0) ? price_sanitizer(main_price): null,
+    //     "status" : status,
+    //     "image" : img_name,
+    //     "img" : img.substring(0,(img.indexOf(".jpg")+4)),
+    //     "brand": brand
+    // };
+    // parsedResults.push(metadata);
+
+
+    // pageCounter++;
+    //
+    // if (pageCounter === pageLimit) {
+    //     exportResults(parsedResults , row ,site_id, catId , start_crawl_time);
+    //     return false;
+    // }
+    //
+    // await fetchData(nextPageLink);
+};
+
+getResults();
+return;
+
+
+
+
 // Start Crawler
 const user_url = catName+'Url';
 connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=${siteId} `,
@@ -119,7 +155,7 @@ connection.query(`SELECT ${user_url} FROM ${config.tables.SitesTable} WHERE id=$
         fetchData(row , user_url);
     });
 
-// Variables
+// variables
 let pageLimit = config.crawler_settings.pageLimit;
 let pageCounter = 0;
 let parsedResults = [];
@@ -129,8 +165,8 @@ const download = async function(uri, filename, callback){
     request.head(uri, function(err, res, body){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
-        fs.access('./productImages/',(error) => {
-            if (error) fs.mkdirSync('./productImages/')  ;
+        fs.access('../EcommerceShop/public/uploads/productImages',(error) => {
+            if (error) fs.mkdirSync('../EcommerceShop/public/uploads/productImages')  ;
         });
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
@@ -357,18 +393,18 @@ const exportResults = async (parsed_results ,row,site_id ,cat_id,sct) => {
         let image_temp = uuidv4();
         download(parsed_results[i].img,
             path.join(__dirname, '.' +
-                './productImages/') + image_temp + '.jpg', function(){
+                '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg', function(){
                 console.log('image upload:','done');
                 sharp('.' +
-                    './productImages/' + image_temp + '.jpg')
+                    '../EcommerceShop/public/uploads/productImages' + image_temp + '.jpg')
                     .resize(450)
                     .toFile('.' +
-                        './productImages/' + image_temp + '.webp', (err, info) => {
+                        '../EcommerceShop/public/uploads/productImages' + image_temp + '.webp', (err, info) => {
                         if (err) console.log('Error in resinzing',err);
                         else {
                             try {
                                 fs.unlink(path.join(__dirname, '.' +
-                                    './productImages/') + image_temp + '.jpg' , function (err) {
+                                    '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg' , function (err) {
                                     if (err) console.warn('image deletion Error',err);
                                 });
                             } catch (e) {
@@ -430,7 +466,7 @@ const oldImagesArrayFunc = async (img) => {
 const deleteOldImages = async () => {
     for (let j=0;j<old_images.length;j++){
         try {
-            fs.unlink(path.join(__dirname, './productImages/') + old_images[j] + '.webp' , function (err) {
+            fs.unlink(path.join(__dirname, '../EcommerceShop/public/uploads/productImages') + old_images[j] + '.webp' , function (err) {
                 if (err) console.warn('image deletion Error',err);
                 console.log('Old Image Is Deleted');
             })
