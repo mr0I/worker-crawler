@@ -19,7 +19,7 @@ const Ftp = require( 'ftp' );
 
 // Get Args
 const isDev = cmdArgs['dev'];
-const siteId = cmdArgs['site-id'];
+const siteID = cmdArgs['site-id'];
 const catId = cmdArgs['cat-id'];
 const catName = cmdArgs['cat-name'];
 const brandUpdater = cmdArgs['brand-updater'];
@@ -110,38 +110,239 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
 
 
 // Start New Crawler
-const getResults = async function () {
-    const results = await axios.get('https://api.digikala.com/v1/categories/mobile-phone/search/?page=2');
+const fetchData = async (npl) => {
+    const results = await axios.get(npl);
     // log in local file
-    fs.writeFileSync('./logs.js', JSON.stringify(results.data.data.products,null,'\t'));
+    fs.writeFileSync('./logs.json', JSON.stringify(results.data.data.products,null,'\t'));
 
     const products = results.data.data.products;
-    console.log(products.length) // 20
+    console.log(products.length); // 20
 
-    // const metadata = {
-    //     "title" : title,
-    //     "url" : href,
-    //     "price" : price_sanitizer(price),
-    //     "main_price" : (price_sanitizer(main_price) !== 0) ? price_sanitizer(main_price): null,
-    //     "status" : status,
-    //     "image" : img_name,
-    //     "img" : img.substring(0,(img.indexOf(".jpg")+4)),
-    //     "brand": brand
-    // };
-    // parsedResults.push(metadata);
-
-
-    // pageCounter++;
-    //
-    // if (pageCounter === pageLimit) {
-    //     exportResults(parsedResults , row ,site_id, catId , start_crawl_time);
-    //     return false;
-    // }
-    //
-    // await fetchData(nextPageLink);
+    getResults(products,siteID);
 };
 
-getResults();
+fetchData('https://api.digikala.com/v1/categories/mobile-phone/search/?page=1');
+
+
+
+const getResults = async function (products,site_id) {
+    // variables
+    let pageLimit = config.crawler_settings.pageLimit;
+    let pageCounter = 0;
+    let parsedResults = [];
+    let start_crawl_time = '';
+
+    products.forEach(product => {
+        const metadata = {
+            "title" : product.title_fa,
+            "title_en" : product.title_en,
+            "url" : product.url.uri,
+            "price" : product.default_variant.price.selling_price,
+            "main_price" : (product.default_variant.price.rrp_price !== 0)
+                ? product.default_variant.price.rrp_price
+                : null,
+            "status" : product.status,
+            "img" : (product.images.main.url[0]).substring(0,((product.images.main.url[0]).indexOf(".jpg")+4)),
+            "brand": product.data_layer.brand,
+            "pid": product.id,
+        };
+
+        parsedResults.push(metadata);
+    });
+
+    fs.writeFileSync('./dsad.json', JSON.stringify(parsedResults,null,'\t'));
+
+
+
+
+    // Pagination Elements Link
+    let nextPageLink = '';
+    switch (site_id) {
+        case 1:
+            nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=${pageCounter}`;
+            break;
+        default:
+            nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=${pageCounter}`;
+    }
+
+    console.log(chalk.cyan(`scraping: ${nextPageLink}`));
+    pageCounter++;
+    if (pageCounter === pageLimit) {
+        setResults(parsedResults,site_id, catId , start_crawl_time);
+        return false;
+    }
+
+    await fetchData(nextPageLink);
+};
+
+const setResults = async (parsed_results,site_id ,cat_id,sct) => {
+    let values = [];
+    const ect = get_current_date();
+
+    connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+        function(err,result,fields){
+            if (err) console.log(err);
+            for (let k=0;k<result.length;k++){
+                oldImagesArrayFunc(result[k].image);
+            }
+        });
+
+    let crawled_count = 0;
+    for(let i=0; i< parsedResults.length; i++){
+        // Add Single Page Data
+        crawled_count++;
+        const urlSingle = `https://api.digikala.com/v1/product/5460523/${parsed_results[i].pid}`;
+        console.log('current index:' + chalk.yellow.bgBlack(i+1));
+        let specifications = '';
+        let parameters = '';
+        let description = '';
+
+        const results = await axios.get(urlSingle);
+        // log in local file
+        fs.writeFileSync('./single-logs.json', JSON.stringify(results.data.data.products,null,'\t'));
+
+        return;
+        const products = results.data.data.products;
+        console.log(products.length); // 20
+
+        getResults(products,siteID);
+
+
+        // try{
+        //     const html = await axios.get(encodeURI(urlSingle));
+        //     const $ = cheerio.load(html.data);
+        //     const specs_selector = $(row[0].specs_selector);
+        //     const params_selector = $(row[0].params_selector);
+        //     const desc_selector = $(row[0].desc_selector);
+        //     let specs = [];
+        //     let specs_obj = {};
+        //     let params = [];
+        //     let params_obj = {};
+        //     let desc = '';
+        //
+        //     params_selector.map(function (index , el) {
+        //         let params_key = '';
+        //         let params_value = '';
+        //         switch (site_id) {
+        //             case 1:
+        //                 params_key = $(el).find('.c-params__list-key > span.block').text();
+        //                 params_value = $(el).find('.c-params__list-value > span.block').text();
+        //                 params_obj[params_key] = params_value.replace(/\s+/g, ' ');
+        //                 params.push(params_obj);
+        //                 break;
+        //             default:
+        //                 params_key = $(el).find('.c-params__list-key > span.block').text();
+        //                 params_value = $(el).find('.c-params__list-value > span.block').text();
+        //                 params_obj[params_key] = params_value.replace(/\s+/g, ' ');
+        //                 params.push(params_obj);
+        //         }
+        //     });
+        //     params = params[params.length-1];
+        //
+        //     specs_selector.map(function (index , el) {
+        //         let specs_key ='';
+        //         let specs_value ='';
+        //         switch (site_id) {
+        //             case 1:
+        //                 specs_key = $(el).find('span').eq(0).text();
+        //                 specs_value = $(el).find('span').eq(1).text();
+        //                 specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
+        //                 specs.push(specs_obj);
+        //                 break;
+        //             default:
+        //                 specs_key = $(el).find('span').eq(0).text();
+        //                 specs_value = $(el).find('span').eq(1).text();
+        //                 specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
+        //                 specs.push(specs_obj);
+        //         }
+        //     });
+        //     specs = specs[specs.length-1];
+        //
+        //     desc_selector.map(function (index , el) {
+        //         switch (site_id) {
+        //             case 1:
+        //                 desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
+        //                 break;
+        //             default:
+        //                 desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
+        //         }
+        //     });
+        //
+        //     specifications = JSON.stringify(specs);
+        //     parameters = JSON.stringify(params);
+        //     description = desc;
+        // } catch (error) {
+        //     console.error(error);
+        //     process.exit(1);
+        // }
+
+        let image_temp = uuidv4();
+        download(parsed_results[i].img,
+            path.join(__dirname, '.' +
+                '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg', function(){
+                console.log('image upload:','done');
+                sharp('.' +
+                    '../EcommerceShop/public/uploads/productImages' + image_temp + '.jpg')
+                    .resize(450)
+                    .toFile('.' +
+                        '../EcommerceShop/public/uploads/productImages' + image_temp + '.webp', (err, info) => {
+                        if (err) console.log('Error in resinzing',err);
+                        else {
+                            try {
+                                fs.unlink(path.join(__dirname, '.' +
+                                    '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg' , function (err) {
+                                    if (err) console.warn('image deletion Error',err);
+                                });
+                            } catch (e) {
+                                console.error('Unlink Error',e);
+                            }
+                        }
+                    });
+            });
+
+        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
+            ,parsed_results[i].price,parsed_results[i].status,image_temp,cat_id,site_id,specifications
+            ,parameters,description,parsed_results[i].brand,String(ect)]);
+
+        if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
+            connection.query(`INSERT INTO ${config.tables.ProductsTable}
+                 (title, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                [values],
+                function(err,result) {
+                    if (err) throw err;
+                    console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
+                    values = [];
+                });
+        }
+    }
+
+
+    //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
+    connection.query(`INSERT INTO ${config.tables.ProductsTable}
+     (title, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+        [values],
+        function(err,result) {
+            if (err) throw err;
+            console.log('All Is Done');
+
+            connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+                function(err,resp){
+                    if (err) throw err;
+                    console.log('All Old Data Is Deleted.');
+                    // delete old images
+                    deleteOldImages();
+                });
+        });
+
+    connection.query(`INSERT INTO ${config.tables.LogsTable}
+    (start_crawl_time, end_crawl_time , all_count ,crawled_count , category_id , site_id)
+    VALUES (${sct},${ect},${parsed_results.length} , ${crawled_count},${cat_id},${site_id})`,
+        function(err,result) {
+            if (err) throw err;
+            console.log('Logs Added.');
+        });
+};
+
 return;
 
 
@@ -172,60 +373,60 @@ const download = async function(uri, filename, callback){
     });
 };
 
-const fetchData = async (row , user_url) => {
-    if (row.length === 0){
-        console.log(chalk.red.bgBlack("No Such Category!!!"));
-        process.exit(1);
-        return;
-    }
-
-    let url = '';
-    switch (user_url){
-        case 'mobileUrl':
-            url = (row instanceof Object) ? await row[0].mobileUrl : row;
-            break;
-        case 'mobileAccessoriesUrl':
-            url = (row instanceof Object) ? await row[0].mobileAccessoriesUrl : row;
-            break;
-        case 'computerPartsUrl':
-            url = (row instanceof Object) ? await row[0].computerPartsUrl : row;
-            break;
-        case 'laptopAccessoriesUrl':
-            url = (row instanceof Object) ? await row[0].laptopAccessoriesUrl : row;
-            break;
-        case 'wearableGadgetUrl':
-            url = (row instanceof Object) ? await row[0].wearableGadgetUrl : row;
-            break;
-        case 'tabletUrl':
-            url = (row instanceof Object) ? await row[0].tabletUrl : row;
-            break;
-        case 'laptopUrl':
-            url = (row instanceof Object) ? await row[0].laptopUrl : row;
-            break;
-        case 'officeMachinesUrl':
-            url = (row instanceof Object) ? await row[0].officeMachinesUrl : row;
-            break;
-        default:
-            url = (row instanceof Object) ? await row[0].mobileUrl : row;
-    }
-
-    console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(url)} initiated...\n`));
-
-    start_crawl_time = get_current_date();
-    try {
-        const html = await axios.get(encodeURI(url));
-        const $ = cheerio.load(html.data);
-
-        connection.query(`SELECT * FROM ${config.tables.SelectorsTable} WHERE site_id=${siteId} `,
-            function(err,row,fields){
-                if (err) console.log(err);
-                Scraping(row,$);
-            });
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-};
+// const fetchData = async (row , user_url) => {
+//     if (row.length === 0){
+//         console.log(chalk.red.bgBlack("No Such Category!!!"));
+//         process.exit(1);
+//         return;
+//     }
+//
+//     let url = '';
+//     switch (user_url){
+//         case 'mobileUrl':
+//             url = (row instanceof Object) ? await row[0].mobileUrl : row;
+//             break;
+//         case 'mobileAccessoriesUrl':
+//             url = (row instanceof Object) ? await row[0].mobileAccessoriesUrl : row;
+//             break;
+//         case 'computerPartsUrl':
+//             url = (row instanceof Object) ? await row[0].computerPartsUrl : row;
+//             break;
+//         case 'laptopAccessoriesUrl':
+//             url = (row instanceof Object) ? await row[0].laptopAccessoriesUrl : row;
+//             break;
+//         case 'wearableGadgetUrl':
+//             url = (row instanceof Object) ? await row[0].wearableGadgetUrl : row;
+//             break;
+//         case 'tabletUrl':
+//             url = (row instanceof Object) ? await row[0].tabletUrl : row;
+//             break;
+//         case 'laptopUrl':
+//             url = (row instanceof Object) ? await row[0].laptopUrl : row;
+//             break;
+//         case 'officeMachinesUrl':
+//             url = (row instanceof Object) ? await row[0].officeMachinesUrl : row;
+//             break;
+//         default:
+//             url = (row instanceof Object) ? await row[0].mobileUrl : row;
+//     }
+//
+//     console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(url)} initiated...\n`));
+//
+//     start_crawl_time = get_current_date();
+//     try {
+//         const html = await axios.get(encodeURI(url));
+//         const $ = cheerio.load(html.data);
+//
+//         connection.query(`SELECT * FROM ${config.tables.SelectorsTable} WHERE site_id=${siteId} `,
+//             function(err,row,fields){
+//                 if (err) console.log(err);
+//                 Scraping(row,$);
+//             });
+//     } catch (error) {
+//         console.error(error);
+//         process.exit(1);
+//     }
+// };
 
 const Scraping = async (row , $) => {
     const site_id = row[0].site_id;
