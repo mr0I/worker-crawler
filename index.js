@@ -12,7 +12,8 @@ const {
     price_sanitizer,
     get_current_date,
     get_brand
-} = require('./inc/functions');
+} = require('./inc/helpers');
+const ApiCrawler = require('./inc/functions');
 const sharp = require('sharp'); // https://github.com/lovell/sharp
 const Ftp = require( 'ftp' );
 
@@ -20,7 +21,7 @@ const Ftp = require( 'ftp' );
 // Get Args
 const isDev = cmdArgs['dev'];
 const siteID = cmdArgs['site-id'];
-const catId = cmdArgs['cat-id'];
+const catID = cmdArgs['cat-id'];
 const catName = cmdArgs['cat-name'];
 const brandUpdater = cmdArgs['brand-updater'];
 const imageUploader = cmdArgs['image-uploader'];
@@ -110,70 +111,132 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
 
 
 // Start New Crawler
-const fetchData = async (npl) => {
-    const results = await axios.get(npl);
-    // log in local file
-    fs.writeFileSync('./logs.json', JSON.stringify(results.data.data.products,null,'\t'));
-
-    const products = results.data.data.products;
-    console.log(products.length); // 20
-
-    getResults(products,siteID);
-};
-
-fetchData('https://api.digikala.com/v1/categories/mobile-phone/search/?page=1');
-
-
-
-const getResults = async function (products,site_id) {
+const crawler = async (next_page_link , connection ,site_id, cat_id) => {
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
     let pageCounter = 0;
-    let parsedResults = [];
     let start_crawl_time = '';
+    let parsedResultsArray = [];
 
-    products.forEach(product => {
-        const metadata = {
-            "title" : product.title_fa,
-            "title_en" : product.title_en,
-            "url" : product.url.uri,
-            "price" : product.default_variant.price.selling_price,
-            "main_price" : (product.default_variant.price.rrp_price !== 0)
-                ? product.default_variant.price.rrp_price
-                : null,
-            "status" : product.status,
-            "img" : (product.images.main.url[0]).substring(0,((product.images.main.url[0]).indexOf(".jpg")+4)),
-            "brand": product.data_layer.brand,
-            "pid": product.id,
-        };
-
-        parsedResults.push(metadata);
-    });
-
-    fs.writeFileSync('./dsad.json', JSON.stringify(parsedResults,null,'\t'));
+    for (let i=0; i<pageLimit; i++){
+        let products = await ApiCrawler.fetchData(next_page_link + i);
+        parsedResultsArray = await ApiCrawler.parseResults(products,parsedResultsArray);
+    }
+    //fs.writeFileSync('./dsad.json', JSON.stringify(parsedResultsArray,null,'\t'));
 
 
+    // let values = [];
+    // const ect = get_current_date();
+    //
+    // let old_images = [];
+    // connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+    //     function(err,result,fields){
+    //         if (err) console.log(err);
+    //
+    //         for (let k=0;k<result.length;k++){
+    //             old_images.push(result[k].image);
+    //         }
+    //     });
 
 
-    // Pagination Elements Link
-    let nextPageLink = '';
-    switch (site_id) {
-        case 1:
-            nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=${pageCounter}`;
-            break;
-        default:
-            nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=${pageCounter}`;
+    let crawled_count = 0;
+    for (let i=0; i< parsedResultsArray.length; i++){
+        // Add Single Page Data
+        crawled_count++;
+        const urlSingle = `https://api.digikala.com/v1/product/${parsedResultsArray[i].pid}/`;
+        console.log('current index:' + chalk.yellow.bgBlack(i+1));
+
+        try {
+            let results = await axios.get('https://api.digikala.com/v1/product/7051551/');
+            fs.writeFileSync('./single-logs.json', JSON.stringify(results,null,'\t'));
+        }catch (e) {
+            console.log(e);
+        }
+
+
+
+        //const products = results.data.products;
+
+        //
+        // const specifications = products.specifications.attributes;
+        // const parameters = '';
+        // const description = '';
+        //
+        // let specs = [];
+        // let specs_obj = {};
+        // // let params = [];
+        // // let params_obj = {};
+        // // let desc = '';
+        // specifications.forEach(spec => {
+        //     specs_obj[spec.title] = spec.value;
+        //     specs.push(specs_obj);
+        //     //specs = specs[specs.length-1];
+        // });
+        //
+        // //return specs;
+        //
+        //
+        //
+        // let image_temp = uuidv4();
+        // download(item.img,
+        //     path.join(__dirname, '.' +
+        //         '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg', function(){
+        //         console.log('image upload:','done');
+        //         sharp('.' +
+        //             '../EcommerceShop/public/uploads/productImages' + image_temp + '.jpg')
+        //             .resize(450)
+        //             .toFile('.' +
+        //                 '../EcommerceShop/public/uploads/productImages' + image_temp + '.webp', (err, info) => {
+        //                 if (err) console.log('Error in resinzing',err);
+        //                 else {
+        //                     try {
+        //                         fs.unlink(path.join(__dirname, '.' +
+        //                             '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg' , function (err) {
+        //                             if (err) console.warn('image deletion Error',err);
+        //                         });
+        //                     } catch (e) {
+        //                         console.error('Unlink Error',e);
+        //                     }
+        //                 }
+        //             });
+        //     });
+        //
+        // values.push([parsedResultsArray[i].title,parsedResultsArray[i].url,parsedResultsArray[i].main_price
+        //     ,parsedResultsArray[i].price,parsedResultsArray[i].status,image_temp,cat_id,site_id,specifications
+        //     ,parameters,description,parsedResultsArray[i].brand,String(ect)]);
+        //
+        // if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
+        //     connection.query(`INSERT INTO ${config.tables.ProductsTable}
+        //          (title, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+        //         [values],
+        //         function(err,result) {
+        //             if (err) throw err;
+        //             console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
+        //             values = [];
+        //         });
+        // }
     }
 
-    console.log(chalk.cyan(`scraping: ${nextPageLink}`));
-    pageCounter++;
-    if (pageCounter === pageLimit) {
-        setResults(parsedResults,site_id, catId , start_crawl_time);
-        return false;
-    }
 
-    await fetchData(nextPageLink);
+    //const specsss = await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id);
+    // log in local file
+    //fs.writeFileSync('./single-logs.json', JSON.stringify(specsss,null,'\t'));
+
 };
+
+// Pagination Elements Link
+let nextPageLink = '';
+switch (siteID) {
+    case 1:
+        nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=`;
+        break;
+    default:
+        nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=`;
+}
+
+crawler(nextPageLink, connection ,siteID,catID);
+return;
+
 
 const setResults = async (parsed_results,site_id ,cat_id,sct) => {
     let values = [];
@@ -191,7 +254,7 @@ const setResults = async (parsed_results,site_id ,cat_id,sct) => {
     for(let i=0; i< parsedResults.length; i++){
         // Add Single Page Data
         crawled_count++;
-        const urlSingle = `https://api.digikala.com/v1/product/5460523/${parsed_results[i].pid}`;
+        const urlSingle = `https://api.digikala.com/v1/product/${parsed_results[i].pid}`;
         console.log('current index:' + chalk.yellow.bgBlack(i+1));
         let specifications = '';
         let parameters = '';
