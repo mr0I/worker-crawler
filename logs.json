@@ -20,7 +20,7 @@
 		"data_layer": {
 			"brand": "اپل",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 608,
+			"metric6": 611,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -40,12 +40,12 @@
 		},
 		"rating": {
 			"rate": 92,
-			"count": 608
+			"count": 611
 		},
 		"default_variant": {
-			"id": 28334125,
+			"id": 28723671,
 			"lead_time": 1,
-			"rank": 98.5,
+			"rank": 99.86,
 			"rate": 0,
 			"statistics": null,
 			"status": "marketable",
@@ -70,19 +70,19 @@
 				"hex_code": "#40aaff"
 			},
 			"warranty": {
-				"id": 6180,
-				"title_fa": "گارانتی 18 ماهه آرکا تجارت بیستون",
-				"title_en": "گارانتی 18 ماهه آرکا تجارت بیستون"
+				"id": 4895,
+				"title_fa": "گارانتی 18 ماهه توسعه اقتصاد توان یاسین (پرهان)",
+				"title_en": "گارانتی 18 ماهه توسعه اقتصاد توان یاسین (پرهان)"
 			},
 			"seller": {
-				"id": 217731,
-				"title": "ارکا تجارت بیستون",
-				"code": "ATS3G",
-				"url": "https://www.digikala.com/seller/ATS3G/",
+				"id": 871577,
+				"title": "موبایل برتر کام",
+				"code": "DZHMP",
+				"url": "https://www.digikala.com/seller/DZHMP/",
 				"rating": {
-					"total_rate": 100,
-					"total_count": 2,
-					"commitment": 93.3,
+					"total_rate": 86,
+					"total_count": 16,
+					"commitment": 100,
 					"no_return": 100,
 					"on_time_shipping": 100
 				},
@@ -92,19 +92,20 @@
 					"is_roosta": false,
 					"is_new": false
 				},
-				"stars": 3,
-				"registration_date": "2 سال و 5 ماه"
+				"stars": 5,
+				"registration_date": "2 ماه و 2 هفته"
 			},
 			"digiclub": {
 				"point": 150
 			},
 			"price": {
-				"selling_price": 425000000,
-				"rrp_price": 425000000,
-				"order_limit": 30,
+				"selling_price": 428000000,
+				"rrp_price": 428000000,
+				"order_limit": 2,
 				"is_incredible": false,
 				"is_promotion": false,
 				"is_locked_for_digiplus": false,
+				"marketable_stock": 2,
 				"discount_percent": 0
 			},
 			"shipment_methods": {
@@ -178,10 +179,10 @@
 		"data_layer": {
 			"brand": "سامسونگ",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 5028,
-			"dimension2": 4,
+			"metric6": 5075,
+			"dimension2": 5,
 			"dimension6": 0,
-			"dimension7": "incredible",
+			"dimension7": "special-offer",
 			"dimension9": 4.3,
 			"dimension11": 0,
 			"dimension20": "marketable"
@@ -198,43 +199,43 @@
 		},
 		"rating": {
 			"rate": 86,
-			"count": 5028
+			"count": 5075
 		},
 		"default_variant": {
-			"id": 20687802,
+			"id": 21166851,
 			"lead_time": 0,
-			"rank": 99.34,
-			"rate": 86.8,
+			"rank": 99.89,
+			"rate": 89.2,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 150,
-					"rate": 51.19
+					"rate_count": 322,
+					"rate": 53.94
 				},
 				"satisfied": {
-					"rate_count": 114,
-					"rate": 38.91
+					"rate_count": 242,
+					"rate": 40.54
 				},
 				"neutral": {
-					"rate_count": 16,
-					"rate": 5.46
+					"rate_count": 23,
+					"rate": 3.85
 				},
 				"dissatisfied": {
-					"rate_count": 6,
-					"rate": 2.05
+					"rate_count": 3,
+					"rate": 0.5
 				},
 				"totally_dissatisfied": {
 					"rate_count": 7,
-					"rate": 2.39
+					"rate": 1.17
 				},
-				"total_count": 293,
-				"total_rate": 86.8
+				"total_count": 597,
+				"total_rate": 89.2
 			},
 			"status": "marketable",
 			"properties": {
 				"is_fast_shipping": false,
 				"is_ship_by_seller": false,
 				"is_multi_warehouse": false,
-				"has_similar_variants": true,
+				"has_similar_variants": false,
 				"in_digikala_warehouse": true
 			},
 			"digiplus": {
@@ -247,14 +248,14 @@
 				"is_general_location_jet_eligible": false
 			},
 			"color": {
-				"id": 2,
-				"title": "سفید",
-				"hex_code": "#FFFFFF"
+				"id": 4,
+				"title": "آبی",
+				"hex_code": "#2196f3"
 			},
 			"warranty": {
-				"id": 4300,
-				"title_fa": "گارانتی 18 ماهه داریا همراه پایتخت",
-				"title_en": "گارانتی 18 ماهه داریا همراه پایتخت"
+				"id": 4590,
+				"title_fa": "گارانتی 18 ماهه دیجی کالا",
+				"title_en": "گارانتی 18 ماهه دیجی کالا"
 			},
 			"seller": {
 				"id": 1,
@@ -281,19 +282,25 @@
 				"point": 150
 			},
 			"price": {
-				"selling_price": 36490000,
-				"rrp_price": 37820000,
-				"order_limit": 5,
-				"is_incredible": true,
-				"is_promotion": false,
+				"selling_price": 36190000,
+				"rrp_price": 37900000,
+				"order_limit": 2,
+				"is_incredible": false,
+				"is_promotion": true,
 				"is_locked_for_digiplus": false,
-				"discount_percent": 4,
-				"timer": 5532,
-				"sold_percentage": 73,
+				"discount_percent": 5,
+				"sold_percentage": 69,
 				"badge": {
-					"title": "پیشنهاد شگفت انگیز",
-					"color": "#E6123D",
-					"icon": null
+					"title": "گوشی دستت باشه",
+					"color": "#FB3449",
+					"icon": {
+						"storage_ids": [],
+						"url": [
+							"https://dkstatics-public.digikala.com/digikala-adservice-promotions/887e8d6d77719fb393d7ec0fe5e203d045ca771c_1647265552.svg"
+						],
+						"thumbnail_url": null,
+						"temporary_id": null
+					}
 				},
 				"is_digiplus_promotion": false,
 				"is_digiplus_early_access": false,
@@ -333,24 +340,24 @@
 				"hex_code": "#FFFFFF"
 			},
 			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
-			{
 				"id": 4,
 				"title": "آبی",
 				"hex_code": "#2196f3"
+			},
+			{
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
 			}
 		]
 	},
 	{
-		"id": 6351381,
-		"title_fa": "گوشی موبایل سامسونگ مدل A52s 5G SM-A528B/DS دو سیم‌کارت ظرفیت 256 گیگابایت و رم 8 گیگابایت",
-		"title_en": "Samsung Galaxy A52s 5G SM-A528B/DS Dual SIM 256GB And 8GB Ram Mobile Phone",
+		"id": 6772505,
+		"title_fa": "گوشی موبایل اپل مدل iPhone 13 Pro Max A2644 دو سیم‌ کارت ظرفیت 256 گیگابایت و رم 6 گیگابایت - اکتیو",
+		"title_en": "Apple iPhone 13 Pro Max A2644 Dual SIM 256GB And 6GB RAM Mobile Phone - Activate  ",
 		"url": {
 			"base": null,
-			"uri": "/product/dkp-6351381/گوشی-موبایل-سامسونگ-مدل-a52s-5g-sm-a525fds-دو-سیمکارت-ظرفیت-256-گیگابایت-و-رم-8-گیگابایت"
+			"uri": "/product/dkp-6772505/گوشی-موبایل-اپل-مدل-iphone-13-pro-max-a2644-دو-سیم-کارت-ظرفیت-256-گیگابایت-و-رم-6-گیگابایت-اکتیو"
 		},
 		"status": "marketable",
 		"has_quick_view": false,
@@ -364,13 +371,13 @@
 			"is_general_location_jet_eligible": false
 		},
 		"data_layer": {
-			"brand": "سامسونگ",
+			"brand": "اپل",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 2644,
-			"dimension2": 2,
+			"metric6": 317,
+			"dimension2": 0,
 			"dimension6": 0,
-			"dimension7": "incredible",
-			"dimension9": 4.3,
+			"dimension7": "none",
+			"dimension9": 4.5,
 			"dimension11": 0,
 			"dimension20": "marketable"
 		},
@@ -378,44 +385,44 @@
 			"main": {
 				"storage_ids": [],
 				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/8a499b9702b546cdcd882c72dab527b95924a4b5_1630926567.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+					"https://dkstatics-public.digikala.com/digikala-products/15d774761e234a15c1c559ac540963baad9e229f_1634450031.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
 				],
 				"thumbnail_url": null,
 				"temporary_id": null
 			}
 		},
 		"rating": {
-			"rate": 86,
-			"count": 2644
+			"rate": 90,
+			"count": 317
 		},
 		"default_variant": {
-			"id": 24734969,
+			"id": 23758137,
 			"lead_time": 0,
-			"rank": 99.89,
-			"rate": 88.8,
+			"rank": 98.62,
+			"rate": 93.8,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 59,
-					"rate": 57.84
+					"rate_count": 22,
+					"rate": 68.75
 				},
 				"satisfied": {
-					"rate_count": 33,
-					"rate": 32.35
+					"rate_count": 10,
+					"rate": 31.25
 				},
 				"neutral": {
-					"rate_count": 6,
-					"rate": 5.88
+					"rate_count": 0,
+					"rate": 0
 				},
 				"dissatisfied": {
-					"rate_count": 4,
-					"rate": 3.92
+					"rate_count": 0,
+					"rate": 0
 				},
 				"totally_dissatisfied": {
 					"rate_count": 0,
 					"rate": 0
 				},
-				"total_count": 102,
-				"total_rate": 88.8
+				"total_count": 32,
+				"total_rate": 93.8
 			},
 			"status": "marketable",
 			"properties": {
@@ -435,9 +442,9 @@
 				"is_general_location_jet_eligible": false
 			},
 			"color": {
-				"id": 6,
-				"title": "سبز",
-				"hex_code": "#00e676"
+				"id": 43,
+				"title": "آبی روشن",
+				"hex_code": "#40aaff"
 			},
 			"warranty": {
 				"id": 4590,
@@ -469,24 +476,195 @@
 				"point": 150
 			},
 			"price": {
-				"selling_price": 97890000,
-				"rrp_price": 99900000,
-				"order_limit": 5,
-				"is_incredible": true,
+				"selling_price": 428890000,
+				"rrp_price": 428890000,
+				"order_limit": 30,
+				"is_incredible": false,
 				"is_promotion": false,
 				"is_locked_for_digiplus": false,
-				"discount_percent": 2,
-				"timer": 5532,
-				"sold_percentage": 34,
-				"badge": {
-					"title": "پیشنهاد شگفت انگیز",
-					"color": "#E6123D",
-					"icon": null
+				"discount_percent": 0
+			},
+			"shipment_methods": {
+				"description": "موجود در انبار دیجی‌کالا",
+				"has_lead_time": true,
+				"providers": [
+					{
+						"title": "ارسال دیجی‌کالا",
+						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": false,
+						"type": "digikala"
+					}
+				]
+			}
+		},
+		"properties": {
+			"is_fast_shipping": false,
+			"is_ship_by_seller": false,
+			"is_multi_warehouse": false,
+			"is_fake": false,
+			"has_gift": false,
+			"min_price_in_last_month": 381890000,
+			"is_non_inventory": false,
+			"is_ad": false,
+			"is_jet_eligible": false,
+			"is_medical_supplement": false
+		},
+		"badges": [],
+		"colors": [
+			{
+				"id": 43,
+				"title": "آبی روشن",
+				"hex_code": "#40aaff"
+			},
+			{
+				"id": 11,
+				"title": "خاکستری",
+				"hex_code": "#9E9E9E"
+			},
+			{
+				"id": 2,
+				"title": "سفید",
+				"hex_code": "#FFFFFF"
+			},
+			{
+				"id": 15,
+				"title": "طلایی",
+				"hex_code": "#c99212"
+			}
+		]
+	},
+	{
+		"id": 6351381,
+		"title_fa": "گوشی موبایل سامسونگ مدل A52s 5G SM-A528B/DS دو سیم‌کارت ظرفیت 256 گیگابایت و رم 8 گیگابایت",
+		"title_en": "Samsung Galaxy A52s 5G SM-A528B/DS Dual SIM 256GB And 8GB Ram Mobile Phone",
+		"url": {
+			"base": null,
+			"uri": "/product/dkp-6351381/گوشی-موبایل-سامسونگ-مدل-a52s-5g-sm-a525fds-دو-سیمکارت-ظرفیت-256-گیگابایت-و-رم-8-گیگابایت"
+		},
+		"status": "marketable",
+		"has_quick_view": false,
+		"digiplus": {
+			"services": [
+				"ارسال رایگان",
+				"امکان ارسال فوری (شهر تهران)"
+			],
+			"is_jet_eligible": true,
+			"cash_back": 0,
+			"is_general_location_jet_eligible": false
+		},
+		"data_layer": {
+			"brand": "سامسونگ",
+			"category": "[MO,گوشی موبایل]",
+			"metric6": 2665,
+			"dimension2": 0,
+			"dimension6": 0,
+			"dimension7": "none",
+			"dimension9": 4.3,
+			"dimension11": 0,
+			"dimension20": "marketable"
+		},
+		"images": {
+			"main": {
+				"storage_ids": [],
+				"url": [
+					"https://dkstatics-public.digikala.com/digikala-products/8a499b9702b546cdcd882c72dab527b95924a4b5_1630926567.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+				],
+				"thumbnail_url": null,
+				"temporary_id": null
+			}
+		},
+		"rating": {
+			"rate": 86,
+			"count": 2665
+		},
+		"default_variant": {
+			"id": 23995811,
+			"lead_time": 0,
+			"rank": 99.88,
+			"rate": 88,
+			"statistics": {
+				"totally_satisfied": {
+					"rate_count": 2,
+					"rate": 40
 				},
-				"is_digiplus_promotion": false,
-				"is_digiplus_early_access": false,
-				"is_application_incredible": false,
-				"is_lightening_deal": false
+				"satisfied": {
+					"rate_count": 3,
+					"rate": 60
+				},
+				"neutral": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"dissatisfied": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"totally_dissatisfied": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"total_count": 5,
+				"total_rate": 88
+			},
+			"status": "marketable",
+			"properties": {
+				"is_fast_shipping": false,
+				"is_ship_by_seller": false,
+				"is_multi_warehouse": false,
+				"has_similar_variants": false,
+				"in_digikala_warehouse": true
+			},
+			"digiplus": {
+				"services": [
+					"ارسال رایگان",
+					"امکان ارسال فوری (شهر تهران)"
+				],
+				"is_jet_eligible": true,
+				"cash_back": 0,
+				"is_general_location_jet_eligible": false
+			},
+			"color": {
+				"id": 6,
+				"title": "سبز",
+				"hex_code": "#00e676"
+			},
+			"warranty": {
+				"id": 4300,
+				"title_fa": "گارانتی 18 ماهه داریا همراه پایتخت",
+				"title_en": "گارانتی 18 ماهه داریا همراه پایتخت"
+			},
+			"seller": {
+				"id": 1,
+				"title": "دیجی‌کالا",
+				"code": "5A52N",
+				"url": "https://www.digikala.com/seller/5A52N/",
+				"rating": {
+					"total_rate": 0,
+					"total_count": 0,
+					"commitment": 100,
+					"no_return": 99.9,
+					"on_time_shipping": 100
+				},
+				"properties": {
+					"is_trusted": false,
+					"is_official": false,
+					"is_roosta": false,
+					"is_new": false
+				},
+				"stars": 5,
+				"registration_date": "5 سال و 7 ماه"
+			},
+			"digiclub": {
+				"point": 150
+			},
+			"price": {
+				"selling_price": 99990000,
+				"rrp_price": 99990000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": false,
+				"is_locked_for_digiplus": false,
+				"discount_percent": 0
 			},
 			"shipment_methods": {
 				"description": "موجود در انبار دیجی‌کالا",
@@ -521,14 +699,14 @@
 				"hex_code": "#FFFFFF"
 			},
 			{
+				"id": 24,
+				"title": "یاسی",
+				"hex_code": "#fce4ec"
+			},
+			{
 				"id": 6,
 				"title": "سبز",
 				"hex_code": "#00e676"
-			},
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
 			}
 		]
 	},
@@ -554,7 +732,7 @@
 		"data_layer": {
 			"brand": "شیائومی",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 8366,
+			"metric6": 8369,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -574,7 +752,7 @@
 		},
 		"rating": {
 			"rate": 88,
-			"count": 8366
+			"count": 8369
 		},
 		"default_variant": {
 			"id": 17426911,
@@ -725,7 +903,7 @@
 		"data_layer": {
 			"brand": "اپل",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 151,
+			"metric6": 152,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -745,7 +923,7 @@
 		},
 		"rating": {
 			"rate": 92,
-			"count": 151
+			"count": 152
 		},
 		"default_variant": {
 			"id": 23960169,
@@ -809,7 +987,7 @@
 				"url": "https://www.digikala.com/seller/5A5RS/",
 				"rating": {
 					"total_rate": 87,
-					"total_count": 561,
+					"total_count": 562,
 					"commitment": 100,
 					"no_return": 100,
 					"on_time_shipping": 100
@@ -827,13 +1005,13 @@
 				"point": 150
 			},
 			"price": {
-				"selling_price": 392000000,
-				"rrp_price": 392000000,
+				"selling_price": 393220000,
+				"rrp_price": 393220000,
 				"order_limit": 1,
 				"is_incredible": false,
 				"is_promotion": false,
 				"is_locked_for_digiplus": false,
-				"marketable_stock": 3,
+				"marketable_stock": 2,
 				"discount_percent": 0
 			},
 			"shipment_methods": {
@@ -867,478 +1045,6 @@
 				"id": 43,
 				"title": "آبی روشن",
 				"hex_code": "#40aaff"
-			},
-			{
-				"id": 2,
-				"title": "سفید",
-				"hex_code": "#FFFFFF"
-			}
-		]
-	},
-	{
-		"id": 2292372,
-		"title_fa": "گوشی موبایل بلک بری مدل Evolve BBG100-1 دو سیم‌ کارت ظرفیت 64 گیگابایت",
-		"title_en": "BlackBerry Evolve BBG100-1 Dual SIM 64GB Mobile Phone",
-		"url": {
-			"base": null,
-			"uri": "/product/dkp-2292372/گوشی-موبایل-بلک-بری-مدل-evolve-bbg100-1-دو-سیم-کارت-ظرفیت-64-گیگابایت"
-		},
-		"status": "marketable",
-		"has_quick_view": false,
-		"digiplus": {
-			"services": [
-				"ارسال رایگان"
-			],
-			"is_jet_eligible": false,
-			"cash_back": 0,
-			"is_general_location_jet_eligible": false
-		},
-		"data_layer": {
-			"brand": "بلک بری",
-			"category": "[MO,گوشی موبایل]",
-			"metric6": 119,
-			"dimension2": 0,
-			"dimension6": 0,
-			"dimension7": "none",
-			"dimension9": 3.2,
-			"dimension11": 0,
-			"dimension20": "marketable"
-		},
-		"images": {
-			"main": {
-				"storage_ids": [],
-				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/114800249.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
-				],
-				"thumbnail_url": null,
-				"temporary_id": null
-			}
-		},
-		"rating": {
-			"rate": 64,
-			"count": 119
-		},
-		"default_variant": {
-			"id": 14285566,
-			"lead_time": 1,
-			"rank": 96.84,
-			"rate": 83.8,
-			"statistics": {
-				"totally_satisfied": {
-					"rate_count": 6,
-					"rate": 37.5
-				},
-				"satisfied": {
-					"rate_count": 7,
-					"rate": 43.75
-				},
-				"neutral": {
-					"rate_count": 3,
-					"rate": 18.75
-				},
-				"dissatisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"totally_dissatisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"total_count": 16,
-				"total_rate": 83.8
-			},
-			"status": "marketable",
-			"properties": {
-				"is_fast_shipping": false,
-				"is_ship_by_seller": false,
-				"is_multi_warehouse": false,
-				"has_similar_variants": false,
-				"in_digikala_warehouse": false
-			},
-			"digiplus": {
-				"services": [
-					"ارسال رایگان"
-				],
-				"is_jet_eligible": false,
-				"cash_back": 0,
-				"is_general_location_jet_eligible": false
-			},
-			"color": {
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
-			"warranty": {
-				"id": 1968,
-				"title_fa": "گارانتی 18 ماهه کاوش تیم",
-				"title_en": "گارانتی 18 ماهه کاوش تیم"
-			},
-			"seller": {
-				"id": 346,
-				"title": "ایرانیان قایم همراه کاوش تیم",
-				"code": "5A5GY",
-				"url": "https://www.digikala.com/seller/5A5GY/",
-				"rating": {
-					"total_rate": 81,
-					"total_count": 19604,
-					"commitment": 100,
-					"no_return": 99.9,
-					"on_time_shipping": 100
-				},
-				"properties": {
-					"is_trusted": false,
-					"is_official": false,
-					"is_roosta": false,
-					"is_new": false
-				},
-				"stars": 5,
-				"registration_date": "4 سال و 8 ماه"
-			},
-			"digiclub": {
-				"point": 150
-			},
-			"price": {
-				"selling_price": 51990000,
-				"rrp_price": 51990000,
-				"order_limit": 1,
-				"is_incredible": false,
-				"is_promotion": false,
-				"is_locked_for_digiplus": false,
-				"discount_percent": 0
-			},
-			"shipment_methods": {
-				"description": "موجود در انبار فروشنده",
-				"has_lead_time": false,
-				"providers": [
-					{
-						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
-						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": true,
-						"type": "digikala"
-					}
-				]
-			}
-		},
-		"properties": {
-			"is_fast_shipping": false,
-			"is_ship_by_seller": false,
-			"is_multi_warehouse": false,
-			"is_fake": false,
-			"has_gift": false,
-			"min_price_in_last_month": 50200000,
-			"is_non_inventory": false,
-			"is_ad": false,
-			"is_jet_eligible": false,
-			"is_medical_supplement": false
-		},
-		"badges": [],
-		"colors": [
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			}
-		]
-	},
-	{
-		"id": 7745748,
-		"title_fa": "گوشی موبایل  اینفینیکس مدل HOT 11 PLAY X688B دو سیم‌ کارت ظرفیت 32 گیگابایت و رم 3 گیگابایت",
-		"title_en": "Infinix HOT 11 PLAY X688B Dual SIM 32GB And 3GB RAM Mobile Phone",
-		"url": {
-			"base": null,
-			"uri": "/product/dkp-7745748/گوشی-موبایل-اینفینیکس-مدل-hot-11-play-x688b-دو-سیم-کارت-ظرفیت-32-گیگابایت-و-رم-3-گیگابایت"
-		},
-		"status": "marketable",
-		"has_quick_view": false,
-		"digiplus": {
-			"services": [
-				"ارسال رایگان",
-				"امکان ارسال فوری (شهر تهران)"
-			],
-			"is_jet_eligible": true,
-			"cash_back": 0,
-			"is_general_location_jet_eligible": false
-		},
-		"data_layer": {
-			"brand": " اینفینیکس",
-			"category": "[MO,گوشی موبایل]",
-			"metric6": 2,
-			"dimension2": 0,
-			"dimension6": 0,
-			"dimension7": "none",
-			"dimension9": 5,
-			"dimension11": 0,
-			"dimension20": "marketable"
-		},
-		"images": {
-			"main": {
-				"storage_ids": [],
-				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/344229380ab45ed518d628778e3983438486b09e_1643799192.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
-				],
-				"thumbnail_url": null,
-				"temporary_id": null
-			}
-		},
-		"rating": {
-			"rate": 100,
-			"count": 2
-		},
-		"default_variant": {
-			"id": 27229619,
-			"lead_time": 0,
-			"rank": 99.85,
-			"rate": 0,
-			"statistics": null,
-			"status": "marketable",
-			"properties": {
-				"is_fast_shipping": false,
-				"is_ship_by_seller": false,
-				"is_multi_warehouse": false,
-				"has_similar_variants": true,
-				"in_digikala_warehouse": true
-			},
-			"digiplus": {
-				"services": [
-					"ارسال رایگان",
-					"امکان ارسال فوری (شهر تهران)"
-				],
-				"is_jet_eligible": true,
-				"cash_back": 0,
-				"is_general_location_jet_eligible": false
-			},
-			"color": {
-				"id": 4,
-				"title": "آبی",
-				"hex_code": "#2196f3"
-			},
-			"warranty": {
-				"id": 1157,
-				"title_fa": "گارانتی 18 ماهه سام تل",
-				"title_en": "گارانتی 18 ماهه سام تل"
-			},
-			"seller": {
-				"id": 1,
-				"title": "دیجی‌کالا",
-				"code": "5A52N",
-				"url": "https://www.digikala.com/seller/5A52N/",
-				"rating": {
-					"total_rate": 0,
-					"total_count": 0,
-					"commitment": 100,
-					"no_return": 99.9,
-					"on_time_shipping": 100
-				},
-				"properties": {
-					"is_trusted": false,
-					"is_official": false,
-					"is_roosta": false,
-					"is_new": false
-				},
-				"stars": 5,
-				"registration_date": "5 سال و 7 ماه"
-			},
-			"digiclub": {
-				"point": 150
-			},
-			"price": {
-				"selling_price": 31300000,
-				"rrp_price": 31300000,
-				"order_limit": 1,
-				"is_incredible": false,
-				"is_promotion": false,
-				"is_locked_for_digiplus": false,
-				"marketable_stock": 2,
-				"discount_percent": 0
-			},
-			"shipment_methods": {
-				"description": "موجود در انبار دیجی‌کالا",
-				"has_lead_time": true,
-				"providers": [
-					{
-						"title": "ارسال دیجی‌کالا",
-						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": false,
-						"type": "digikala"
-					}
-				]
-			}
-		},
-		"properties": {
-			"is_fast_shipping": false,
-			"is_ship_by_seller": false,
-			"is_multi_warehouse": false,
-			"is_fake": false,
-			"has_gift": false,
-			"min_price_in_last_month": 31300000,
-			"is_non_inventory": false,
-			"is_ad": false,
-			"is_jet_eligible": false,
-			"is_medical_supplement": false
-		},
-		"badges": [],
-		"colors": [
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
-			{
-				"id": 4,
-				"title": "آبی",
-				"hex_code": "#2196f3"
-			},
-			{
-				"id": 6,
-				"title": "سبز",
-				"hex_code": "#00e676"
-			}
-		]
-	},
-	{
-		"id": 6975352,
-		"title_fa": "گوشی موبایل دوجی مدل S97 Pro دو سیم‌ کارت ظرفیت 128 گیگابایت و رم 8 گیگابایت",
-		"title_en": "Doogee s97 pro Dual SIM 128GB And 8GB RAM Mobile Phone",
-		"url": {
-			"base": null,
-			"uri": "/product/dkp-6975352/گوشی-موبایل-دوجی-مدل-s97-pro-دو-سیم-کارت-ظرفیت-128-گیگابایت-و-رم-8-گیگابایت"
-		},
-		"status": "marketable",
-		"has_quick_view": false,
-		"digiplus": {
-			"services": [
-				"ارسال رایگان"
-			],
-			"is_jet_eligible": false,
-			"cash_back": 0,
-			"is_general_location_jet_eligible": false
-		},
-		"data_layer": {
-			"brand": "دوجی",
-			"category": "[MO,گوشی موبایل]",
-			"metric6": 6,
-			"dimension2": 0,
-			"dimension6": 0,
-			"dimension7": "none",
-			"dimension9": 4.3,
-			"dimension11": 0,
-			"dimension20": "marketable"
-		},
-		"images": {
-			"main": {
-				"storage_ids": [],
-				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/c0df8c5c767141f70eeab9ff334a693d1f91b020_1636377248.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
-				],
-				"thumbnail_url": null,
-				"temporary_id": null
-			}
-		},
-		"rating": {
-			"rate": 86,
-			"count": 6
-		},
-		"default_variant": {
-			"id": 23899733,
-			"lead_time": 1,
-			"rank": 99.81,
-			"rate": 0,
-			"statistics": null,
-			"status": "marketable",
-			"properties": {
-				"is_fast_shipping": false,
-				"is_ship_by_seller": false,
-				"is_multi_warehouse": false,
-				"has_similar_variants": false,
-				"in_digikala_warehouse": false
-			},
-			"digiplus": {
-				"services": [
-					"ارسال رایگان"
-				],
-				"is_jet_eligible": false,
-				"cash_back": 0,
-				"is_general_location_jet_eligible": false
-			},
-			"color": {
-				"id": 3,
-				"title": "قرمز",
-				"hex_code": "#f44336"
-			},
-			"warranty": {
-				"id": 1968,
-				"title_fa": "گارانتی 18 ماهه کاوش تیم",
-				"title_en": "گارانتی 18 ماهه کاوش تیم"
-			},
-			"seller": {
-				"id": 346,
-				"title": "ایرانیان قایم همراه کاوش تیم",
-				"code": "5A5GY",
-				"url": "https://www.digikala.com/seller/5A5GY/",
-				"rating": {
-					"total_rate": 81,
-					"total_count": 19604,
-					"commitment": 100,
-					"no_return": 99.9,
-					"on_time_shipping": 100
-				},
-				"properties": {
-					"is_trusted": false,
-					"is_official": true,
-					"is_roosta": false,
-					"is_new": false
-				},
-				"stars": 5,
-				"registration_date": "4 سال و 8 ماه"
-			},
-			"digiclub": {
-				"point": 150
-			},
-			"price": {
-				"selling_price": 119990000,
-				"rrp_price": 119990000,
-				"order_limit": 2,
-				"is_incredible": false,
-				"is_promotion": false,
-				"is_locked_for_digiplus": false,
-				"discount_percent": 0
-			},
-			"shipment_methods": {
-				"description": "موجود در انبار فروشنده",
-				"has_lead_time": false,
-				"providers": [
-					{
-						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
-						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": true,
-						"type": "digikala"
-					}
-				]
-			}
-		},
-		"properties": {
-			"is_fast_shipping": false,
-			"is_ship_by_seller": false,
-			"is_multi_warehouse": false,
-			"is_fake": false,
-			"has_gift": false,
-			"min_price_in_last_month": 0,
-			"is_non_inventory": false,
-			"is_ad": false,
-			"is_jet_eligible": false,
-			"is_medical_supplement": false
-		},
-		"badges": [],
-		"colors": [
-			{
-				"id": 3,
-				"title": "قرمز",
-				"hex_code": "#f44336"
-			},
-			{
-				"id": 17,
-				"title": "نارنجی",
-				"hex_code": "#ff5722"
 			}
 		]
 	},
@@ -1507,7 +1213,7 @@
 		"data_layer": {
 			"brand": "اپل",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 74,
+			"metric6": 78,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -1527,16 +1233,16 @@
 		},
 		"rating": {
 			"rate": 90,
-			"count": 74
+			"count": 78
 		},
 		"default_variant": {
-			"id": 28011987,
+			"id": 25548611,
 			"lead_time": 0,
 			"rank": 100,
 			"rate": 100,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 4,
+					"rate_count": 1,
 					"rate": 100
 				},
 				"satisfied": {
@@ -1555,7 +1261,7 @@
 					"rate_count": 0,
 					"rate": 0
 				},
-				"total_count": 4,
+				"total_count": 1,
 				"total_rate": 100
 			},
 			"status": "marketable",
@@ -1576,25 +1282,25 @@
 				"is_general_location_jet_eligible": false
 			},
 			"color": {
-				"id": 2,
-				"title": "سفید",
-				"hex_code": "#FFFFFF"
+				"id": 11,
+				"title": "خاکستری",
+				"hex_code": "#9E9E9E"
 			},
 			"warranty": {
-				"id": 4590,
-				"title_fa": "گارانتی 18 ماهه دیجی کالا",
-				"title_en": "گارانتی 18 ماهه دیجی کالا"
+				"id": 8105,
+				"title_fa": "گارانتی 18 ماهه (بازرگانی کشکا مسافر (جی تل پارس",
+				"title_en": "گارانتی 18 ماهه (بازرگانی کشکا مسافر (جی تل پارس"
 			},
 			"seller": {
-				"id": 1,
-				"title": "دیجی‌کالا",
-				"code": "5A52N",
-				"url": "https://www.digikala.com/seller/5A52N/",
+				"id": 348163,
+				"title": "سام رام",
+				"code": "CAFJ3",
+				"url": "https://www.digikala.com/seller/CAFJ3/",
 				"rating": {
-					"total_rate": 0,
-					"total_count": 0,
+					"total_rate": 86,
+					"total_count": 13647,
 					"commitment": 100,
-					"no_return": 99.9,
+					"no_return": 99.4,
 					"on_time_shipping": 100
 				},
 				"properties": {
@@ -1603,19 +1309,20 @@
 					"is_roosta": false,
 					"is_new": false
 				},
-				"stars": 5,
-				"registration_date": "5 سال و 7 ماه"
+				"stars": 4.4,
+				"registration_date": "1 سال و 10 ماه"
 			},
 			"digiclub": {
 				"point": 150
 			},
 			"price": {
-				"selling_price": 339800000,
-				"rrp_price": 339800000,
-				"order_limit": 30,
+				"selling_price": 348900000,
+				"rrp_price": 348900000,
+				"order_limit": 1,
 				"is_incredible": false,
 				"is_promotion": false,
 				"is_locked_for_digiplus": false,
+				"marketable_stock": 1,
 				"discount_percent": 0
 			},
 			"shipment_methods": {
@@ -1658,166 +1365,6 @@
 		]
 	},
 	{
-		"id": 4834144,
-		"title_fa": "گوشی موبایل سامسونگ مدل Galaxy A32 SM-A325F/DS دو سیم‌کارت ظرفیت 128 گیگابایت و رم 6 گیگابایت",
-		"title_en": "Samsung Galaxy A32 SM-A325F/DS Dual Sim 128GB And 6GB RAM Mobile Phone",
-		"url": {
-			"base": null,
-			"uri": "/product/dkp-4834144/گوشی-موبایل-سامسونگ-مدل-galaxy-a32-sm-a325fds-دو-سیمکارت-ظرفیت-128-گیگابایت-و-رم-6-گیگابایت"
-		},
-		"status": "marketable",
-		"has_quick_view": false,
-		"digiplus": {
-			"services": [
-				"ارسال رایگان",
-				"امکان ارسال فوری (شهر تهران)"
-			],
-			"is_jet_eligible": true,
-			"cash_back": 0,
-			"is_general_location_jet_eligible": false
-		},
-		"data_layer": {
-			"brand": "سامسونگ",
-			"category": "[MO,گوشی موبایل]",
-			"metric6": 5148,
-			"dimension2": 0,
-			"dimension6": 0,
-			"dimension7": "none",
-			"dimension9": 4.2,
-			"dimension11": 0,
-			"dimension20": "marketable"
-		},
-		"images": {
-			"main": {
-				"storage_ids": [],
-				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/1aaa7ff34f7bec773c4baea959b652ed5dff9f30_1619596674.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
-				],
-				"thumbnail_url": null,
-				"temporary_id": null
-			}
-		},
-		"rating": {
-			"rate": 84,
-			"count": 5148
-		},
-		"default_variant": {
-			"id": 28329673,
-			"lead_time": 0,
-			"rank": 99.4,
-			"rate": 0,
-			"statistics": null,
-			"status": "marketable",
-			"properties": {
-				"is_fast_shipping": false,
-				"is_ship_by_seller": false,
-				"is_multi_warehouse": false,
-				"has_similar_variants": false,
-				"in_digikala_warehouse": true
-			},
-			"digiplus": {
-				"services": [
-					"ارسال رایگان",
-					"امکان ارسال فوری (شهر تهران)"
-				],
-				"is_jet_eligible": true,
-				"cash_back": 0,
-				"is_general_location_jet_eligible": false
-			},
-			"color": {
-				"id": 2,
-				"title": "سفید",
-				"hex_code": "#FFFFFF"
-			},
-			"warranty": {
-				"id": 5121,
-				"title_fa": "گارانتی 18 ماهه مان سانا تجارت راد",
-				"title_en": "گارانتی 18 ماهه مان سانا تجارت راد"
-			},
-			"seller": {
-				"id": 783215,
-				"title": "کسب و کار خلاق داروگ",
-				"code": "DPUPK",
-				"url": "https://www.digikala.com/seller/DPUPK/",
-				"rating": {
-					"total_rate": 84,
-					"total_count": 353,
-					"commitment": 99.7,
-					"no_return": 99.9,
-					"on_time_shipping": 100
-				},
-				"properties": {
-					"is_trusted": false,
-					"is_official": false,
-					"is_roosta": false,
-					"is_new": false
-				},
-				"stars": 4.6,
-				"registration_date": "6 ماه و 1 هفته"
-			},
-			"digiclub": {
-				"point": 150
-			},
-			"price": {
-				"selling_price": 66290000,
-				"rrp_price": 66290000,
-				"order_limit": 1,
-				"is_incredible": false,
-				"is_promotion": false,
-				"is_locked_for_digiplus": false,
-				"marketable_stock": 1,
-				"discount_percent": 0
-			},
-			"shipment_methods": {
-				"description": "موجود در انبار دیجی‌کالا",
-				"has_lead_time": true,
-				"providers": [
-					{
-						"title": "ارسال دیجی‌کالا",
-						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": false,
-						"type": "digikala"
-					}
-				]
-			}
-		},
-		"properties": {
-			"is_fast_shipping": false,
-			"is_ship_by_seller": false,
-			"is_multi_warehouse": false,
-			"is_fake": false,
-			"has_gift": false,
-			"min_price_in_last_month": 62190000,
-			"is_non_inventory": false,
-			"is_ad": false,
-			"is_jet_eligible": false,
-			"is_medical_supplement": false
-		},
-		"badges": [],
-		"colors": [
-			{
-				"id": 4,
-				"title": "آبی",
-				"hex_code": "#2196f3"
-			},
-			{
-				"id": 2,
-				"title": "سفید",
-				"hex_code": "#FFFFFF"
-			},
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
-			{
-				"id": 8,
-				"title": "بنفش",
-				"hex_code": "#9C27B1"
-			}
-		]
-	},
-	{
 		"id": 6530107,
 		"title_fa": "گوشی موبایل شیائومی مدل Poco X3 GT دو سیم‌کارت ظرفیت 256 گیگابایت و رم 8 گیگابایت",
 		"title_en": "Xiaomi Poco X3 GT Dual Sim 256GB And 8GB RAM Mobile Phone",
@@ -1839,7 +1386,7 @@
 		"data_layer": {
 			"brand": "شیائومی",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 1449,
+			"metric6": 1461,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -1859,36 +1406,36 @@
 		},
 		"rating": {
 			"rate": 90,
-			"count": 1449
+			"count": 1461
 		},
 		"default_variant": {
 			"id": 24326309,
 			"lead_time": 0,
 			"rank": 99.9,
-			"rate": 89.8,
+			"rate": 90,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 23,
-					"rate": 65.71
+					"rate_count": 24,
+					"rate": 66.67
 				},
 				"satisfied": {
 					"rate_count": 9,
-					"rate": 25.71
+					"rate": 25
 				},
 				"neutral": {
 					"rate_count": 1,
-					"rate": 2.86
+					"rate": 2.78
 				},
 				"dissatisfied": {
 					"rate_count": 1,
-					"rate": 2.86
+					"rate": 2.78
 				},
 				"totally_dissatisfied": {
 					"rate_count": 1,
-					"rate": 2.86
+					"rate": 2.78
 				},
-				"total_count": 35,
-				"total_rate": 89.8
+				"total_count": 36,
+				"total_rate": 90
 			},
 			"status": "marketable",
 			"properties": {
@@ -1969,7 +1516,7 @@
 			"is_multi_warehouse": false,
 			"is_fake": false,
 			"has_gift": false,
-			"min_price_in_last_month": 68600000,
+			"min_price_in_last_month": 69490000,
 			"is_non_inventory": false,
 			"is_ad": false,
 			"is_jet_eligible": false,
@@ -1977,11 +1524,6 @@
 		},
 		"badges": [],
 		"colors": [
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
 			{
 				"id": 4,
 				"title": "آبی",
@@ -1991,6 +1533,319 @@
 				"id": 2,
 				"title": "سفید",
 				"hex_code": "#FFFFFF"
+			},
+			{
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
+			}
+		]
+	},
+	{
+		"id": 4834144,
+		"title_fa": "گوشی موبایل سامسونگ مدل Galaxy A32 SM-A325F/DS دو سیم‌کارت ظرفیت 128 گیگابایت و رم 6 گیگابایت",
+		"title_en": "Samsung Galaxy A32 SM-A325F/DS Dual Sim 128GB And 6GB RAM Mobile Phone",
+		"url": {
+			"base": null,
+			"uri": "/product/dkp-4834144/گوشی-موبایل-سامسونگ-مدل-galaxy-a32-sm-a325fds-دو-سیمکارت-ظرفیت-128-گیگابایت-و-رم-6-گیگابایت"
+		},
+		"status": "marketable",
+		"has_quick_view": false,
+		"digiplus": {
+			"services": [
+				"ارسال رایگان",
+				"امکان ارسال فوری (شهر تهران)"
+			],
+			"is_jet_eligible": true,
+			"cash_back": 0,
+			"is_general_location_jet_eligible": false
+		},
+		"data_layer": {
+			"brand": "سامسونگ",
+			"category": "[MO,گوشی موبایل]",
+			"metric6": 5158,
+			"dimension2": 0,
+			"dimension6": 0,
+			"dimension7": "none",
+			"dimension9": 4.2,
+			"dimension11": 0,
+			"dimension20": "marketable"
+		},
+		"images": {
+			"main": {
+				"storage_ids": [],
+				"url": [
+					"https://dkstatics-public.digikala.com/digikala-products/1aaa7ff34f7bec773c4baea959b652ed5dff9f30_1619596674.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+				],
+				"thumbnail_url": null,
+				"temporary_id": null
+			}
+		},
+		"rating": {
+			"rate": 84,
+			"count": 5158
+		},
+		"default_variant": {
+			"id": 28329672,
+			"lead_time": 0,
+			"rank": 99.13,
+			"rate": 0,
+			"statistics": null,
+			"status": "marketable",
+			"properties": {
+				"is_fast_shipping": false,
+				"is_ship_by_seller": false,
+				"is_multi_warehouse": false,
+				"has_similar_variants": false,
+				"in_digikala_warehouse": true
+			},
+			"digiplus": {
+				"services": [
+					"ارسال رایگان",
+					"امکان ارسال فوری (شهر تهران)"
+				],
+				"is_jet_eligible": true,
+				"cash_back": 0,
+				"is_general_location_jet_eligible": false
+			},
+			"color": {
+				"id": 4,
+				"title": "آبی",
+				"hex_code": "#2196f3"
+			},
+			"warranty": {
+				"id": 5121,
+				"title_fa": "گارانتی 18 ماهه مان سانا تجارت راد",
+				"title_en": "گارانتی 18 ماهه مان سانا تجارت راد"
+			},
+			"seller": {
+				"id": 783215,
+				"title": "کسب و کار خلاق داروگ",
+				"code": "DPUPK",
+				"url": "https://www.digikala.com/seller/DPUPK/",
+				"rating": {
+					"total_rate": 84,
+					"total_count": 355,
+					"commitment": 99.7,
+					"no_return": 99.9,
+					"on_time_shipping": 100
+				},
+				"properties": {
+					"is_trusted": false,
+					"is_official": false,
+					"is_roosta": false,
+					"is_new": false
+				},
+				"stars": 4.6,
+				"registration_date": "6 ماه و 1 هفته"
+			},
+			"digiclub": {
+				"point": 150
+			},
+			"price": {
+				"selling_price": 66390000,
+				"rrp_price": 66390000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": false,
+				"is_locked_for_digiplus": false,
+				"marketable_stock": 2,
+				"discount_percent": 0
+			},
+			"shipment_methods": {
+				"description": "موجود در انبار دیجی‌کالا",
+				"has_lead_time": true,
+				"providers": [
+					{
+						"title": "ارسال دیجی‌کالا",
+						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": false,
+						"type": "digikala"
+					}
+				]
+			}
+		},
+		"properties": {
+			"is_fast_shipping": false,
+			"is_ship_by_seller": false,
+			"is_multi_warehouse": false,
+			"is_fake": false,
+			"has_gift": false,
+			"min_price_in_last_month": 62190000,
+			"is_non_inventory": false,
+			"is_ad": false,
+			"is_jet_eligible": false,
+			"is_medical_supplement": false
+		},
+		"badges": [],
+		"colors": [
+			{
+				"id": 4,
+				"title": "آبی",
+				"hex_code": "#2196f3"
+			},
+			{
+				"id": 2,
+				"title": "سفید",
+				"hex_code": "#FFFFFF"
+			},
+			{
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
+			},
+			{
+				"id": 8,
+				"title": "بنفش",
+				"hex_code": "#9C27B1"
+			}
+		]
+	},
+	{
+		"id": 6772463,
+		"title_fa": "گوشی موبایل اپل مدل iPhone 13 Pro A2639 دو سیم‌ کارت ظرفیت 256 گیگابایت و 6 گیگابایت رم - اکتیو",
+		"title_en": "Apple iPhone 13 Pro A2639 Dual SIM 256GB And 6GB RAM Mobile Phone - Activated",
+		"url": {
+			"base": null,
+			"uri": "/product/dkp-6772463/گوشی-موبایل-اپل-مدل-iphone-13-pro-a2639-دو-سیم-کارت-ظرفیت-256-گیگابایت-و-6-گیگابایت-رم-clone-1-of-6461003"
+		},
+		"status": "marketable",
+		"has_quick_view": false,
+		"digiplus": {
+			"services": [
+				"ارسال رایگان"
+			],
+			"is_jet_eligible": false,
+			"cash_back": 0,
+			"is_general_location_jet_eligible": false
+		},
+		"data_layer": {
+			"brand": "اپل",
+			"category": "[MO,گوشی موبایل]",
+			"metric6": 144,
+			"dimension2": 0,
+			"dimension6": 0,
+			"dimension7": "none",
+			"dimension9": 4.5,
+			"dimension11": 0,
+			"dimension20": "marketable"
+		},
+		"images": {
+			"main": {
+				"storage_ids": [],
+				"url": [
+					"https://dkstatics-public.digikala.com/digikala-products/9582480838e6440356f8469461aa51a7fa84cba2_1634449320.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+				],
+				"thumbnail_url": null,
+				"temporary_id": null
+			}
+		},
+		"rating": {
+			"rate": 90,
+			"count": 144
+		},
+		"default_variant": {
+			"id": 28295088,
+			"lead_time": 1,
+			"rank": 99.87,
+			"rate": 0,
+			"statistics": null,
+			"status": "marketable",
+			"properties": {
+				"is_fast_shipping": false,
+				"is_ship_by_seller": false,
+				"is_multi_warehouse": false,
+				"has_similar_variants": false,
+				"in_digikala_warehouse": false
+			},
+			"digiplus": {
+				"services": [
+					"ارسال رایگان"
+				],
+				"is_jet_eligible": false,
+				"cash_back": 0,
+				"is_general_location_jet_eligible": false
+			},
+			"color": {
+				"id": 43,
+				"title": "آبی روشن",
+				"hex_code": "#40aaff"
+			},
+			"warranty": {
+				"id": 5407,
+				"title_fa": "گارانتی 18 ماهه مهرگان همراه ایساتیس",
+				"title_en": "گارانتی 18 ماهه مهرگان همراه ایساتیس"
+			},
+			"seller": {
+				"id": 871577,
+				"title": "موبایل برتر کام",
+				"code": "DZHMP",
+				"url": "https://www.digikala.com/seller/DZHMP/",
+				"rating": {
+					"total_rate": 87,
+					"total_count": 15,
+					"commitment": 100,
+					"no_return": 100,
+					"on_time_shipping": 100
+				},
+				"properties": {
+					"is_trusted": false,
+					"is_official": false,
+					"is_roosta": false,
+					"is_new": false
+				},
+				"stars": 5,
+				"registration_date": "2 ماه و 2 هفته"
+			},
+			"digiclub": {
+				"point": 150
+			},
+			"price": {
+				"selling_price": 390000000,
+				"rrp_price": 390000000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": false,
+				"is_locked_for_digiplus": false,
+				"marketable_stock": 1,
+				"discount_percent": 0
+			},
+			"shipment_methods": {
+				"description": "موجود در انبار فروشنده",
+				"has_lead_time": false,
+				"providers": [
+					{
+						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
+						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": true,
+						"type": "digikala"
+					}
+				]
+			}
+		},
+		"properties": {
+			"is_fast_shipping": false,
+			"is_ship_by_seller": false,
+			"is_multi_warehouse": false,
+			"is_fake": false,
+			"has_gift": false,
+			"min_price_in_last_month": 359000000,
+			"is_non_inventory": false,
+			"is_ad": false,
+			"is_jet_eligible": false,
+			"is_medical_supplement": false
+		},
+		"badges": [],
+		"colors": [
+			{
+				"id": 4,
+				"title": "آبی",
+				"hex_code": "#2196f3"
+			},
+			{
+				"id": 43,
+				"title": "آبی روشن",
+				"hex_code": "#40aaff"
 			}
 		]
 	},
@@ -2016,7 +1871,7 @@
 		"data_layer": {
 			"brand": "سامسونگ",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 230,
+			"metric6": 232,
 			"dimension2": 4,
 			"dimension6": 0,
 			"dimension7": "special-offer",
@@ -2036,21 +1891,21 @@
 		},
 		"rating": {
 			"rate": 90,
-			"count": 230
+			"count": 232
 		},
 		"default_variant": {
 			"id": 22029499,
 			"lead_time": 0,
-			"rank": 99.51,
-			"rate": 95.8,
+			"rank": 99.52,
+			"rate": 96,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 17,
-					"rate": 89.47
+					"rate_count": 18,
+					"rate": 90
 				},
 				"satisfied": {
 					"rate_count": 1,
-					"rate": 5.26
+					"rate": 5
 				},
 				"neutral": {
 					"rate_count": 0,
@@ -2058,14 +1913,14 @@
 				},
 				"dissatisfied": {
 					"rate_count": 1,
-					"rate": 5.26
+					"rate": 5
 				},
 				"totally_dissatisfied": {
 					"rate_count": 0,
 					"rate": 0
 				},
-				"total_count": 19,
-				"total_rate": 95.8
+				"total_count": 20,
+				"total_rate": 96
 			},
 			"status": "marketable",
 			"properties": {
@@ -2126,7 +1981,7 @@
 				"is_promotion": true,
 				"is_locked_for_digiplus": false,
 				"discount_percent": 4,
-				"sold_percentage": 35,
+				"sold_percentage": 45,
 				"badge": {
 					"title": "فروش ویژه",
 					"color": "#E6123D",
@@ -2168,45 +2023,36 @@
 				"id": 1,
 				"title": "مشکی",
 				"hex_code": "#212121"
-			},
-			{
-				"id": 45,
-				"title": "سبز تیره",
-				"hex_code": "#007e33"
-			},
-			{
-				"id": 27,
-				"title": "کرم",
-				"hex_code": "#ffecca"
 			}
 		]
 	},
 	{
-		"id": 6529028,
-		"title_fa": "گوشی موبایل سامسونگ مدل A52s 5G SM-A528B/DS دو سیم کارت ظرفیت 128 گیگابایت و رم 8 گیگابایت",
-		"title_en": "Samsung Galaxy A52s 5G SM-A528B/DS Dual Sim 128GB And 8GB RAM Mobile Phone",
+		"id": 6461003,
+		"title_fa": "گوشی موبایل اپل مدل iPhone 13 Pro A2639 دو سیم‌ کارت ظرفیت 256 گیگابایت و 6 گیگابایت رم",
+		"title_en": "Apple iPhone 13 Pro A2639 Dual SIM 256GB And 6GB RAM Mobile Phone",
 		"url": {
 			"base": null,
-			"uri": "/product/dkp-6529028/گوشی-موبایل-سامسونگ-مدل-samsung-a52s-5g-sm-a528bds"
+			"uri": "/product/dkp-6461003/گوشی-موبایل-اپل-مدل-iphone-13-pro-a2413-دو-سیم-کارت-ظرفیت-256-گیگابایت-و-6-گیگابایت-رم"
 		},
 		"status": "marketable",
 		"has_quick_view": false,
 		"digiplus": {
 			"services": [
-				"ارسال رایگان"
+				"ارسال رایگان",
+				"امکان ارسال فوری (شهر تهران)"
 			],
-			"is_jet_eligible": false,
+			"is_jet_eligible": true,
 			"cash_back": 0,
 			"is_general_location_jet_eligible": false
 		},
 		"data_layer": {
-			"brand": "سامسونگ",
+			"brand": "اپل",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 1372,
+			"metric6": 133,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
-			"dimension9": 4.2,
+			"dimension9": 4.5,
 			"dimension11": 0,
 			"dimension20": "marketable"
 		},
@@ -2214,33 +2060,33 @@
 			"main": {
 				"storage_ids": [],
 				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/8a499b9702b546cdcd882c72dab527b95924a4b5_1632312814.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+					"https://dkstatics-public.digikala.com/digikala-products/9582480838e6440356f8469461aa51a7fa84cba2_1631704840.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
 				],
 				"thumbnail_url": null,
 				"temporary_id": null
 			}
 		},
 		"rating": {
-			"rate": 84,
-			"count": 1372
+			"rate": 90,
+			"count": 133
 		},
 		"default_variant": {
-			"id": 23947068,
-			"lead_time": 1,
-			"rank": 100,
-			"rate": 100,
+			"id": 23757786,
+			"lead_time": 0,
+			"rank": 99.91,
+			"rate": 91,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 1,
-					"rate": 100
+					"rate_count": 12,
+					"rate": 60
 				},
 				"satisfied": {
-					"rate_count": 0,
-					"rate": 0
+					"rate_count": 7,
+					"rate": 35
 				},
 				"neutral": {
-					"rate_count": 0,
-					"rate": 0
+					"rate_count": 1,
+					"rate": 5
 				},
 				"dissatisfied": {
 					"rate_count": 0,
@@ -2250,8 +2096,8 @@
 					"rate_count": 0,
 					"rate": 0
 				},
-				"total_count": 1,
-				"total_rate": 100
+				"total_count": 20,
+				"total_rate": 91
 			},
 			"status": "marketable",
 			"properties": {
@@ -2259,36 +2105,37 @@
 				"is_ship_by_seller": false,
 				"is_multi_warehouse": false,
 				"has_similar_variants": false,
-				"in_digikala_warehouse": false
+				"in_digikala_warehouse": true
 			},
 			"digiplus": {
 				"services": [
-					"ارسال رایگان"
+					"ارسال رایگان",
+					"امکان ارسال فوری (شهر تهران)"
 				],
-				"is_jet_eligible": false,
+				"is_jet_eligible": true,
 				"cash_back": 0,
 				"is_general_location_jet_eligible": false
 			},
 			"color": {
-				"id": 6,
-				"title": "سبز",
-				"hex_code": "#00e676"
+				"id": 43,
+				"title": "آبی روشن",
+				"hex_code": "#40aaff"
 			},
 			"warranty": {
-				"id": 9,
-				"title_fa": "گارانتی 18 ماهه مایکروتل",
-				"title_en": "گارانتی 18 ماهه مایکروتل"
+				"id": 4590,
+				"title_fa": "گارانتی 18 ماهه دیجی کالا",
+				"title_en": "گارانتی 18 ماهه دیجی کالا"
 			},
 			"seller": {
-				"id": 224012,
-				"title": "کیان ارتباط فردا",
-				"code": "AUFX2",
-				"url": "https://www.digikala.com/seller/AUFX2/",
+				"id": 1,
+				"title": "دیجی‌کالا",
+				"code": "5A52N",
+				"url": "https://www.digikala.com/seller/5A52N/",
 				"rating": {
-					"total_rate": 87,
-					"total_count": 736,
+					"total_rate": 0,
+					"total_count": 0,
 					"commitment": 100,
-					"no_return": 100,
+					"no_return": 99.9,
 					"on_time_shipping": 100
 				},
 				"properties": {
@@ -2298,28 +2145,28 @@
 					"is_new": false
 				},
 				"stars": 5,
-				"registration_date": "2 سال و 4 ماه"
+				"registration_date": "5 سال و 7 ماه"
 			},
 			"digiclub": {
 				"point": 150
 			},
 			"price": {
-				"selling_price": 91800000,
-				"rrp_price": 91800000,
-				"order_limit": 1,
+				"selling_price": 393500000,
+				"rrp_price": 393500000,
+				"order_limit": 30,
 				"is_incredible": false,
 				"is_promotion": false,
 				"is_locked_for_digiplus": false,
 				"discount_percent": 0
 			},
 			"shipment_methods": {
-				"description": "موجود در انبار فروشنده",
-				"has_lead_time": false,
+				"description": "موجود در انبار دیجی‌کالا",
+				"has_lead_time": true,
 				"providers": [
 					{
-						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
-						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": true,
+						"title": "ارسال دیجی‌کالا",
+						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": false,
 						"type": "digikala"
 					}
 				]
@@ -2331,7 +2178,7 @@
 			"is_multi_warehouse": false,
 			"is_fake": false,
 			"has_gift": false,
-			"min_price_in_last_month": 85790000,
+			"min_price_in_last_month": 364000000,
 			"is_non_inventory": false,
 			"is_ad": false,
 			"is_jet_eligible": false,
@@ -2340,19 +2187,9 @@
 		"badges": [],
 		"colors": [
 			{
-				"id": 6,
-				"title": "سبز",
-				"hex_code": "#00e676"
-			},
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
-			{
-				"id": 8,
-				"title": "بنفش",
-				"hex_code": "#9C27B1"
+				"id": 43,
+				"title": "آبی روشن",
+				"hex_code": "#40aaff"
 			}
 		]
 	},
@@ -2378,7 +2215,7 @@
 		"data_layer": {
 			"brand": "نوکیا",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 9984,
+			"metric6": 9993,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -2398,7 +2235,7 @@
 		},
 		"rating": {
 			"rate": 82,
-			"count": 9984
+			"count": 9993
 		},
 		"default_variant": {
 			"id": 13518114,
@@ -2407,26 +2244,26 @@
 			"rate": 86.8,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 1215,
-					"rate": 51.22
+					"rate_count": 1220,
+					"rate": 51.24
 				},
 				"satisfied": {
-					"rate_count": 921,
-					"rate": 38.83
+					"rate_count": 923,
+					"rate": 38.77
 				},
 				"neutral": {
 					"rate_count": 121,
-					"rate": 5.1
+					"rate": 5.08
 				},
 				"dissatisfied": {
-					"rate_count": 61,
-					"rate": 2.57
+					"rate_count": 62,
+					"rate": 2.6
 				},
 				"totally_dissatisfied": {
-					"rate_count": 54,
-					"rate": 2.28
+					"rate_count": 55,
+					"rate": 2.31
 				},
-				"total_count": 2372,
+				"total_count": 2381,
 				"total_rate": 86.8
 			},
 			"status": "marketable",
@@ -2463,7 +2300,7 @@
 				"url": "https://www.digikala.com/seller/6YJW9/",
 				"rating": {
 					"total_rate": 86,
-					"total_count": 36841,
+					"total_count": 36858,
 					"commitment": 100,
 					"no_return": 99.8,
 					"on_time_shipping": 100
@@ -2481,8 +2318,8 @@
 				"point": 39
 			},
 			"price": {
-				"selling_price": 3900000,
-				"rrp_price": 3900000,
+				"selling_price": 3890000,
+				"rrp_price": 3890000,
 				"order_limit": 30,
 				"is_incredible": false,
 				"is_promotion": false,
@@ -2524,6 +2361,159 @@
 		]
 	},
 	{
+		"id": 6529028,
+		"title_fa": "گوشی موبایل سامسونگ مدل A52s 5G SM-A528B/DS دو سیم کارت ظرفیت 128 گیگابایت و رم 8 گیگابایت",
+		"title_en": "Samsung Galaxy A52s 5G SM-A528B/DS Dual Sim 128GB And 8GB RAM Mobile Phone",
+		"url": {
+			"base": null,
+			"uri": "/product/dkp-6529028/گوشی-موبایل-سامسونگ-مدل-samsung-a52s-5g-sm-a528bds"
+		},
+		"status": "marketable",
+		"has_quick_view": false,
+		"digiplus": {
+			"services": [
+				"ارسال رایگان"
+			],
+			"is_jet_eligible": false,
+			"cash_back": 0,
+			"is_general_location_jet_eligible": false
+		},
+		"data_layer": {
+			"brand": "سامسونگ",
+			"category": "[MO,گوشی موبایل]",
+			"metric6": 1387,
+			"dimension2": 0,
+			"dimension6": 0,
+			"dimension7": "none",
+			"dimension9": 4.2,
+			"dimension11": 0,
+			"dimension20": "marketable"
+		},
+		"images": {
+			"main": {
+				"storage_ids": [],
+				"url": [
+					"https://dkstatics-public.digikala.com/digikala-products/8a499b9702b546cdcd882c72dab527b95924a4b5_1632312814.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+				],
+				"thumbnail_url": null,
+				"temporary_id": null
+			}
+		},
+		"rating": {
+			"rate": 84,
+			"count": 1387
+		},
+		"default_variant": {
+			"id": 28719080,
+			"lead_time": 1,
+			"rank": 99.84,
+			"rate": 0,
+			"statistics": null,
+			"status": "marketable",
+			"properties": {
+				"is_fast_shipping": false,
+				"is_ship_by_seller": false,
+				"is_multi_warehouse": false,
+				"has_similar_variants": false,
+				"in_digikala_warehouse": false
+			},
+			"digiplus": {
+				"services": [
+					"ارسال رایگان"
+				],
+				"is_jet_eligible": false,
+				"cash_back": 0,
+				"is_general_location_jet_eligible": false
+			},
+			"color": {
+				"id": 8,
+				"title": "بنفش",
+				"hex_code": "#9C27B1"
+			},
+			"warranty": {
+				"id": 4300,
+				"title_fa": "گارانتی 18 ماهه داریا همراه پایتخت",
+				"title_en": "گارانتی 18 ماهه داریا همراه پایتخت"
+			},
+			"seller": {
+				"id": 1542,
+				"title": "مرکز تامین کالای دیجیتال ایران",
+				"code": "5A6ZP",
+				"url": "https://www.digikala.com/seller/5A6ZP/",
+				"rating": {
+					"total_rate": 84,
+					"total_count": 21073,
+					"commitment": 100,
+					"no_return": 99.6,
+					"on_time_shipping": 100
+				},
+				"properties": {
+					"is_trusted": false,
+					"is_official": false,
+					"is_roosta": false,
+					"is_new": false
+				},
+				"stars": 4.7,
+				"registration_date": "4 سال و 4 ماه"
+			},
+			"digiclub": {
+				"point": 150
+			},
+			"price": {
+				"selling_price": 91690000,
+				"rrp_price": 91690000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": false,
+				"is_locked_for_digiplus": false,
+				"marketable_stock": 1,
+				"discount_percent": 0
+			},
+			"shipment_methods": {
+				"description": "موجود در انبار فروشنده",
+				"has_lead_time": false,
+				"providers": [
+					{
+						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
+						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": true,
+						"type": "digikala"
+					}
+				]
+			}
+		},
+		"properties": {
+			"is_fast_shipping": false,
+			"is_ship_by_seller": false,
+			"is_multi_warehouse": false,
+			"is_fake": false,
+			"has_gift": false,
+			"min_price_in_last_month": 85790000,
+			"is_non_inventory": false,
+			"is_ad": false,
+			"is_jet_eligible": false,
+			"is_medical_supplement": false
+		},
+		"badges": [],
+		"colors": [
+			{
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
+			},
+			{
+				"id": 6,
+				"title": "سبز",
+				"hex_code": "#00e676"
+			},
+			{
+				"id": 8,
+				"title": "بنفش",
+				"hex_code": "#9C27B1"
+			}
+		]
+	},
+	{
 		"id": 5626354,
 		"title_fa": "گوشی موبایل سامسونگ مدل Galaxy A22 SM-A225F/DSN دو سیم کارت ظرفیت 64 گیگابایت و رم 4 گیگابایت ",
 		"title_en": "Samsung Galaxy A22 SM-A225F/DSN Dual SIM 64GB And 4GB RAM Mobile Phone",
@@ -2544,7 +2534,7 @@
 		"data_layer": {
 			"brand": "سامسونگ",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 759,
+			"metric6": 763,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -2564,12 +2554,12 @@
 		},
 		"rating": {
 			"rate": 86,
-			"count": 759
+			"count": 763
 		},
 		"default_variant": {
 			"id": 28551213,
-			"lead_time": 1,
-			"rank": 100,
+			"lead_time": 0,
+			"rank": 99.93,
 			"rate": 0,
 			"statistics": null,
 			"status": "marketable",
@@ -2578,7 +2568,7 @@
 				"is_ship_by_seller": false,
 				"is_multi_warehouse": false,
 				"has_similar_variants": false,
-				"in_digikala_warehouse": false
+				"in_digikala_warehouse": true
 			},
 			"digiplus": {
 				"services": [
@@ -2604,9 +2594,9 @@
 				"code": "ATS3G",
 				"url": "https://www.digikala.com/seller/ATS3G/",
 				"rating": {
-					"total_rate": 100,
-					"total_count": 2,
-					"commitment": 93.3,
+					"total_rate": 93,
+					"total_count": 3,
+					"commitment": 95.2,
 					"no_return": 100,
 					"on_time_shipping": 100
 				},
@@ -2632,13 +2622,13 @@
 				"discount_percent": 0
 			},
 			"shipment_methods": {
-				"description": "موجود در انبار فروشنده",
-				"has_lead_time": false,
+				"description": "موجود در انبار دیجی‌کالا",
+				"has_lead_time": true,
 				"providers": [
 					{
-						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
-						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": true,
+						"title": "ارسال دیجی‌کالا",
+						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": false,
 						"type": "digikala"
 					}
 				]
@@ -2650,7 +2640,7 @@
 			"is_multi_warehouse": false,
 			"is_fake": false,
 			"has_gift": false,
-			"min_price_in_last_month": 45990000,
+			"min_price_in_last_month": 46800000,
 			"is_non_inventory": false,
 			"is_ad": false,
 			"is_jet_eligible": false,
@@ -2681,339 +2671,6 @@
 		]
 	},
 	{
-		"id": 4935058,
-		"title_fa": "گوشی موبایل وان پلاس مدل NORD N10 5G BE2029 دو سیم‌کارت ظرفیت 128 گیگابایت و رم 6 گیگابایت",
-		"title_en": "OnePlus NORD N10 5G BE2029 Dual Sim 128GB And 6GB Ram Mobile Phone",
-		"url": {
-			"base": null,
-			"uri": "/product/dkp-4935058/گوشی-موبایل-وان-پلاس-مدل-nord-n10-5g-be2029-دو-سیمکارت-ظرفیت-128-گیگابایت-و-رم-6-گیگابایت"
-		},
-		"status": "marketable",
-		"has_quick_view": false,
-		"digiplus": {
-			"services": [
-				"ارسال رایگان",
-				"امکان ارسال فوری (شهر تهران)"
-			],
-			"is_jet_eligible": true,
-			"cash_back": 0,
-			"is_general_location_jet_eligible": false
-		},
-		"data_layer": {
-			"brand": "وان پلاس",
-			"category": "[MO,گوشی موبایل]",
-			"metric6": 61,
-			"dimension2": 0,
-			"dimension6": 0,
-			"dimension7": "none",
-			"dimension9": 4.2,
-			"dimension11": 0,
-			"dimension20": "marketable"
-		},
-		"images": {
-			"main": {
-				"storage_ids": [],
-				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/b9b7903a9a8d5ce39de827b44d3a45033859efbc_1618730250.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
-				],
-				"thumbnail_url": null,
-				"temporary_id": null
-			}
-		},
-		"rating": {
-			"rate": 84,
-			"count": 61
-		},
-		"default_variant": {
-			"id": 24591848,
-			"lead_time": 0,
-			"rank": 99.85,
-			"rate": 60,
-			"statistics": {
-				"totally_satisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"satisfied": {
-					"rate_count": 2,
-					"rate": 66.67
-				},
-				"neutral": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"dissatisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"totally_dissatisfied": {
-					"rate_count": 1,
-					"rate": 33.33
-				},
-				"total_count": 3,
-				"total_rate": 60
-			},
-			"status": "marketable",
-			"properties": {
-				"is_fast_shipping": false,
-				"is_ship_by_seller": false,
-				"is_multi_warehouse": false,
-				"has_similar_variants": false,
-				"in_digikala_warehouse": true
-			},
-			"digiplus": {
-				"services": [
-					"ارسال رایگان",
-					"امکان ارسال فوری (شهر تهران)"
-				],
-				"is_jet_eligible": true,
-				"cash_back": 0,
-				"is_general_location_jet_eligible": false
-			},
-			"color": {
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			},
-			"warranty": {
-				"id": 4978,
-				"title_fa": "گارانتی 18 ماهه کسری پارس",
-				"title_en": "گارانتی 18 ماهه کسری پارس"
-			},
-			"seller": {
-				"id": 1,
-				"title": "دیجی‌کالا",
-				"code": "5A52N",
-				"url": "https://www.digikala.com/seller/5A52N/",
-				"rating": {
-					"total_rate": 0,
-					"total_count": 0,
-					"commitment": 100,
-					"no_return": 99.9,
-					"on_time_shipping": 100
-				},
-				"properties": {
-					"is_trusted": false,
-					"is_official": false,
-					"is_roosta": false,
-					"is_new": false
-				},
-				"stars": 5,
-				"registration_date": "5 سال و 7 ماه"
-			},
-			"digiclub": {
-				"point": 150
-			},
-			"price": {
-				"selling_price": 65390000,
-				"rrp_price": 65390000,
-				"order_limit": 21,
-				"is_incredible": false,
-				"is_promotion": false,
-				"is_locked_for_digiplus": false,
-				"discount_percent": 0
-			},
-			"shipment_methods": {
-				"description": "موجود در انبار دیجی‌کالا",
-				"has_lead_time": true,
-				"providers": [
-					{
-						"title": "ارسال دیجی‌کالا",
-						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": false,
-						"type": "digikala"
-					}
-				]
-			}
-		},
-		"properties": {
-			"is_fast_shipping": false,
-			"is_ship_by_seller": false,
-			"is_multi_warehouse": false,
-			"is_fake": false,
-			"has_gift": false,
-			"min_price_in_last_month": 65390000,
-			"is_non_inventory": false,
-			"is_ad": false,
-			"is_jet_eligible": false,
-			"is_medical_supplement": false
-		},
-		"badges": [],
-		"colors": [
-			{
-				"id": 1,
-				"title": "مشکی",
-				"hex_code": "#212121"
-			}
-		]
-	},
-	{
-		"id": 6768113,
-		"title_fa": "گوشی موبایل اپل مدل iPhone 13 A2634 دو سیم‌ کارت ظرفیت 256 گیگابایت و رم 4 گیگابایت - اکتیو",
-		"title_en": "Apple iPhone 13 A2634 Dual SIM 256GB And 4GB RAM Mobile Phone - ACTIVATED",
-		"url": {
-			"base": null,
-			"uri": "/product/dkp-6768113/گوشی-موبایل-اپل-مدل-iphone-13-دو-سیم-کارت-ظرفیت-256-گیگابایت-و-رم-4-گیگابایت-اکتیو"
-		},
-		"status": "marketable",
-		"has_quick_view": false,
-		"digiplus": {
-			"services": [
-				"ارسال رایگان"
-			],
-			"is_jet_eligible": false,
-			"cash_back": 0,
-			"is_general_location_jet_eligible": false
-		},
-		"data_layer": {
-			"brand": "اپل",
-			"category": "[MO,گوشی موبایل]",
-			"metric6": 79,
-			"dimension2": 0,
-			"dimension6": 0,
-			"dimension7": "none",
-			"dimension9": 4.6,
-			"dimension11": 0,
-			"dimension20": "marketable"
-		},
-		"images": {
-			"main": {
-				"storage_ids": [],
-				"url": [
-					"https://dkstatics-public.digikala.com/digikala-products/9db64cde85334e3bf4a6571547d339c57867f11f_1634390689.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
-				],
-				"thumbnail_url": null,
-				"temporary_id": null
-			}
-		},
-		"rating": {
-			"rate": 92,
-			"count": 79
-		},
-		"default_variant": {
-			"id": 23457371,
-			"lead_time": 1,
-			"rank": 100,
-			"rate": 100,
-			"statistics": {
-				"totally_satisfied": {
-					"rate_count": 1,
-					"rate": 100
-				},
-				"satisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"neutral": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"dissatisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"totally_dissatisfied": {
-					"rate_count": 0,
-					"rate": 0
-				},
-				"total_count": 1,
-				"total_rate": 100
-			},
-			"status": "marketable",
-			"properties": {
-				"is_fast_shipping": false,
-				"is_ship_by_seller": false,
-				"is_multi_warehouse": false,
-				"has_similar_variants": false,
-				"in_digikala_warehouse": false
-			},
-			"digiplus": {
-				"services": [
-					"ارسال رایگان"
-				],
-				"is_jet_eligible": false,
-				"cash_back": 0,
-				"is_general_location_jet_eligible": false
-			},
-			"color": {
-				"id": 3,
-				"title": "قرمز",
-				"hex_code": "#f44336"
-			},
-			"warranty": {
-				"id": 5287,
-				"title_fa": "گارانتی 18 ماهه همراه سرویس خاورمیانه",
-				"title_en": "گارانتی 18 ماهه همراه سرویس خاورمیانه"
-			},
-			"seller": {
-				"id": 536,
-				"title": "انفورماتیک گستر",
-				"code": "5A5RS",
-				"url": "https://www.digikala.com/seller/5A5RS/",
-				"rating": {
-					"total_rate": 87,
-					"total_count": 561,
-					"commitment": 100,
-					"no_return": 100,
-					"on_time_shipping": 100
-				},
-				"properties": {
-					"is_trusted": false,
-					"is_official": false,
-					"is_roosta": false,
-					"is_new": false
-				},
-				"stars": 5,
-				"registration_date": "4 سال و 6 ماه"
-			},
-			"digiclub": {
-				"point": 150
-			},
-			"price": {
-				"selling_price": 311000000,
-				"rrp_price": 311000000,
-				"order_limit": 1,
-				"is_incredible": false,
-				"is_promotion": false,
-				"is_locked_for_digiplus": false,
-				"marketable_stock": 1,
-				"discount_percent": 0
-			},
-			"shipment_methods": {
-				"description": "موجود در انبار فروشنده",
-				"has_lead_time": false,
-				"providers": [
-					{
-						"title": "ارسال دیجی‌کالا از 1 روز کاری دیگر",
-						"description": "این کالا پس از مدت زمان مشخص شده توسط فروشنده در انبار دیجی‌کالا تامین و آماده پردازش می‌گردد و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
-						"has_lead_time": true,
-						"type": "digikala"
-					}
-				]
-			}
-		},
-		"properties": {
-			"is_fast_shipping": false,
-			"is_ship_by_seller": false,
-			"is_multi_warehouse": false,
-			"is_fake": false,
-			"has_gift": false,
-			"min_price_in_last_month": 270000000,
-			"is_non_inventory": false,
-			"is_ad": false,
-			"is_jet_eligible": false,
-			"is_medical_supplement": false
-		},
-		"badges": [],
-		"colors": [
-			{
-				"id": 3,
-				"title": "قرمز",
-				"hex_code": "#f44336"
-			}
-		]
-	},
-	{
 		"id": 3246506,
 		"title_fa": "گوشی موبایل شیائومی مدل Redmi 9A M2006C3LG دو سیم‌ کارت ظرفیت 32 گیگابایت\t",
 		"title_en": "Xiaomi Redmi 9A M2006C3LG Dual SIM 32GB Mobile Phone",
@@ -3035,10 +2692,10 @@
 		"data_layer": {
 			"brand": "شیائومی",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 4407,
-			"dimension2": 4,
+			"metric6": 4423,
+			"dimension2": 2,
 			"dimension6": 0,
-			"dimension7": "incredible",
+			"dimension7": "special-offer",
 			"dimension9": 4.2,
 			"dimension11": 0,
 			"dimension20": "marketable"
@@ -3055,36 +2712,36 @@
 		},
 		"rating": {
 			"rate": 84,
-			"count": 4407
+			"count": 4423
 		},
 		"default_variant": {
-			"id": 11449300,
+			"id": 11449315,
 			"lead_time": 0,
-			"rank": 99.87,
-			"rate": 86.8,
+			"rank": 99.88,
+			"rate": 87.8,
 			"statistics": {
 				"totally_satisfied": {
-					"rate_count": 86,
-					"rate": 52.44
+					"rate_count": 167,
+					"rate": 51.23
 				},
 				"satisfied": {
-					"rate_count": 61,
-					"rate": 37.2
+					"rate_count": 136,
+					"rate": 41.72
 				},
 				"neutral": {
-					"rate_count": 9,
-					"rate": 5.49
+					"rate_count": 11,
+					"rate": 3.37
 				},
 				"dissatisfied": {
-					"rate_count": 3,
-					"rate": 1.83
+					"rate_count": 8,
+					"rate": 2.45
 				},
 				"totally_dissatisfied": {
-					"rate_count": 5,
-					"rate": 3.05
+					"rate_count": 4,
+					"rate": 1.23
 				},
-				"total_count": 164,
-				"total_rate": 86.8
+				"total_count": 326,
+				"total_rate": 87.8
 			},
 			"status": "marketable",
 			"properties": {
@@ -3104,9 +2761,9 @@
 				"is_general_location_jet_eligible": false
 			},
 			"color": {
-				"id": 6,
-				"title": "سبز",
-				"hex_code": "#00e676"
+				"id": 11,
+				"title": "خاکستری",
+				"hex_code": "#9E9E9E"
 			},
 			"warranty": {
 				"id": 4590,
@@ -3139,18 +2796,23 @@
 			},
 			"price": {
 				"selling_price": 23950000,
-				"rrp_price": 24990000,
-				"order_limit": 2,
-				"is_incredible": true,
-				"is_promotion": false,
+				"rrp_price": 24490000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": true,
 				"is_locked_for_digiplus": false,
-				"discount_percent": 4,
-				"timer": 5532,
-				"sold_percentage": 56,
+				"discount_percent": 2,
 				"badge": {
-					"title": "پیشنهاد شگفت انگیز",
-					"color": "#E6123D",
-					"icon": null
+					"title": "گوشی دستت باشه",
+					"color": "#FB3449",
+					"icon": {
+						"storage_ids": [],
+						"url": [
+							"https://dkstatics-public.digikala.com/digikala-adservice-promotions/887e8d6d77719fb393d7ec0fe5e203d045ca771c_1647265552.svg"
+						],
+						"thumbnail_url": null,
+						"temporary_id": null
+					}
 				},
 				"is_digiplus_promotion": false,
 				"is_digiplus_early_access": false,
@@ -3223,7 +2885,7 @@
 		"data_layer": {
 			"brand": "اپل",
 			"category": "[MO,گوشی موبایل]",
-			"metric6": 1825,
+			"metric6": 1828,
 			"dimension2": 0,
 			"dimension6": 0,
 			"dimension7": "none",
@@ -3243,7 +2905,7 @@
 		},
 		"rating": {
 			"rate": 84,
-			"count": 1825
+			"count": 1828
 		},
 		"default_variant": {
 			"id": 27537535,
@@ -3353,7 +3015,7 @@
 			"is_multi_warehouse": false,
 			"is_fake": false,
 			"has_gift": false,
-			"min_price_in_last_month": 186890000,
+			"min_price_in_last_month": 180000000,
 			"is_non_inventory": false,
 			"is_ad": false,
 			"is_jet_eligible": false,
@@ -3380,6 +3042,360 @@
 				"id": 1,
 				"title": "مشکی",
 				"hex_code": "#212121"
+			}
+		]
+	},
+	{
+		"id": 5950634,
+		"title_fa": "گوشی موبایل سامسونگ مدل Galaxy A22 SM-A225F/DSN دو سیم کارت ظرفیت 128 گیگابایت و رم 4 گیگابایت",
+		"title_en": "Samsung Galaxy A22 SM-A225F/DSN Dual SIM 128GB And 4GB RAM Mobile Phone",
+		"url": {
+			"base": null,
+			"uri": "/product/dkp-5950634/گوشی-موبایل-سامسونگ-مدل-galaxy-a22-sm-a225fdsn-دو-سیم-کارت-ظرفیت-128-گیگابایت-و-رم-4-گیگابایت"
+		},
+		"status": "marketable",
+		"has_quick_view": false,
+		"digiplus": {
+			"services": [
+				"ارسال رایگان",
+				"امکان ارسال فوری (شهر تهران)"
+			],
+			"is_jet_eligible": true,
+			"cash_back": 0,
+			"is_general_location_jet_eligible": false
+		},
+		"data_layer": {
+			"brand": "سامسونگ",
+			"category": "[MO,گوشی موبایل]",
+			"metric6": 975,
+			"dimension2": 0,
+			"dimension6": 0,
+			"dimension7": "none",
+			"dimension9": 4.3,
+			"dimension11": 0,
+			"dimension20": "marketable"
+		},
+		"images": {
+			"main": {
+				"storage_ids": [],
+				"url": [
+					"https://dkstatics-public.digikala.com/digikala-products/eaa9965c5d241e92403b49e0f69e5df928994958_1627815332.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+				],
+				"thumbnail_url": null,
+				"temporary_id": null
+			}
+		},
+		"rating": {
+			"rate": 86,
+			"count": 975
+		},
+		"default_variant": {
+			"id": 21859811,
+			"lead_time": 0,
+			"rank": 99.9,
+			"rate": 89.6,
+			"statistics": {
+				"totally_satisfied": {
+					"rate_count": 25,
+					"rate": 54.35
+				},
+				"satisfied": {
+					"rate_count": 20,
+					"rate": 43.48
+				},
+				"neutral": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"dissatisfied": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"totally_dissatisfied": {
+					"rate_count": 1,
+					"rate": 2.17
+				},
+				"total_count": 46,
+				"total_rate": 89.6
+			},
+			"status": "marketable",
+			"properties": {
+				"is_fast_shipping": false,
+				"is_ship_by_seller": false,
+				"is_multi_warehouse": false,
+				"has_similar_variants": false,
+				"in_digikala_warehouse": true
+			},
+			"digiplus": {
+				"services": [
+					"ارسال رایگان",
+					"امکان ارسال فوری (شهر تهران)"
+				],
+				"is_jet_eligible": true,
+				"cash_back": 0,
+				"is_general_location_jet_eligible": false
+			},
+			"color": {
+				"id": 24,
+				"title": "یاسی",
+				"hex_code": "#fce4ec"
+			},
+			"warranty": {
+				"id": 4300,
+				"title_fa": "گارانتی 18 ماهه داریا همراه پایتخت",
+				"title_en": "گارانتی 18 ماهه داریا همراه پایتخت"
+			},
+			"seller": {
+				"id": 1,
+				"title": "دیجی‌کالا",
+				"code": "5A52N",
+				"url": "https://www.digikala.com/seller/5A52N/",
+				"rating": {
+					"total_rate": 0,
+					"total_count": 0,
+					"commitment": 100,
+					"no_return": 99.9,
+					"on_time_shipping": 100
+				},
+				"properties": {
+					"is_trusted": false,
+					"is_official": false,
+					"is_roosta": false,
+					"is_new": false
+				},
+				"stars": 5,
+				"registration_date": "5 سال و 7 ماه"
+			},
+			"digiclub": {
+				"point": 150
+			},
+			"price": {
+				"selling_price": 51990000,
+				"rrp_price": 51990000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": false,
+				"is_locked_for_digiplus": false,
+				"discount_percent": 0
+			},
+			"shipment_methods": {
+				"description": "موجود در انبار دیجی‌کالا",
+				"has_lead_time": true,
+				"providers": [
+					{
+						"title": "ارسال دیجی‌کالا",
+						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": false,
+						"type": "digikala"
+					}
+				]
+			}
+		},
+		"properties": {
+			"is_fast_shipping": false,
+			"is_ship_by_seller": false,
+			"is_multi_warehouse": false,
+			"is_fake": false,
+			"has_gift": false,
+			"min_price_in_last_month": 50990000,
+			"is_non_inventory": false,
+			"is_ad": false,
+			"is_jet_eligible": false,
+			"is_medical_supplement": false
+		},
+		"badges": [],
+		"colors": [
+			{
+				"id": 24,
+				"title": "یاسی",
+				"hex_code": "#fce4ec"
+			},
+			{
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
+			},
+			{
+				"id": 8,
+				"title": "بنفش",
+				"hex_code": "#9C27B1"
+			},
+			{
+				"id": 2,
+				"title": "سفید",
+				"hex_code": "#FFFFFF"
+			}
+		]
+	},
+	{
+		"id": 7384166,
+		"title_fa": "گوشی موبایل سامسونگ مدل Galaxy A03 Core SM-A032F/DS دو سیم‌ کارت ظرفیت 32 گیگابایت و رم 2 گیگابایت",
+		"title_en": "Samsung Galaxy A03 Core SM-A032F/DS Dual SIM 32GB And 2GB RAM Mobile Phone",
+		"url": {
+			"base": null,
+			"uri": "/product/dkp-7384166/گوشی-موبایل-سامسونگ-مدل-galaxy-a03-core-sm-a032fds-دو-سیم-کارت-ظرفیت-32-گیگابایت-و-رم-2-گیگابایت"
+		},
+		"status": "marketable",
+		"has_quick_view": false,
+		"digiplus": {
+			"services": [
+				"ارسال رایگان",
+				"امکان ارسال فوری (شهر تهران)"
+			],
+			"is_jet_eligible": true,
+			"cash_back": 0,
+			"is_general_location_jet_eligible": false
+		},
+		"data_layer": {
+			"brand": "سامسونگ",
+			"category": "[MO,گوشی موبایل]",
+			"metric6": 223,
+			"dimension2": 0,
+			"dimension6": 0,
+			"dimension7": "none",
+			"dimension9": 4,
+			"dimension11": 0,
+			"dimension20": "marketable"
+		},
+		"images": {
+			"main": {
+				"storage_ids": [],
+				"url": [
+					"https://dkstatics-public.digikala.com/digikala-products/c534b55b28b295db460f2bf8ab0f476bb1e3be0b_1640519213.jpg?x-oss-process=image/resize,m_lfit,h_300,w_300/quality,q_80"
+				],
+				"thumbnail_url": null,
+				"temporary_id": null
+			}
+		},
+		"rating": {
+			"rate": 80,
+			"count": 223
+		},
+		"default_variant": {
+			"id": 25528898,
+			"lead_time": 0,
+			"rank": 99.91,
+			"rate": 91,
+			"statistics": {
+				"totally_satisfied": {
+					"rate_count": 6,
+					"rate": 54.55
+				},
+				"satisfied": {
+					"rate_count": 5,
+					"rate": 45.45
+				},
+				"neutral": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"dissatisfied": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"totally_dissatisfied": {
+					"rate_count": 0,
+					"rate": 0
+				},
+				"total_count": 11,
+				"total_rate": 91
+			},
+			"status": "marketable",
+			"properties": {
+				"is_fast_shipping": false,
+				"is_ship_by_seller": false,
+				"is_multi_warehouse": false,
+				"has_similar_variants": false,
+				"in_digikala_warehouse": true
+			},
+			"digiplus": {
+				"services": [
+					"ارسال رایگان",
+					"امکان ارسال فوری (شهر تهران)"
+				],
+				"is_jet_eligible": true,
+				"cash_back": 0,
+				"is_general_location_jet_eligible": false
+			},
+			"color": {
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
+			},
+			"warranty": {
+				"id": 4300,
+				"title_fa": "گارانتی 18 ماهه داریا همراه پایتخت",
+				"title_en": "گارانتی 18 ماهه داریا همراه پایتخت"
+			},
+			"seller": {
+				"id": 1,
+				"title": "دیجی‌کالا",
+				"code": "5A52N",
+				"url": "https://www.digikala.com/seller/5A52N/",
+				"rating": {
+					"total_rate": 0,
+					"total_count": 0,
+					"commitment": 100,
+					"no_return": 99.9,
+					"on_time_shipping": 100
+				},
+				"properties": {
+					"is_trusted": false,
+					"is_official": false,
+					"is_roosta": false,
+					"is_new": false
+				},
+				"stars": 5,
+				"registration_date": "5 سال و 7 ماه"
+			},
+			"digiclub": {
+				"point": 150
+			},
+			"price": {
+				"selling_price": 22790000,
+				"rrp_price": 22790000,
+				"order_limit": 1,
+				"is_incredible": false,
+				"is_promotion": false,
+				"is_locked_for_digiplus": false,
+				"discount_percent": 0
+			},
+			"shipment_methods": {
+				"description": "موجود در انبار دیجی‌کالا",
+				"has_lead_time": true,
+				"providers": [
+					{
+						"title": "ارسال دیجی‌کالا",
+						"description": "این کالا در انبار دیجی‌کالا موجود و آماده پردازش است و توسط پیک دیجی‌کالا در بازه انتخابی ارسال خواهد شد.",
+						"has_lead_time": false,
+						"type": "digikala"
+					}
+				]
+			}
+		},
+		"properties": {
+			"is_fast_shipping": false,
+			"is_ship_by_seller": false,
+			"is_multi_warehouse": false,
+			"is_fake": false,
+			"has_gift": false,
+			"min_price_in_last_month": 21890000,
+			"is_non_inventory": false,
+			"is_ad": false,
+			"is_jet_eligible": false,
+			"is_medical_supplement": false
+		},
+		"badges": [],
+		"colors": [
+			{
+				"id": 1,
+				"title": "مشکی",
+				"hex_code": "#212121"
+			},
+			{
+				"id": 4,
+				"title": "آبی",
+				"hex_code": "#2196f3"
 			}
 		]
 	}

@@ -112,6 +112,7 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
 
 // Start New Crawler
 const crawler = async (next_page_link , connection ,site_id, cat_id) => {
+
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
     let pageCounter = 0;
@@ -122,8 +123,11 @@ const crawler = async (next_page_link , connection ,site_id, cat_id) => {
         let products = await ApiCrawler.fetchData(next_page_link + i);
         parsedResultsArray = await ApiCrawler.parseResults(products,parsedResultsArray);
     }
-    //fs.writeFileSync('./dsad.json', JSON.stringify(parsedResultsArray,null,'\t'));
 
+    await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id);
+    // su.then(res => {
+    // fs.writeFileSync('./single-logs.json', JSON.stringify(res,null,'\t'));
+    // });
 
     // let values = [];
     // const ect = get_current_date();
@@ -137,21 +141,6 @@ const crawler = async (next_page_link , connection ,site_id, cat_id) => {
     //             old_images.push(result[k].image);
     //         }
     //     });
-
-
-    let crawled_count = 0;
-    for (let i=0; i< parsedResultsArray.length; i++){
-        // Add Single Page Data
-        crawled_count++;
-        const urlSingle = `https://api.digikala.com/v1/product/${parsedResultsArray[i].pid}/`;
-        console.log('current index:' + chalk.yellow.bgBlack(i+1));
-
-        try {
-            let results = await axios.get('https://api.digikala.com/v1/product/7051551/');
-            fs.writeFileSync('./single-logs.json', JSON.stringify(results,null,'\t'));
-        }catch (e) {
-            console.log(e);
-        }
 
 
 
@@ -215,14 +204,13 @@ const crawler = async (next_page_link , connection ,site_id, cat_id) => {
         //             values = [];
         //         });
         // }
-    }
+};
 
 
     //const specsss = await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id);
     // log in local file
     //fs.writeFileSync('./single-logs.json', JSON.stringify(specsss,null,'\t'));
 
-};
 
 // Pagination Elements Link
 let nextPageLink = '';
