@@ -112,106 +112,23 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
 
 // Start New Crawler
 const crawler = async (next_page_link , connection ,site_id, cat_id) => {
+    // console.log(path.join(__dirname, '../' + 'EcommerceShop/public/uploads/productImages/'));
+    // return;
 
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
-    let pageCounter = 0;
-    let start_crawl_time = '';
+    const start_crawl_time = get_current_date();
     let parsedResultsArray = [];
 
-    for (let i=0; i<pageLimit; i++){
+    for (let i=1; i<=pageLimit; i++){
+        console.log(chalk.cyan(`Scraping: ${nextPageLink+i}`));
         let products = await ApiCrawler.fetchData(next_page_link + i);
         parsedResultsArray = await ApiCrawler.parseResults(products,parsedResultsArray);
     }
+    // console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(next_page_link + i)} initiated...\n`));
 
-    await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id);
-    // su.then(res => {
-    // fs.writeFileSync('./single-logs.json', JSON.stringify(res,null,'\t'));
-    // });
-
-    // let values = [];
-    // const ect = get_current_date();
-    //
-    // let old_images = [];
-    // connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
-    //     function(err,result,fields){
-    //         if (err) console.log(err);
-    //
-    //         for (let k=0;k<result.length;k++){
-    //             old_images.push(result[k].image);
-    //         }
-    //     });
-
-
-
-        //const products = results.data.products;
-
-        //
-        // const specifications = products.specifications.attributes;
-        // const parameters = '';
-        // const description = '';
-        //
-        // let specs = [];
-        // let specs_obj = {};
-        // // let params = [];
-        // // let params_obj = {};
-        // // let desc = '';
-        // specifications.forEach(spec => {
-        //     specs_obj[spec.title] = spec.value;
-        //     specs.push(specs_obj);
-        //     //specs = specs[specs.length-1];
-        // });
-        //
-        // //return specs;
-        //
-        //
-        //
-        // let image_temp = uuidv4();
-        // download(item.img,
-        //     path.join(__dirname, '.' +
-        //         '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg', function(){
-        //         console.log('image upload:','done');
-        //         sharp('.' +
-        //             '../EcommerceShop/public/uploads/productImages' + image_temp + '.jpg')
-        //             .resize(450)
-        //             .toFile('.' +
-        //                 '../EcommerceShop/public/uploads/productImages' + image_temp + '.webp', (err, info) => {
-        //                 if (err) console.log('Error in resinzing',err);
-        //                 else {
-        //                     try {
-        //                         fs.unlink(path.join(__dirname, '.' +
-        //                             '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg' , function (err) {
-        //                             if (err) console.warn('image deletion Error',err);
-        //                         });
-        //                     } catch (e) {
-        //                         console.error('Unlink Error',e);
-        //                     }
-        //                 }
-        //             });
-        //     });
-        //
-        // values.push([parsedResultsArray[i].title,parsedResultsArray[i].url,parsedResultsArray[i].main_price
-        //     ,parsedResultsArray[i].price,parsedResultsArray[i].status,image_temp,cat_id,site_id,specifications
-        //     ,parameters,description,parsedResultsArray[i].brand,String(ect)]);
-        //
-        // if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
-        //     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-        //          (title, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
-        //         [values],
-        //         function(err,result) {
-        //             if (err) throw err;
-        //             console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
-        //             values = [];
-        //         });
-        // }
+    await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
 };
-
-
-    //const specsss = await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id);
-    // log in local file
-    //fs.writeFileSync('./single-logs.json', JSON.stringify(specsss,null,'\t'));
-
-
 // Pagination Elements Link
 let nextPageLink = '';
 switch (siteID) {
@@ -221,182 +138,8 @@ switch (siteID) {
     default:
         nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=`;
 }
-
 crawler(nextPageLink, connection ,siteID,catID);
 return;
-
-
-const setResults = async (parsed_results,site_id ,cat_id,sct) => {
-    let values = [];
-    const ect = get_current_date();
-
-    connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
-        function(err,result,fields){
-            if (err) console.log(err);
-            for (let k=0;k<result.length;k++){
-                oldImagesArrayFunc(result[k].image);
-            }
-        });
-
-    let crawled_count = 0;
-    for(let i=0; i< parsedResults.length; i++){
-        // Add Single Page Data
-        crawled_count++;
-        const urlSingle = `https://api.digikala.com/v1/product/${parsed_results[i].pid}`;
-        console.log('current index:' + chalk.yellow.bgBlack(i+1));
-        let specifications = '';
-        let parameters = '';
-        let description = '';
-
-        const results = await axios.get(urlSingle);
-        // log in local file
-        fs.writeFileSync('./single-logs.json', JSON.stringify(results.data.data.products,null,'\t'));
-
-        return;
-        const products = results.data.data.products;
-        console.log(products.length); // 20
-
-        getResults(products,siteID);
-
-
-        // try{
-        //     const html = await axios.get(encodeURI(urlSingle));
-        //     const $ = cheerio.load(html.data);
-        //     const specs_selector = $(row[0].specs_selector);
-        //     const params_selector = $(row[0].params_selector);
-        //     const desc_selector = $(row[0].desc_selector);
-        //     let specs = [];
-        //     let specs_obj = {};
-        //     let params = [];
-        //     let params_obj = {};
-        //     let desc = '';
-        //
-        //     params_selector.map(function (index , el) {
-        //         let params_key = '';
-        //         let params_value = '';
-        //         switch (site_id) {
-        //             case 1:
-        //                 params_key = $(el).find('.c-params__list-key > span.block').text();
-        //                 params_value = $(el).find('.c-params__list-value > span.block').text();
-        //                 params_obj[params_key] = params_value.replace(/\s+/g, ' ');
-        //                 params.push(params_obj);
-        //                 break;
-        //             default:
-        //                 params_key = $(el).find('.c-params__list-key > span.block').text();
-        //                 params_value = $(el).find('.c-params__list-value > span.block').text();
-        //                 params_obj[params_key] = params_value.replace(/\s+/g, ' ');
-        //                 params.push(params_obj);
-        //         }
-        //     });
-        //     params = params[params.length-1];
-        //
-        //     specs_selector.map(function (index , el) {
-        //         let specs_key ='';
-        //         let specs_value ='';
-        //         switch (site_id) {
-        //             case 1:
-        //                 specs_key = $(el).find('span').eq(0).text();
-        //                 specs_value = $(el).find('span').eq(1).text();
-        //                 specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
-        //                 specs.push(specs_obj);
-        //                 break;
-        //             default:
-        //                 specs_key = $(el).find('span').eq(0).text();
-        //                 specs_value = $(el).find('span').eq(1).text();
-        //                 specs_obj[specs_key] = specs_value.replace(/\s+/g, ' ');
-        //                 specs.push(specs_obj);
-        //         }
-        //     });
-        //     specs = specs[specs.length-1];
-        //
-        //     desc_selector.map(function (index , el) {
-        //         switch (site_id) {
-        //             case 1:
-        //                 desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
-        //                 break;
-        //             default:
-        //                 desc = $(el).find('.c-mask__text.c-mask__text--product-summary').text();
-        //         }
-        //     });
-        //
-        //     specifications = JSON.stringify(specs);
-        //     parameters = JSON.stringify(params);
-        //     description = desc;
-        // } catch (error) {
-        //     console.error(error);
-        //     process.exit(1);
-        // }
-
-        let image_temp = uuidv4();
-        download(parsed_results[i].img,
-            path.join(__dirname, '.' +
-                '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg', function(){
-                console.log('image upload:','done');
-                sharp('.' +
-                    '../EcommerceShop/public/uploads/productImages' + image_temp + '.jpg')
-                    .resize(450)
-                    .toFile('.' +
-                        '../EcommerceShop/public/uploads/productImages' + image_temp + '.webp', (err, info) => {
-                        if (err) console.log('Error in resinzing',err);
-                        else {
-                            try {
-                                fs.unlink(path.join(__dirname, '.' +
-                                    '../EcommerceShop/public/uploads/productImages') + image_temp + '.jpg' , function (err) {
-                                    if (err) console.warn('image deletion Error',err);
-                                });
-                            } catch (e) {
-                                console.error('Unlink Error',e);
-                            }
-                        }
-                    });
-            });
-
-        values.push([parsed_results[i].title,parsed_results[i].url,parsed_results[i].main_price
-            ,parsed_results[i].price,parsed_results[i].status,image_temp,cat_id,site_id,specifications
-            ,parameters,description,parsed_results[i].brand,String(ect)]);
-
-        if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
-            connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
-                [values],
-                function(err,result) {
-                    if (err) throw err;
-                    console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
-                    values = [];
-                });
-        }
-    }
-
-
-    //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
-    connection.query(`INSERT INTO ${config.tables.ProductsTable}
-     (title, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
-        [values],
-        function(err,result) {
-            if (err) throw err;
-            console.log('All Is Done');
-
-            connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
-                function(err,resp){
-                    if (err) throw err;
-                    console.log('All Old Data Is Deleted.');
-                    // delete old images
-                    deleteOldImages();
-                });
-        });
-
-    connection.query(`INSERT INTO ${config.tables.LogsTable}
-    (start_crawl_time, end_crawl_time , all_count ,crawled_count , category_id , site_id)
-    VALUES (${sct},${ect},${parsed_results.length} , ${crawled_count},${cat_id},${site_id})`,
-        function(err,result) {
-            if (err) throw err;
-            console.log('Logs Added.');
-        });
-};
-
-return;
-
-
 
 
 // Start Crawler
