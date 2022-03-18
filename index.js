@@ -110,6 +110,7 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
 
 
 // Run Crawler
+global.varr = '';
 const runCrawler = async (url , connection ,site_id, cat_id) => {
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
@@ -123,13 +124,18 @@ const runCrawler = async (url , connection ,site_id, cat_id) => {
     }
 
     await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
+    for (let j=0; j<parsedResultsArray.length; j++){
+        // add delay
+        await ApiCrawler.updateProducts(parsedResultsArray[j].pid,connection);
+
+    }
+
 };
 
 const userUrl = catName+'Url';
 connection.query(`SELECT ${userUrl} FROM ${config.tables.SitesTable} WHERE id=${siteID} `,
     function(err,row,fields){
         if (err) console.log(err);
-        console.log('row',row);
         preparation(row , userUrl);
     });
 

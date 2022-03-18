@@ -129,14 +129,14 @@ class ApiCrawler{
                         });
                 });
 
-            values.push([product.title,product.title_en,product.url,product.main_price
+            values.push([product.pid,product.title,product.title_en,product.url,product.main_price
                 ,product.price,product.status,image_temp,cat_id,site_id,specifications
                 ,parameters,description,product.brand,String(ect)]);
 
 
             if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
                 connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                 (pid,title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
                     [values],
                     function(err,result) {
                         if (err) throw err;
@@ -146,9 +146,13 @@ class ApiCrawler{
             }
         });
 
+        console.log('vl: ',values.length);
+        for (let j=0;j<values.length;j++){
+            // Bulk insert every 30
+        }
         //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
         connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                         (title,title_en, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                         (pid,title,title_en, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
             [values],
             function(err,result) {
                 if (err) throw err;
@@ -180,6 +184,55 @@ class ApiCrawler{
                 console.log('Logs Added.');
                 // connection.end();
             });
+    }
+
+    static async updateProducts(pid,connection)
+    {
+        // variables
+        let values = [];
+        const ect = get_current_date();
+        let specifications = '';
+        let parameters = '';
+        let description = '';
+        let specs = [];
+        let specs_obj = {};
+        let params = [];
+        let params_obj = {};
+        let old_images = [];
+
+
+        let urlSingle = `${process.env.API_URL}/product/${pid}/`;
+        axios.get(encodeURI(urlSingle))
+            .then(res => {
+                specifications = res.data.data.product.specifications[0].attributes;
+                //parameters = res.data.data.product.review.attributes;
+
+                if (specifications !== undefined){
+                    specifications.forEach(spec => {
+                        specs_obj[spec.title] = spec.values;
+                        specs.push(specs_obj);
+                    });
+                }
+                // if (parameters !== undefined){
+                //     parameters.forEach(param=> {
+                //         params_obj[param.title] = param.values;
+                //         params.push(params_obj);
+                //     });
+                // }
+
+                specifications = JSON.stringify(specs);
+                //parameters = JSON.stringify(params);
+                //if (res.data.data.product.review.description !== undefined) description = res.data.data.product.review.description;
+
+                connection.query(`UPDATE ${config.tables.ProductsTable} SET specifications = ? WHERE pid = ?; `, [specifications,pid],
+                    function(err,result,fields){
+                        if (err) console.log(err);
+                    });
+            }).catch(err => {
+            console.log(err);
+        });
+
+
     }
 }
 
