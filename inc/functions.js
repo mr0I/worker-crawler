@@ -79,24 +79,28 @@ class ApiCrawler{
             crawled_count++;
             console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
 
-            let urlSingle = `https://api.digikala.com/v1/product/${product.pid}/`;
+            let urlSingle = `${process.env.API_URL}/product/${product.pid}/`;
             axios.get(encodeURI(urlSingle))
                 .then(res => {
                     specifications = res.data.data.product.specifications[0].attributes;
                     parameters = res.data.data.product.review.attributes;
 
-                    specifications.forEach(spec => {
-                        specs_obj[spec.title] = spec.values;
-                        specs.push(specs_obj);
-                    });
-                    parameters.forEach(param=> {
-                        params_obj[param.title] = param.values;
-                        params.push(params_obj);
-                    });
+                    if (specifications !== undefined){
+                        specifications.forEach(spec => {
+                            specs_obj[spec.title] = spec.values;
+                            specs.push(specs_obj);
+                        });
+                    }
+                    if (parameters !== undefined){
+                        parameters.forEach(param=> {
+                            params_obj[param.title] = param.values;
+                            params.push(params_obj);
+                        });
+                    }
 
                     specifications = JSON.stringify(specs);
                     parameters = JSON.stringify(params);
-                    description = res.data.data.product.review.description;
+                    if (res.data.data.product.review.description !== undefined) description = res.data.data.product.review.description;
                 }).catch(err => {
                 console.log(err);
             });

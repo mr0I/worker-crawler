@@ -10,7 +10,7 @@
   "ftp": {
     "host": "212.33.195.45",
     "user": "zeroone@dgmarketz.com",
-    "pass": "S63)0UTi^0P*"
+    "pass": "******"
   },
   "tables": {
     "ProductsTable": "products",

@@ -6,12 +6,15 @@ const chalk = require('chalk');
 const cmdArgs = require('yargs').argv;
 const config = require('./config');
 const fs = require('fs');
+const ApiCrawler = require('./inc/functions');
+const Ftp = require( 'ftp' );
+const dotenv = require('dotenv');
+dotenv.config();
+
 const {
     get_current_date,
     get_brand
 } = require('./inc/helpers');
-const ApiCrawler = require('./inc/functions');
-const Ftp = require( 'ftp' );
 
 
 // Get Args
@@ -35,7 +38,7 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
-/* start Tools */
+/* Start Tools */
 // send images to host
 if (imageUploader !== undefined && imageUploader.toLowerCase() === 'y'){
     const ftpClient = new Ftp();
@@ -103,36 +106,93 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
         });
     return;
 }
-/* end Tools */
+/* End Tools */
 
 
 // Run Crawler
-const runCrawler = async (next_page_link , connection ,site_id, cat_id) => {
+const runCrawler = async (url , connection ,site_id, cat_id) => {
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
-    const start_crawl_time = get_current_date();
     let parsedResultsArray = [];
+    const start_crawl_time = get_current_date();
 
     for (let i=1; i<=pageLimit; i++){
-        console.log(chalk.cyan(`Scraping: ${nextPageLink+i}`));
-        let products = await ApiCrawler.fetchData(next_page_link + i);
+        console.log(chalk.cyan(`Scraping: ${url+i}`));
+        let products = await ApiCrawler.fetchData(url + i);
         parsedResultsArray = await ApiCrawler.parseResults(products,parsedResultsArray);
     }
-    // console.log(chalk.yellow.bgBlue(`\n  Scraping of ${chalk.underline.bold(next_page_link + i)} initiated...\n`));
 
     await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
 };
-// Pagination Elements Link
-let nextPageLink = '';
-switch (siteID) {
-    case 1:
-        nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=`;
-        break;
-    default:
-        nextPageLink = `https://api.digikala.com/v1/categories/mobile-phone/search/?page=`;
-}
 
-runCrawler(nextPageLink, connection ,siteID,catID);
+const userUrl = catName+'Url';
+connection.query(`SELECT ${userUrl} FROM ${config.tables.SitesTable} WHERE id=${siteID} `,
+    function(err,row,fields){
+        if (err) console.log(err);
+        console.log('row',row);
+        preparation(row , userUrl);
+    });
+
+const preparation = async(row ,user_url) => {
+    if (row.length === 0){
+        console.log(chalk.red.bgBlack("No Such Category!!!"));
+        process.exit(1);
+        return;
+    }
+    // Pagination Elements Link
+    let url = '';
+    switch (user_url){
+        case 'mobileUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].mobileUrl}/search/?page=`
+                : row;
+            break;
+        case 'mobileAccessoriesUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].mobileAccessoriesUrl}/search/?page=`
+                : row;
+            break;
+        case 'computerPartsUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].computerPartsUrl}/search/?page=`
+                : row;
+            break;
+        case 'laptopAccessoriesUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].laptopAccessoriesUrl}/search/?page=`
+                : row;
+            break;
+        case 'wearableGadgetUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].wearableGadgetUrl}/search/?page=`
+                : row;
+            break;
+        case 'tabletUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].tabletUrl}/search/?page=`
+                : row;
+            break;
+        case 'laptopUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].laptopUrl}/search/?page=`
+                : row;
+            break;
+        case 'officeMachinesUrl':
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].officeMachinesUrl}/search/?page=`
+                : row;
+            break;
+        default:
+            url = (row instanceof Object)
+                ? `${process.env.API_URL}/categories/${await row[0].mobileUrl}/search/?page=`
+                : row;
+    }
+
+    runCrawler(url, connection ,siteID,catID);
+};
+
+
+
 
 
 
