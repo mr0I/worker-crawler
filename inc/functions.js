@@ -4,13 +4,10 @@ const fs = require('fs');
 const chalk = require('chalk');
 const { v4: uuidv4 } = require('uuid');
 const request = require('request');
-const cmdArgs = require('yargs').argv;
 const path = require('path');
 const sharp = require('sharp'); // https://github.com/lovell/sharp
 const {
-    price_sanitizer,
     get_current_date,
-    get_brand
 } = require('../inc/helpers');
 
 
@@ -25,7 +22,7 @@ class ApiCrawler{
     {
         const results = await axios.get(encodeURI(next_page_link));
         // log in local file
-        fs.writeFileSync('./logs.json', JSON.stringify(results.data.data.products,null,'\t'));
+        //fs.writeFileSync('./logs.json', JSON.stringify(results.data.data.products,null,'\t'));
 
         return results.data.data.products;
     }
@@ -68,7 +65,6 @@ class ApiCrawler{
         let params_obj = {};
         let old_images = [];
 
-
         connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
             function(err,result,fields){
                 if (err) console.log(err);
@@ -101,8 +97,6 @@ class ApiCrawler{
                     specifications = JSON.stringify(specs);
                     parameters = JSON.stringify(params);
                     description = res.data.data.product.review.description;
-
-                    //fs.writeFileSync('./single-logs.json', JSON.stringify(description,null,'\t'));
                 }).catch(err => {
                 console.log(err);
             });
@@ -183,8 +177,6 @@ class ApiCrawler{
                 // connection.end();
             });
     }
-
-
 }
 
 
