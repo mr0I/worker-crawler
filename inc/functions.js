@@ -74,77 +74,49 @@ class ApiCrawler{
                 }
             });
 
+
+
         let crawled_count = 0;
-        await parsedResultsArray.map(product => {
-            crawled_count++;
-            console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
+        for(let i=0; i< parsedResultsArray.length; i++){
+                crawled_count++;
+                console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
 
-            let urlSingle = `${process.env.API_URL}/product/${product.pid}/`;
-            axios.get(encodeURI(urlSingle))
-                .then(res => {
-                    specifications = res.data.data.product.specifications[0].attributes;
-                    parameters = res.data.data.product.review.attributes;
-
-                    if (specifications !== undefined){
-                        specifications.forEach(spec => {
-                            specs_obj[spec.title] = spec.values;
-                            specs.push(specs_obj);
+                let image_temp = uuidv4();
+                try {
+                    await download(parsedResultsArray[i].img,
+                        path.join(__dirname, '../../' +
+                            'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function () {
+                            console.log('image upload:', 'done');
+                            sharp(path.join(__dirname, '../../' +
+                                'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg')
+                                .resize(450)
+                                .toFile(path.join(__dirname, '../../' +
+                                    'EcommerceShop/public/uploads/productImages/') + image_temp + '.webp', (err, info) => {
+                                    if (err) console.log('Error in resizing', err);
+                                    else {
+                                        try {
+                                            fs.unlink(path.join(__dirname, '../../' +
+                                                'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function (err) {
+                                                if (err) console.warn('image deletion Error', err);
+                                            });
+                                        } catch (e) {
+                                            console.error('Unlink Error', e);
+                                        }
+                                    }
+                                });
                         });
-                    }
-                    if (parameters !== undefined){
-                        parameters.forEach(param=> {
-                            params_obj[param.title] = param.values;
-                            params.push(params_obj);
-                        });
-                    }
 
-                    specifications = JSON.stringify(specs);
-                    parameters = JSON.stringify(params);
-                    if (res.data.data.product.review.description !== undefined) description = res.data.data.product.review.description;
-                }).catch(err => {
-                console.log(err);
-            });
+                    values.push([parsedResultsArray[i].pid, parsedResultsArray[i].title, parsedResultsArray[i].title_en, parsedResultsArray[i].url, parsedResultsArray[i].main_price
+                        , parsedResultsArray[i].price, parsedResultsArray[i].status, image_temp, cat_id, site_id, specifications
+                        , parameters, description, parsedResultsArray[i].brand, String(ect)]);
+                }catch (e) {
+                    console.log(e);
+                }
 
-            let image_temp = uuidv4();
-            download(product.img,
-                path.join(__dirname, '../../' +
-                    'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function(){
-                    console.log('image upload:','done');
-                    sharp(path.join(__dirname,'../../' +
-                        'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg')
-                        .resize(450)
-                        .toFile(path.join(__dirname,'../../' +
-                            'EcommerceShop/public/uploads/productImages/') + image_temp + '.webp', (err, info) => {
-                            if (err) console.log('Error in resizing',err);
-                            else {
-                                try {
-                                    fs.unlink(path.join(__dirname, '../../' +
-                                        'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg' , function (err) {
-                                        if (err) console.warn('image deletion Error',err);
-                                    });
-                                } catch (e) {
-                                    console.error('Unlink Error',e);
-                                }
-                            }
-                        });
-                });
-
-            values.push([product.pid,product.title,product.title_en,product.url,product.main_price
-                ,product.price,product.status,image_temp,cat_id,site_id,specifications
-                ,parameters,description,product.brand,String(ect)]);
-
-
-            // if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
-            //     connection.query(`INSERT INTO ${config.tables.ProductsTable}
-            //      (pid,title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
-            //         [values],
-            //         function(err,result) {
-            //             if (err) throw err;
-            //             console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
-            //             values = [];
-            //         });
-            // }
-        });
+                // setTimeout(function () {
+                //     console.log('delay...')
+                // } , 1000)
+        }
 
 
         // for (let j=0;j<values.length;j++){
@@ -210,7 +182,6 @@ class ApiCrawler{
             function(err,result) {
                 if (err) throw err;
                 console.log('Logs Added.');
-                // connection.end();
             });
     }
 
@@ -281,13 +252,15 @@ class ApiCrawler{
 
 function download(uri, filename, callback)
 {
-    request.head(uri, function(err, res, body){
+    request.head(uri,async function(err, res, body){
         // console.log('content-type:', res.headers['content-type']);
         // console.log('content-length:', res.headers['content-length']);
         fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
             if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
         });
-        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+        request(uri).pipe(fs.createWriteStream(filename,{
+            highWaterMark:300000
+        })).on('close', callback);
     });
 }
 

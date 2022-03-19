@@ -128,9 +128,13 @@ const runCrawler = async (url , connection ,site_id, cat_id) => {
     await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
     //await ApiCrawler.eligibleProductIds(connection,idsArray);
 
+    const delay = (ms) => new Promise((resolve,reject) => {
+        setTimeout(resolve,ms);
+    });
     for (let j=0; j<parsedResultsArray.length; j++){
-        // add delay
         await ApiCrawler.updateProducts(parsedResultsArray[j].pid,connection);
+        // add delay
+        await delay(2000);
     }
 
 };
