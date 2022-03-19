@@ -115,7 +115,9 @@ const runCrawler = async (url , connection ,site_id, cat_id) => {
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
     let parsedResultsArray = [];
+    let idsArray = [];
     const start_crawl_time = get_current_date();
+
 
     for (let i=1; i<=pageLimit; i++){
         console.log(chalk.cyan(`Scraping: ${url+i}`));
@@ -124,10 +126,11 @@ const runCrawler = async (url , connection ,site_id, cat_id) => {
     }
 
     await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
+    //await ApiCrawler.eligibleProductIds(connection,idsArray);
+
     for (let j=0; j<parsedResultsArray.length; j++){
         // add delay
         await ApiCrawler.updateProducts(parsedResultsArray[j].pid,connection);
-
     }
 
 };

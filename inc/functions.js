@@ -134,23 +134,51 @@ class ApiCrawler{
                 ,parameters,description,product.brand,String(ect)]);
 
 
-            if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
-                connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                 (pid,title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
-                    [values],
-                    function(err,result) {
-                        if (err) throw err;
-                        console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
-                        values = [];
-                    });
-            }
+            // if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
+            //     connection.query(`INSERT INTO ${config.tables.ProductsTable}
+            //      (pid,title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+            //         [values],
+            //         function(err,result) {
+            //             if (err) throw err;
+            //             console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
+            //             values = [];
+            //         });
+            // }
         });
 
-        console.log('vl: ',values.length);
-        for (let j=0;j<values.length;j++){
-            // Bulk insert every 30
-        }
-        //Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
+
+        // for (let j=0;j<values.length;j++){
+        //     crawled_count++;
+        //     console.log(crawled_count);
+        //     if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
+        //         connection.query(`INSERT INTO ${config.tables.ProductsTable}
+        //          (pid,title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+        //                 [values],
+        //                 function(err,result) {
+        //                     if (err) throw err;
+        //                     console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
+        //                     values = [];
+        //                 });
+        //     }
+        // }
+        // connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
+        //     function(err,resp){
+        //         if (err) throw err;
+        //         console.log('All Old Data Is Deleted.');
+        //         // delete old images
+        //         for (let j=0;j<old_images.length;j++){
+        //             try {
+        //                 fs.unlink(path.join(__dirname, '../../EcommerceShop/public/uploads/productImages/') + old_images[j] + '.webp' , function (err) {
+        //                     if (err) console.warn('image deletion Error',err);
+        //                     console.log('Old Image Is Deleted');
+        //                 })
+        //             } catch (e) {
+        //                 console.error('Unlink Error',e);
+        //             }
+        //         }
+        //     });
+
+      //  Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
         connection.query(`INSERT INTO ${config.tables.ProductsTable}
                          (pid,title,title_en, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
             [values],
@@ -186,6 +214,19 @@ class ApiCrawler{
             });
     }
 
+    static async eligibleProductIds(connection,ids_array)
+    {
+        connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE
+         specifications='' AND parameters='' AND description='' `,
+            function(err,result,fields){
+                if (err) console.log(err);
+
+                for (let k=0;k<result.length;k++){
+                    ids_array.push(result[k].id);
+                }
+                console.log(ids_array);
+            });
+    }
     static async updateProducts(pid,connection)
     {
         // variables
@@ -205,7 +246,7 @@ class ApiCrawler{
         axios.get(encodeURI(urlSingle))
             .then(res => {
                 specifications = res.data.data.product.specifications[0].attributes;
-                //parameters = res.data.data.product.review.attributes;
+                parameters = res.data.data.product.review.attributes;
 
                 if (specifications !== undefined){
                     specifications.forEach(spec => {
@@ -213,18 +254,19 @@ class ApiCrawler{
                         specs.push(specs_obj);
                     });
                 }
-                // if (parameters !== undefined){
-                //     parameters.forEach(param=> {
-                //         params_obj[param.title] = param.values;
-                //         params.push(params_obj);
-                //     });
-                // }
+                if (parameters !== undefined){
+                    parameters.forEach(param=> {
+                        params_obj[param.title] = param.values;
+                        params.push(params_obj);
+                    });
+                }
 
                 specifications = JSON.stringify(specs);
-                //parameters = JSON.stringify(params);
-                //if (res.data.data.product.review.description !== undefined) description = res.data.data.product.review.description;
+                parameters = JSON.stringify(params);
+                if (res.data.data.product.review.description !== undefined) description = res.data.data.product.review.description;
 
-                connection.query(`UPDATE ${config.tables.ProductsTable} SET specifications = ? WHERE pid = ?; `, [specifications,pid],
+                connection.query(`UPDATE ${config.tables.ProductsTable} SET 
+                specifications=?,parameters=?,description=? WHERE pid=?; `, [specifications,parameters,description,pid],
                     function(err,result,fields){
                         if (err) console.log(err);
                     });

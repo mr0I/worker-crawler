@@ -20,7 +20,7 @@
     "SitesTable": "sites"
   },
   "crawler_settings": {
-    "pageLimit" : 2,
-    "bulkInsertCount" : 30
+    "pageLimit" : 10,
+    "bulkInsertCount" : 20
   }
 }
