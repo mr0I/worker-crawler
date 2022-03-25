@@ -74,83 +74,29 @@ class ApiCrawler{
                 }
             });
 
-
-
         let crawled_count = 0;
+        let queueImages = [];
+        let imageNames = [];
         for(let i=0; i< parsedResultsArray.length; i++){
-                crawled_count++;
-                console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
+            crawled_count++;
+            queueImages.push(parsedResultsArray[i].img);
+            console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
 
-                let image_temp = uuidv4();
-                try {
-                    await download(parsedResultsArray[i].img,
-                        path.join(__dirname, '../../' +
-                            'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function () {
-                            console.log('image upload:', 'done');
-                            sharp(path.join(__dirname, '../../' +
-                                'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg')
-                                .resize(450)
-                                .toFile(path.join(__dirname, '../../' +
-                                    'EcommerceShop/public/uploads/productImages/') + image_temp + '.webp', (err, info) => {
-                                    if (err) console.log('Error in resizing', err);
-                                    else {
-                                        try {
-                                            fs.unlink(path.join(__dirname, '../../' +
-                                                'EcommerceShop/public/uploads/productImages/') + image_temp + '.jpg', function (err) {
-                                                if (err) console.warn('image deletion Error', err);
-                                            });
-                                        } catch (e) {
-                                            console.error('Unlink Error', e);
-                                        }
-                                    }
-                                });
-                        });
+            let image_temp = uuidv4();
+            imageNames.push(image_temp);
 
-                    values.push([parsedResultsArray[i].pid, parsedResultsArray[i].title, parsedResultsArray[i].title_en, parsedResultsArray[i].url, parsedResultsArray[i].main_price
-                        , parsedResultsArray[i].price, parsedResultsArray[i].status, image_temp, cat_id, site_id, specifications
-                        , parameters, description, parsedResultsArray[i].brand, String(ect)]);
-                }catch (e) {
-                    console.log(e);
-                }
-
-                // setTimeout(function () {
-                //     console.log('delay...')
-                // } , 1000)
+            values.push([parsedResultsArray[i].pid, parsedResultsArray[i].title, parsedResultsArray[i].title_en, parsedResultsArray[i].url, parsedResultsArray[i].main_price
+                , parsedResultsArray[i].price, parsedResultsArray[i].status, image_temp, cat_id, site_id, specifications
+                , parameters, description, parsedResultsArray[i].brand, String(ect)]);
         }
 
+        try{
+            download(queueImages,imageNames, function () {console.log('image upload:', 'done');});
+        } catch (e) {
+            console.log('image download error: ',e);
+        }
 
-        // for (let j=0;j<values.length;j++){
-        //     crawled_count++;
-        //     console.log(crawled_count);
-        //     if (crawled_count % config.crawler_settings.bulkInsertCount === 0) {
-        //         connection.query(`INSERT INTO ${config.tables.ProductsTable}
-        //          (pid,title,title_en, url,main_price ,price ,status,image, category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
-        //                 [values],
-        //                 function(err,result) {
-        //                     if (err) throw err;
-        //                     console.log(`All ${config.crawler_settings.bulkInsertCount} Is Done`);
-        //                     values = [];
-        //                 });
-        //     }
-        // }
-        // connection.query(`DELETE FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
-        //     function(err,resp){
-        //         if (err) throw err;
-        //         console.log('All Old Data Is Deleted.');
-        //         // delete old images
-        //         for (let j=0;j<old_images.length;j++){
-        //             try {
-        //                 fs.unlink(path.join(__dirname, '../../EcommerceShop/public/uploads/productImages/') + old_images[j] + '.webp' , function (err) {
-        //                     if (err) console.warn('image deletion Error',err);
-        //                     console.log('Old Image Is Deleted');
-        //                 })
-        //             } catch (e) {
-        //                 console.error('Unlink Error',e);
-        //             }
-        //         }
-        //     });
-
-      //  Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
+        //  Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
         connection.query(`INSERT INTO ${config.tables.ProductsTable}
                          (pid,title,title_en, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
             [values],
@@ -250,18 +196,31 @@ class ApiCrawler{
 }
 
 
-function download(uri, filename, callback)
-{
-    request.head(uri,async function(err, res, body){
-        // console.log('content-type:', res.headers['content-type']);
-        // console.log('content-length:', res.headers['content-length']);
-        fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
-            if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
-        });
-        request(uri).pipe(fs.createWriteStream(filename,{
-            highWaterMark:300000
-        })).on('close', callback);
-    });
+function download(files,image_names, callback) {
+    let index = 0;
+    let data = setInterval(async () => {
+        index++;
+        if (index === files.length)
+            clearInterval(data);
+        else {
+            let fileName = path.join(__dirname, '../../' +
+                'EcommerceShop/public/uploads/productImages/') + image_names[index] + '.jpg';
+
+            request.head(files[index % files.length], function (err, res, body) {
+                // console.log('content-type:', res.headers['content-type']);
+                // console.log('content-length:', res.headers['content-length']);
+                fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
+                    if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
+                });
+                request(files[index % files.length])
+                    .pipe(fs.createWriteStream(fileName,{
+                        highWaterMark:300000
+                    }))
+                    .on("close", callback);
+            });
+        }
+    }, 4000);
 }
+
 
 module.exports = ApiCrawler;

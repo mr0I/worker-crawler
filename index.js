@@ -10,10 +10,12 @@ const ApiCrawler = require('./inc/functions');
 const Ftp = require( 'ftp' );
 const dotenv = require('dotenv');
 dotenv.config();
-
+const sharp = require('sharp'); // https://github.com/lovell/sharp
+const path = require('path');
 const {
     get_current_date,
-    get_brand
+    get_brand,
+    delay
 } = require('./inc/helpers');
 
 
@@ -24,6 +26,7 @@ const catID = cmdArgs['cat-id'];
 const catName = cmdArgs['cat-name'];
 const brandUpdater = cmdArgs['brand-updater'];
 const imageUploader = cmdArgs['image-uploader'];
+const webpConverter = cmdArgs['webp-converter'];
 
 
 // Define Connection
@@ -37,6 +40,7 @@ const connection = mysql.createConnection({
     multipleStatements:true
 });
 connection.connect();
+
 
 /* Start Tools */
 // send images to host
@@ -106,11 +110,46 @@ if (brandUpdater !== undefined && brandUpdater.toLowerCase() === 'y') {
         });
     return;
 }
+// Convert Jpg To Webp
+if (webpConverter !== undefined && webpConverter.toLowerCase() === 'y') {
+    fs.readdir('../EcommerceShop/public/uploads/productImages/', function (err, files) {
+        if (err) {
+            console.error("Could not list the directory.", err);
+            process.exit(1);
+        }
+
+        files.forEach(async function (file, index) {
+            let fileExt = file.slice(file.indexOf('.')+1);
+            let fileName = file.slice(0,file.indexOf('.'));
+            console.log('progress:' + chalk.green(++index) + '/' + files.length);
+
+            if (fileExt === 'jpg' || fileExt === 'jpeg' ) {
+                sharp(path.join(__dirname,'../EcommerceShop/public/uploads/productImages/' + file))
+                    .resize(450)
+                    .toFile(path.join(__dirname, '../' +
+                        'EcommerceShop/public/uploads/productImages/') + fileName + '.webp', (err, info) => {
+                        if (err) console.log('Error in resizing', err);
+                        else {
+                            try {
+                                fs.unlink(path.join(__dirname, '../' +
+                                    'EcommerceShop/public/uploads/productImages/') + file, function (err) {
+                                    if (err) console.warn('image deletion Error', err);
+                                });
+                            } catch (e) {
+                                console.error('Unlink Error', e);
+                            }
+                        }
+                    });
+            }
+            await delay(1500);
+        });
+    });
+    return;
+}
 /* End Tools */
 
 
 // Run Crawler
-global.varr = '';
 const runCrawler = async (url , connection ,site_id, cat_id) => {
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
@@ -128,15 +167,10 @@ const runCrawler = async (url , connection ,site_id, cat_id) => {
     await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
     //await ApiCrawler.eligibleProductIds(connection,idsArray);
 
-    const delay = (ms) => new Promise((resolve,reject) => {
-        setTimeout(resolve,ms);
-    });
     for (let j=0; j<parsedResultsArray.length; j++){
         await ApiCrawler.updateProducts(parsedResultsArray[j].pid,connection);
-        // add delay
-        await delay(2000);
+        await delay(2000); // add delay
     }
-
 };
 
 const userUrl = catName+'Url';

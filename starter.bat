@@ -2,10 +2,11 @@
 
 
 :choice
-set /P c=Choose Your Operation(1:start crawler ,2:image uploader ,3:brand updater) :
+set /P c=Choose Your Operation(1:start crawler ,2:image uploader ,3:brand updater,4:webp converter) :
 if /I "%c%" EQU "1" goto :start_crawler
 if /I "%c%" EQU "2" goto :image_uploader
 if /I "%c%" EQU "3" goto :brand_updater
+if /I "%c%" EQU "4" goto :webp_converter
 goto :choice
 
 
@@ -29,6 +30,14 @@ cls
 set /p bu="Are You Sure (Y/N):"
 powershell -c node index.js --brand-updater "%bu%" --dev
 echo "Brand Updater Has Started..."
+pause
+cls
+exit
+
+:webp_converter
+set /p wc="Are You Sure (Y/N):"
+powershell -c node index.js --webp-converter "%wc%" --dev
+echo "Webp Converter Has Started..."
 pause
 cls
 exit

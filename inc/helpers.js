@@ -44,10 +44,16 @@ function get_brand(title){
     return brand;
 }
 
+function delay(ms){
+    return new Promise((resolve,reject) => {
+        setTimeout(resolve,ms);
+    });
+}
 
 
 module.exports = {
     price_sanitizer,
     get_current_date,
-    get_brand
+    get_brand,
+    delay
 };
