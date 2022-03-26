@@ -32,8 +32,10 @@ class ApiCrawler{
                 "title" : product.title_fa,
                 "title_en" : product.title_en,
                 "url" : product.url.uri,
-                "price" : product.default_variant.price.selling_price,
-                "main_price" : (product.default_variant.price.rrp_price !== 0)
+                "price" : ((product.default_variant).length !== 0)
+                    ? product.default_variant.price.selling_price
+                    : null,
+                "main_price" : ( (product.default_variant).length !== 0 && product.default_variant.price.rrp_price !== 0)
                     ? product.default_variant.price.rrp_price
                     : null,
                 "status" : product.status,
