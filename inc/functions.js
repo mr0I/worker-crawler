@@ -5,11 +5,9 @@ const chalk = require('chalk');
 const { v4: uuidv4 } = require('uuid');
 const request = require('request');
 const path = require('path');
-const sharp = require('sharp'); // https://github.com/lovell/sharp
 const {
     get_current_date,
 } = require('../inc/helpers');
-
 
 
 
@@ -50,20 +48,15 @@ class ApiCrawler{
         return parsedResultsArray;
     }
 
-
     static async exportResults(parsedResultsArray,connection,site_id,cat_id,sct)
     {
         // variables
         let values = [];
-        const ect = get_current_date();
         let specifications = '';
         let parameters = '';
         let description = '';
-        let specs = [];
-        let specs_obj = {};
-        let params = [];
-        let params_obj = {};
         let old_images = [];
+        const ect = get_current_date();
 
         connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE category_id=${cat_id} AND site_id=${site_id} AND date<${String(ect)} `,
             function(err,result,fields){
@@ -77,7 +70,7 @@ class ApiCrawler{
         let crawled_count = 0;
         let queueImages = [];
         let imageNames = [];
-        for(let i=0; i< parsedResultsArray.length; i++){
+        for (let i=0; i< parsedResultsArray.length; i++){
             crawled_count++;
             queueImages.push(parsedResultsArray[i].img);
             console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
@@ -131,24 +124,9 @@ class ApiCrawler{
             });
     }
 
-    static async eligibleProductIds(connection,ids_array)
-    {
-        connection.query(`SELECT * FROM ${config.tables.ProductsTable} WHERE
-         specifications='' AND parameters='' AND description='' `,
-            function(err,result,fields){
-                if (err) console.log(err);
-
-                for (let k=0;k<result.length;k++){
-                    ids_array.push(result[k].id);
-                }
-                console.log(ids_array);
-            });
-    }
     static async updateProducts(pid,connection)
     {
         // variables
-        let values = [];
-        const ect = get_current_date();
         let specifications = '';
         let parameters = '';
         let description = '';
@@ -156,7 +134,6 @@ class ApiCrawler{
         let specs_obj = {};
         let params = [];
         let params_obj = {};
-        let old_images = [];
 
 
         let urlSingle = `${process.env.API_URL}/product/${pid}/`;
