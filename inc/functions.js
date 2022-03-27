@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const { v4: uuidv4 } = require('uuid');
 const request = require('request');
 const path = require('path');
+const dotenv = require('dotenv');
 const {
     get_current_date,
 } = require('../inc/helpers');
@@ -25,7 +26,7 @@ class ApiCrawler{
         return results.data.data.products;
     }
 
-    static async parseResults(products,parsedResultsArray)
+    static async parseResults(products,parsedResultsArray,price_unit)
     {
         products.forEach(product => {
             const metadata = {
@@ -33,10 +34,10 @@ class ApiCrawler{
                 "title_en" : product.title_en,
                 "url" : product.url.uri,
                 "price" : ((product.default_variant).length !== 0)
-                    ? product.default_variant.price.selling_price
+                    ? (price_unit === 'Rial') ? product.default_variant.price.selling_price / 10 : product.default_variant.price.selling_price
                     : null,
                 "main_price" : ( (product.default_variant).length !== 0 && product.default_variant.price.rrp_price !== 0)
-                    ? product.default_variant.price.rrp_price
+                    ? (price_unit === 'Rial') ? product.default_variant.price.rrp_price / 10 : product.default_variant.price.rrp_price
                     : null,
                 "status" : product.status,
                 "img" : (product.images.main.url[0]).substring(0,((product.images.main.url[0]).indexOf(".jpg")+4)),
@@ -80,7 +81,8 @@ class ApiCrawler{
             let image_temp = uuidv4();
             imageNames.push(image_temp);
 
-            values.push([parsedResultsArray[i].pid, parsedResultsArray[i].title, parsedResultsArray[i].title_en, parsedResultsArray[i].url, parsedResultsArray[i].main_price
+            values.push([parsedResultsArray[i].pid, parsedResultsArray[i].title, parsedResultsArray[i].title_en,
+                process.env.DIGIKALA_URL+parsedResultsArray[i].url, parsedResultsArray[i].main_price
                 , parsedResultsArray[i].price, parsedResultsArray[i].status, image_temp, cat_id, site_id, specifications
                 , parameters, description, parsedResultsArray[i].brand, String(ect)]);
         }
@@ -178,7 +180,6 @@ class ApiCrawler{
 function download(files,image_names, callback) {
     let index = 0;
     let data = setInterval(async () => {
-        index++;
         if (index === files.length)
             clearInterval(data);
         else {
@@ -198,6 +199,7 @@ function download(files,image_names, callback) {
                     .on("close", callback);
             });
         }
+        index++;
     }, 4000);
 }
 

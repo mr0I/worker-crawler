@@ -150,7 +150,7 @@ if (webpConverter !== undefined && webpConverter.toLowerCase() === 'y') {
 
 
 // Run Crawler
-const runCrawler = async (url , connection ,site_id, cat_id) => {
+const runCrawler = async (url , connection ,site_id, cat_id , price_unit) => {
     // variables
     let pageLimit = config.crawler_settings.pageLimit;
     let parsedResultsArray = [];
@@ -159,7 +159,7 @@ const runCrawler = async (url , connection ,site_id, cat_id) => {
     for (let i=1; i<=pageLimit; i++){
         console.log(chalk.cyan(`Scraping: ${url+i}`));
         let products = await ApiCrawler.fetchData(url + i);
-        parsedResultsArray = await ApiCrawler.parseResults(products,parsedResultsArray);
+        parsedResultsArray = await ApiCrawler.parseResults(products,parsedResultsArray, price_unit);
     }
 
     await ApiCrawler.exportResults(parsedResultsArray,connection , site_id, cat_id,start_crawl_time);
@@ -232,7 +232,8 @@ const preparation = async(row ,user_url) => {
                 : row;
     }
 
-    runCrawler(url, connection ,siteID,catID);
+    const priceUnit = 'Rial'; // Set Price Unit
+    runCrawler(url, connection ,siteID,catID , priceUnit);
 };
 
 

@@ -30,8 +30,7 @@ function price_sanitizer(price) {
 }
 
 function get_current_date(){
-    const currentDate = new Date();
-    return currentDate.getTime();
+    return new Date().getTime();
 }
 
 function get_brand(title){
