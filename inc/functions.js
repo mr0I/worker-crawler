@@ -2,14 +2,12 @@ const axios = require('axios');
 const config = require('../config');
 const fs = require('fs');
 const chalk = require('chalk');
-const { v4: uuidv4 } = require('uuid');
 const request = require('request');
 const path = require('path');
-const dotenv = require('dotenv');
+const CryptoJS = require('crypto-js');
 const {
     get_current_date,
 } = require('../inc/helpers');
-
 
 
 class ApiCrawler{
@@ -78,13 +76,26 @@ class ApiCrawler{
             queueImages.push(parsedResultsArray[i].img);
             console.log('current index:' + chalk.yellow.bgBlack(crawled_count));
 
-            let image_temp = uuidv4();
+            let image_temp = CryptoJS.MD5(parsedResultsArray[i].img).toString();
             imageNames.push(image_temp);
 
-            values.push([parsedResultsArray[i].pid, parsedResultsArray[i].title, parsedResultsArray[i].title_en,
-                process.env.DIGIKALA_URL+parsedResultsArray[i].url, parsedResultsArray[i].main_price
-                , parsedResultsArray[i].price, parsedResultsArray[i].status, image_temp, cat_id, site_id, specifications
-                , parameters, description, parsedResultsArray[i].brand, String(ect)]);
+            values.push([
+                parsedResultsArray[i].pid,
+                parsedResultsArray[i].title,
+                parsedResultsArray[i].title_en,
+                process.env.DIGIKALA_URL+parsedResultsArray[i].url,
+                (parsedResultsArray[i].status !== 'out_of_stock') ? parsedResultsArray[i].main_price : 0 ,
+                (parsedResultsArray[i].status !== 'out_of_stock') ? parsedResultsArray[i].price : 0 ,
+                parsedResultsArray[i].status,
+                parsedResultsArray[i].img,
+                image_temp,
+                cat_id,
+                site_id,
+                specifications,
+                parameters,
+                description,
+                parsedResultsArray[i].brand, String(ect)
+            ]);
         }
 
         try{
@@ -95,7 +106,7 @@ class ApiCrawler{
 
         //  Bulk insert using nested array [ [a,b],[c,d] ] will be flattened to (a,b),(c,d)
         connection.query(`INSERT INTO ${config.tables.ProductsTable}
-                         (pid,title,title_en, url,main_price ,price,status,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
+                         (pid,title,title_en, url,main_price ,price,status,image_url,image,category_id,site_id,specifications,parameters,description,brand,date) VALUES ?`,
             [values],
             function(err,result) {
                 if (err) throw err;
@@ -148,13 +159,13 @@ class ApiCrawler{
 
                 if (specifications !== undefined){
                     specifications.forEach(spec => {
-                        specs_obj[spec.title] = spec.values;
+                        specs_obj[spec.title] = (spec.values).toString();
                         specs.push(specs_obj);
                     });
                 }
                 if (parameters !== undefined){
                     parameters.forEach(param=> {
-                        params_obj[param.title] = param.values;
+                        params_obj[param.title] = (param.values).toString();
                         params.push(params_obj);
                     });
                 }
@@ -180,26 +191,30 @@ class ApiCrawler{
 function download(files,image_names, callback) {
     let index = 0;
     let data = setInterval(async () => {
-        if (index === files.length)
+        if (index === files.length ){
             clearInterval(data);
-        else {
+            console.log(chalk.green('upload is finished :)'));
+        } else {
             let fileName = path.join(__dirname, '../../' +
                 'EcommerceShop/public/uploads/productImages/') + image_names[index] + '.jpg';
 
-            request.head(files[index % files.length], function (err, res, body) {
+            console.log('index',index);
+            request.head(files[index], function (err, res, body) {
                 // console.log('content-type:', res.headers['content-type']);
                 // console.log('content-length:', res.headers['content-length']);
                 fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
                     if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
                 });
-                request(files[index % files.length])
+                request(files[index])
                     .pipe(fs.createWriteStream(fileName,{
                         highWaterMark:300000
                     }))
-                    .on("close", callback);
+                    .on("close", callback)
+                    .on("error", (err) => {console.log(err)});
+
+                index++;
             });
         }
-        index++;
     }, 4000);
 }
 

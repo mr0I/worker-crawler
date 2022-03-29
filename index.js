@@ -27,6 +27,7 @@ const catName = cmdArgs['cat-name'];
 const brandUpdater = cmdArgs['brand-updater'];
 const imageUploader = cmdArgs['image-uploader'];
 const webpConverter = cmdArgs['webp-converter'];
+const imageRedownloader = cmdArgs['image-redownloader'];
 
 
 // Define Connection
@@ -118,12 +119,21 @@ if (webpConverter !== undefined && webpConverter.toLowerCase() === 'y') {
             process.exit(1);
         }
 
+        let counter = 0;
+        let sum = 0;
+        files.forEach(async (file) => {
+            let fileExt = file.slice(file.indexOf('.')+1);
+            if (fileExt === 'jpg' || fileExt === 'jpeg' ) sum++;
+        });
+
         files.forEach(async function (file, index) {
             let fileExt = file.slice(file.indexOf('.')+1);
             let fileName = file.slice(0,file.indexOf('.'));
-            console.log('progress:' + chalk.green(++index) + '/' + files.length);
 
             if (fileExt === 'jpg' || fileExt === 'jpeg' ) {
+                console.log('progress:' + chalk.green(++counter));
+                if (counter === sum ) console.log(chalk.green('conversation is finished :)'));
+
                 sharp(path.join(__dirname,'../EcommerceShop/public/uploads/productImages/' + file))
                     .resize(450)
                     .toFile(path.join(__dirname, '../' +
@@ -145,6 +155,51 @@ if (webpConverter !== undefined && webpConverter.toLowerCase() === 'y') {
         });
     });
     return;
+} else if(webpConverter !== undefined && webpConverter.toLowerCase() === 'n'){
+    process.exit(1);
+}
+// Redownload Corrupt Images
+if (imageRedownloader !== undefined && imageRedownloader.toLowerCase() === 'y') {
+    fs.readdir('../EcommerceShop/public/uploads/productImages/', function (err, files) {
+        if (err) {
+            console.error("Could not list the directory.", err);
+            process.exit(1);
+        }
+
+        let counter = 0;
+        let queueImages = [];
+        let imageNames = [];
+        files.forEach(async function (file, index) {
+            let fileExt = file.slice(file.indexOf('.')+1);
+            let fileName = file.slice(0,file.indexOf('.'));
+
+            if (fileExt === 'jpg' || fileExt === 'jpeg' ) {
+                imageNames.push(fileName);
+
+                // console.log('progress:' + chalk.green(++counter));
+                // connection.query(`SELECT image_url FROM ${config.tables.ProductsTable} WHERE image=${fileName} `,
+                //     function(err,result,fields){
+                //         if (err) console.log(err);
+                //
+                //
+                //
+                //         // try{
+                //         //     download(queueImages,imageNames, function () {console.log('image upload:', 'done');});
+                //         // } catch (e) {
+                //         //     console.log('image download error: ',e);
+                //         // }
+                //
+                //     });
+            }
+            await delay(1500);
+        });
+
+        fs.writeFileSync('./logs.json', JSON.stringify(imageNames,null,'\t'));
+
+    });
+    return;
+} else if (imageRedownloader !== undefined && imageRedownloader.toLowerCase() === 'n'){
+    process.exit(1);
 }
 /* End Tools */
 

@@ -2,11 +2,12 @@
 
 
 :choice
-set /P c=Choose Your Operation(1:start crawler ,2:image uploader ,3:brand updater,4:webp converter) :
+set /P c=Choose Your Operation(1:start crawler ,2:image uploader ,3:brand updater,4:webp converter,5:image redownloader) :
 if /I "%c%" EQU "1" goto :start_crawler
 if /I "%c%" EQU "2" goto :image_uploader
 if /I "%c%" EQU "3" goto :brand_updater
 if /I "%c%" EQU "4" goto :webp_converter
+if /I "%c%" EQU "5" goto :image_redownloader
 goto :choice
 
 
@@ -38,6 +39,14 @@ exit
 set /p wc="Are You Sure (Y/N):"
 powershell -c node index.js --webp-converter "%wc%" --dev
 echo "Webp Converter Has Started..."
+pause
+cls
+exit
+
+:image_redownloader
+set /p ir="Are You Sure (Y/N):"
+powershell -c node index.js --image-redownloader "%ir%" --dev
+echo "Redownload Corrupted Images Has Started..."
 pause
 cls
 exit
