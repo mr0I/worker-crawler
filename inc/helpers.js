@@ -1,5 +1,8 @@
-const {brandsList} = require('../helpers/brands');
+const request = require('request');
+const path = require('path');
+const fs = require('fs');
 
+const {brandsList} = require('../helpers/brands');
 const arabic_zero_char_code = 1632;
 const arabic_nine_char_code = 1632 + 9;
 const farsi_zero_char_code = 1776;
@@ -33,6 +36,38 @@ function get_current_date(){
     return new Date().getTime();
 }
 
+function image_downloader(files,image_names, callback) {
+    let index = 0;
+
+    let data = setInterval(async () => {
+        if (index === files.length ){
+            clearInterval(data);
+            console.log(chalk.green('upload is finished :)'));
+        } else {
+            let fileName = path.join(__dirname, '../../' +
+                'EcommerceShop/public/uploads/productImages/') + image_names[index] + '.jpg';
+
+            console.log('index',index);
+            request.head(files[index], function (err, res, body) {
+                // console.log('content-type:', res.headers['content-type']);
+                // console.log('content-length:', res.headers['content-length']);
+                fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
+                    if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
+                });
+                request(files[index])
+                    .pipe(fs.createWriteStream(fileName,{
+                        highWaterMark:300000
+                    }))
+                    .on("close", callback)
+                    .on("error", (err) => {console.log(err)});
+
+                index++;
+            });
+        }
+    }, 4000);
+}
+
+
 function get_brand(title){
     let brand = 'UnCategorized';
     Object.entries(brandsList).forEach(entry => {
@@ -54,5 +89,6 @@ module.exports = {
     price_sanitizer,
     get_current_date,
     get_brand,
-    delay
+    delay,
+    image_downloader
 };

@@ -12,10 +12,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 const sharp = require('sharp'); // https://github.com/lovell/sharp
 const path = require('path');
+const axios = require('axios');
+const request = require('request');
 const {
     get_current_date,
     get_brand,
-    delay
+    delay,
+    image_downloader
 } = require('./inc/helpers');
 
 
@@ -166,41 +169,73 @@ if (imageRedownloader !== undefined && imageRedownloader.toLowerCase() === 'y') 
             process.exit(1);
         }
 
-        let counter = 0;
         let queueImages = [];
         let imageNames = [];
+        let downloadedImages= [];
         files.forEach(async function (file, index) {
-            let fileExt = file.slice(file.indexOf('.')+1);
-            let fileName = file.slice(0,file.indexOf('.'));
-
-            if (fileExt === 'jpg' || fileExt === 'jpeg' ) {
-                imageNames.push(fileName);
-
-                // console.log('progress:' + chalk.green(++counter));
-                // connection.query(`SELECT image_url FROM ${config.tables.ProductsTable} WHERE image=${fileName} `,
-                //     function(err,result,fields){
-                //         if (err) console.log(err);
-                //
-                //
-                //
-                //         // try{
-                //         //     download(queueImages,imageNames, function () {console.log('image upload:', 'done');});
-                //         // } catch (e) {
-                //         //     console.log('image download error: ',e);
-                //         // }
-                //
-                //     });
-            }
+            downloadedImages.push(file.slice(0,file.indexOf('.')));
             await delay(1500);
         });
 
-        fs.writeFileSync('./logs.json', JSON.stringify(imageNames,null,'\t'));
+        connection.query(`SELECT image,image_url FROM ${config.tables.ProductsTable} `,
+            function(err,result,fields){
+                if (err) console.log(err);
 
+                result.forEach(item => {
+                    if (! downloadedImages.includes(item.image)){
+                        if (item.image_url !== null){
+                            queueImages.push(item.image_url);
+                            imageNames.push(item.image);
+                        }
+                    }
+                });
+
+                // fs.writeFileSync('./queueImages.json', JSON.stringify(queueImages,null,'\t'));
+                // fs.writeFileSync('./imageNames.json', JSON.stringify(imageNames,null,'\t'));
+
+                try{
+                    image_downloader(queueImages,imageNames, function () {console.log('image upload:', 'done');});
+                } catch (e) {
+                    console.log('image download error: ',e);
+                }
+
+            });
     });
     return;
 } else if (imageRedownloader !== undefined && imageRedownloader.toLowerCase() === 'n'){
     process.exit(1);
 }
+
+// function download(files,image_names, callback) {
+//     let index = 0;
+//     let data = setInterval(async () => {
+//         if (index === files.length ){
+//             clearInterval(data);
+//             console.log(chalk.green('upload is finished :)'));
+//         } else {
+//             let fileName = path.join(__dirname, '../' +
+//                 'EcommerceShop/public/uploads/productImages/') + image_names[index] + '.jpg';
+//
+//             console.log('index',index);
+//             request.head(files[index], function (err, res, body) {
+//                 // console.log('content-type:', res.headers['content-type']);
+//                 // console.log('content-length:', res.headers['content-length']);
+//                 fs.access(path.join(__dirname , '../EcommerceShop/public/uploads/productImages'),(error) => {
+//                     if (error) fs.mkdirSync(path.join(__dirname ,'../EcommerceShop/public/uploads/productImages'))  ;
+//                 });
+//                 request(files[index])
+//                     .pipe(fs.createWriteStream(fileName,{
+//                         highWaterMark:300000
+//                     }))
+//                     .on("close", callback)
+//                     .on("error", (err) => {console.log(err)});
+//
+//                 index++;
+//             });
+//         }
+//     }, 4000);
+// }
+
 /* End Tools */
 
 

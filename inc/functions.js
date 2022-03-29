@@ -6,14 +6,14 @@ const request = require('request');
 const path = require('path');
 const CryptoJS = require('crypto-js');
 const {
-    get_current_date,
+    get_current_date,image_downloader
 } = require('../inc/helpers');
 
 
 class ApiCrawler{
-    constructor() {
-        download.bind(this)();
-    }
+    // constructor() {
+    //     download.bind(this)();
+    // }
 
     static async fetchData(next_page_link)
     {
@@ -99,7 +99,7 @@ class ApiCrawler{
         }
 
         try{
-            download(queueImages,imageNames, function () {console.log('image upload:', 'done');});
+            image_downloader(queueImages,imageNames, function () {console.log('image upload:', 'done');});
         } catch (e) {
             console.log('image download error: ',e);
         }
@@ -188,35 +188,35 @@ class ApiCrawler{
 }
 
 
-function download(files,image_names, callback) {
-    let index = 0;
-    let data = setInterval(async () => {
-        if (index === files.length ){
-            clearInterval(data);
-            console.log(chalk.green('upload is finished :)'));
-        } else {
-            let fileName = path.join(__dirname, '../../' +
-                'EcommerceShop/public/uploads/productImages/') + image_names[index] + '.jpg';
-
-            console.log('index',index);
-            request.head(files[index], function (err, res, body) {
-                // console.log('content-type:', res.headers['content-type']);
-                // console.log('content-length:', res.headers['content-length']);
-                fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
-                    if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
-                });
-                request(files[index])
-                    .pipe(fs.createWriteStream(fileName,{
-                        highWaterMark:300000
-                    }))
-                    .on("close", callback)
-                    .on("error", (err) => {console.log(err)});
-
-                index++;
-            });
-        }
-    }, 4000);
-}
+// function download(files,image_names, callback) {
+//     let index = 0;
+//     let data = setInterval(async () => {
+//         if (index === files.length ){
+//             clearInterval(data);
+//             console.log(chalk.green('upload is finished :)'));
+//         } else {
+//             let fileName = path.join(__dirname, '../../' +
+//                 'EcommerceShop/public/uploads/productImages/') + image_names[index] + '.jpg';
+//
+//             console.log('index',index);
+//             request.head(files[index], function (err, res, body) {
+//                 // console.log('content-type:', res.headers['content-type']);
+//                 // console.log('content-length:', res.headers['content-length']);
+//                 fs.access(path.join(__dirname , '../../EcommerceShop/public/uploads/productImages'),(error) => {
+//                     if (error) fs.mkdirSync(path.join(__dirname ,'../../EcommerceShop/public/uploads/productImages'))  ;
+//                 });
+//                 request(files[index])
+//                     .pipe(fs.createWriteStream(fileName,{
+//                         highWaterMark:300000
+//                     }))
+//                     .on("close", callback)
+//                     .on("error", (err) => {console.log(err)});
+//
+//                 index++;
+//             });
+//         }
+//     }, 4000);
+// }
 
 
 module.exports = ApiCrawler;
