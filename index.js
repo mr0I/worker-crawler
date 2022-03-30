@@ -190,15 +190,11 @@ if (imageRedownloader !== undefined && imageRedownloader.toLowerCase() === 'y') 
                     }
                 });
 
-                // fs.writeFileSync('./queueImages.json', JSON.stringify(queueImages,null,'\t'));
-                // fs.writeFileSync('./imageNames.json', JSON.stringify(imageNames,null,'\t'));
-
                 try{
                     image_downloader(queueImages,imageNames, function () {console.log('image upload:', 'done');});
                 } catch (e) {
                     console.log('image download error: ',e);
                 }
-
             });
     });
     return;

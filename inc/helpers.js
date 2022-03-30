@@ -1,12 +1,13 @@
 const request = require('request');
 const path = require('path');
 const fs = require('fs');
-
+const chalk = require('chalk');
 const {brandsList} = require('../helpers/brands');
 const arabic_zero_char_code = 1632;
 const arabic_nine_char_code = 1632 + 9;
 const farsi_zero_char_code = 1776;
 const farsi_nine_char_code = 1776 + 9;
+
 
 // supports arabic and farsi
 function convert_non_latin_numbers_to_latin_numbers(s) {
@@ -86,7 +87,6 @@ function delay(ms){
 
 
 module.exports = {
-    price_sanitizer,
     get_current_date,
     get_brand,
     delay,
